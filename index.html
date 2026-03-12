@@ -11,50 +11,50 @@ body{font-family:'Space Mono',monospace;background:var(--bg);color:var(--text);f
 
 .container{max-width:1600px;margin:0 auto;padding:24px}
 .header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:24px;padding-bottom:16px;border-bottom:1px solid var(--border)}
-.header h1{font-size:11px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:var(--text)}
+.header h1{font-size:14px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:var(--text)}
 .header-tabs{display:flex;gap:0;margin-top:12px}
-.tab{font-size:10px;font-weight:400;letter-spacing:0.08em;color:var(--muted2);cursor:pointer;padding:10px 16px;border:none;background:none;border-bottom:2px solid transparent;text-transform:uppercase;font-family:'Space Mono',monospace;transition:color 0.15s}
+.tab{font-size:12px;font-weight:400;letter-spacing:0.08em;color:var(--muted2);cursor:pointer;padding:10px 16px;border:none;background:none;border-bottom:2px solid transparent;text-transform:uppercase;font-family:'Space Mono',monospace;transition:color 0.15s}
 .tab:hover{color:var(--text)}
 .tab.active{color:var(--text);font-weight:700;border-bottom-color:var(--accent)}
-.month-selector{background:var(--surface2);border:1px solid var(--border2);padding:7px 10px;font-size:11px;color:var(--text);cursor:pointer;font-family:'Space Mono',monospace;outline:none}
+.month-selector{background:var(--surface2);border:1px solid var(--border2);padding:7px 10px;font-size:13px;color:var(--text);cursor:pointer;font-family:'Space Mono',monospace;outline:none}
 
 .stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px;margin-bottom:24px}
 .stat-card{background:var(--surface);border:1px solid var(--border2);padding:20px 24px}
-.stat-label{font-size:9px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted2);margin-bottom:8px}
-.stat-value{font-size:24px;font-weight:700;color:var(--text);margin-bottom:6px}
-.benchmark-indicator{font-size:9px;color:var(--muted);margin-top:8px;display:flex;align-items:center;gap:8px;letter-spacing:0.04em}
+.stat-label{font-size:11px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted2);margin-bottom:8px}
+.stat-value{font-size:28px;font-weight:700;color:var(--text);margin-bottom:6px}
+.benchmark-indicator{font-size:11px;color:var(--muted2);margin-top:8px;display:flex;align-items:center;gap:8px;letter-spacing:0.04em}
 .benchmark-bar{flex:1;height:3px;background:var(--surface3);border-radius:2px;overflow:hidden}
 .benchmark-fill{height:100%;background:var(--accent);border-radius:2px;transition:width 0.3s}
-.stat-change{font-size:10px;margin-top:8px;color:var(--green);letter-spacing:0.02em}
+.stat-change{font-size:12px;margin-top:8px;color:var(--green);letter-spacing:0.02em}
 
 .charts-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:24px}
 @media(max-width:900px){.charts-grid{grid-template-columns:1fr}}
 .chart-card{background:var(--surface);border:1px solid var(--border2);padding:20px}
 .chart-card.full{grid-column:1/-1}
-.chart-title{font-size:9px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted2);margin-bottom:16px}
+.chart-title{font-size:12px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted2);margin-bottom:16px}
 .chart-container{position:relative;height:260px}
 
 .table-container{background:var(--surface);border:1px solid var(--border2);overflow:hidden;margin-bottom:16px}
 .table-header{padding:14px 20px;border-bottom:1px solid var(--border)}
-.table-title{font-size:9px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted2)}
+.table-title{font-size:12px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted2)}
 table{width:100%;border-collapse:collapse}
-thead th{text-align:left;padding:8px 10px;font-size:9px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted2);border-bottom:2px solid var(--border2);white-space:nowrap;background:var(--surface)}
+thead th{text-align:left;padding:10px 12px;font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted2);border-bottom:2px solid var(--border2);white-space:nowrap;background:var(--surface)}
 thead th.r{text-align:right}
 tbody tr{border-bottom:1px solid var(--border)}
 tbody tr:hover{background:var(--surface3)}
-tbody td{padding:10px;font-size:11px;color:var(--text)}
+tbody td{padding:10px 12px;font-size:13px;color:var(--text)}
 tbody td.r{text-align:right}
 tbody td.m{color:var(--muted2)}
 
-.platform-badge{display:inline-flex;align-items:center;gap:6px;padding:2px 8px;background:var(--surface2);font-size:9px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase}
+.platform-badge{display:inline-flex;align-items:center;gap:6px;padding:3px 10px;background:var(--surface2);font-size:11px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;color:var(--text)}
 .platform-dot{width:6px;height:6px;border-radius:50%}
 .youtube{background:#f00}
 .instagram{background:#e1306c}
 .tiktok{background:var(--text)}
 .linkedin{background:#0077b5}
-.content-title{max-width:360px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:11px}
+.content-title{max-width:360px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:13px}
 
-.priority-badge{padding:2px 8px;font-size:9px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase}
+.priority-badge{padding:3px 10px;font-size:11px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase}
 .priority-high{background:var(--red-dim);color:var(--red)}
 .priority-medium{background:var(--amber-dim);color:var(--amber)}
 </style>
@@ -87,8 +87,8 @@ let M='combined',F='all',CH={};
 document.getElementById('monthSel').onchange=function(){M=this.value;UPD();};
 document.querySelectorAll('.tab').forEach(t=>t.onclick=function(){F=this.dataset.platform;document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));this.classList.add('active');TBL();});
 function UPD(){const d=DATA[M],s=d.summary;document.getElementById('v').textContent=(s.totalViews/1000).toFixed(1)+'K';document.getElementById('r').textContent=(s.totalReach/1000).toFixed(1)+'K';document.getElementById('e').textContent=(s.totalEngagement/1000).toFixed(1)+'K';document.getElementById('er').textContent=s.avgEngagementRate.toFixed(1)+'%';const t={combined:{v:800000,r:700000,e:14000},february:{v:750000,r:650000,e:12000},january:{v:100000,r:60000,e:2000}}[M];document.getElementById('vb').style.width=((s.totalViews/t.v)*100).toFixed(0)+'%';document.getElementById('rb').style.width=((s.totalReach/t.r)*100).toFixed(0)+'%';document.getElementById('eb').style.width=((s.totalEngagement/t.e)*100).toFixed(0)+'%';const ert={combined:11.5,february:12,january:8}[M];document.getElementById('erb').style.width=((s.avgEngagementRate/ert)*100).toFixed(0)+'%';document.getElementById('ert').textContent='Target: '+ert+'%';document.getElementById('vt').textContent='Target: '+(t.v/1000)+'K';document.getElementById('rt').textContent='Target: '+(t.r/1000)+'K';document.getElementById('et').textContent='Target: '+(t.e/1000)+'K';if(M==='combined'){document.getElementById('vc').textContent='+'+DATA.growth.views+'% MoM';document.getElementById('rc').textContent='+'+DATA.growth.reach+'% MoM';document.getElementById('ec').textContent='+'+DATA.growth.engagement+'% MoM';document.getElementById('erc').textContent='+2.3% MoM';document.getElementById('lct').textContent='LinkedIn (Jan-Feb 2026)';}else if(M==='february'){document.getElementById('vc').textContent='+'+DATA.growth.views+'% vs Jan';document.getElementById('rc').textContent='+'+DATA.growth.reach+'% vs Jan';document.getElementById('ec').textContent='+'+DATA.growth.engagement+'% vs Jan';document.getElementById('erc').textContent='+31.7% vs Jan';document.getElementById('lct').textContent='LinkedIn Feb 2026';}else{document.getElementById('vc').textContent='';document.getElementById('rc').textContent='';document.getElementById('ec').textContent='';document.getElementById('erc').textContent='';document.getElementById('lct').textContent='LinkedIn Jan 2026';}TBL();CHARTS(d);}
-function TBL(){const d=DATA[M],tb=document.getElementById('content');tb.innerHTML='';let f=d.topContent;if(F!=='all'){const map={'youtube':'YouTube','instagram':'Instagram','tiktok':'TikTok','linkedin':'LinkedIn'};f=d.topContent.filter(c=>c.platform===map[F]);}f.slice(0,15).forEach((c,i)=>{const row=document.createElement('tr');row.innerHTML=`<td class="r m">${i+1}</td><td><div class="content-title">${c.title}</div></td><td><span class="platform-badge"><span class="platform-dot ${c.platform.toLowerCase()}"></span>${c.platform}</span></td><td class="r">${c.views.toLocaleString()}</td><td class="r">${c.engagement.toLocaleString()}</td><td class="r" style="color:${c.rate>5?'var(--green)':c.rate>2?'var(--amber)':'var(--muted2)'}">${c.rate.toFixed(1)}%</td>`;tb.appendChild(row);});}
-const rtb=document.getElementById('recs');RECS.forEach(x=>{const row=document.createElement('tr');row.innerHTML=`<td><span class="priority-badge priority-${x.p.toLowerCase()}">${x.p}</span></td><td>${x.r}</td><td class="m" style="font-size:10px">${x.i}</td>`;rtb.appendChild(row);});
-function CHARTS(d){if(typeof Chart==='undefined')return;Chart.defaults.color='var(--muted2)';Chart.defaults.borderColor='var(--border)';Chart.defaults.font.family="'Space Mono', monospace";Chart.defaults.font.size=10;if(CH.p)CH.p.destroy();CH.p=new Chart(document.getElementById('pc').getContext('2d'),{type:'bar',data:{labels:['YouTube','Instagram','TikTok','LinkedIn'],datasets:[{data:[d.platforms.youtube.views,d.platforms.instagram.views,d.platforms.tiktok.views,d.platforms.linkedin.impressions],backgroundColor:['rgba(255,0,0,0.7)','rgba(225,48,108,0.7)','rgba(240,236,228,0.7)','rgba(0,119,181,0.7)'],borderRadius:2}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{y:{beginAtZero:true,grid:{color:'#1a1a1a'},ticks:{font:{size:9}}},x:{grid:{display:false},ticks:{font:{size:9}}}}}});const top=d.topContent.slice(0,10);if(CH.t)CH.t.destroy();CH.t=new Chart(document.getElementById('tc').getContext('2d'),{type:'bar',data:{labels:top.map(c=>c.title.substring(0,18)+'...'),datasets:[{data:top.map(c=>c.views),backgroundColor:top.map(c=>c.platform==='Instagram'?'rgba(225,48,108,0.7)':'rgba(255,0,0,0.7)'),borderRadius:2}]},options:{indexAxis:'y',responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{beginAtZero:true,grid:{color:'#1a1a1a'},ticks:{font:{size:9}}},y:{grid:{display:false},ticks:{font:{size:8}}}}}});if(CH.l)CH.l.destroy();CH.l=new Chart(document.getElementById('lc').getContext('2d'),{type:'line',data:{labels:d.timeseries.linkedin.map(x=>x.date),datasets:[{label:'Impressions',data:d.timeseries.linkedin.map(x=>x.impressions),borderColor:'var(--blue)',borderWidth:1.5,fill:false,tension:0.3,pointRadius:1.5},{label:'Engagement',data:d.timeseries.linkedin.map(x=>x.engagement),borderColor:'var(--green)',borderWidth:1.5,fill:false,tension:0.3,pointRadius:1.5},{label:'Clicks',data:d.timeseries.linkedin.map(x=>x.clicks),borderColor:'var(--amber)',borderWidth:1.5,fill:false,tension:0.3,pointRadius:1.5}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:true,position:'top',align:'end',labels:{color:'#777',usePointStyle:true,font:{size:9}}}},scales:{y:{beginAtZero:true,grid:{color:'#1a1a1a'},ticks:{font:{size:9}}},x:{grid:{display:false},ticks:{font:{size:8}}}}}});}
+function TBL(){const d=DATA[M],tb=document.getElementById('content');tb.innerHTML='';let f=d.topContent;if(F!=='all'){const map={'youtube':'YouTube','instagram':'Instagram','tiktok':'TikTok','linkedin':'LinkedIn'};f=d.topContent.filter(c=>c.platform===map[F]);}f.slice(0,15).forEach((c,i)=>{const row=document.createElement('tr');row.innerHTML=`<td class="r m">${i+1}</td><td><div class="content-title">${c.title}</div></td><td><span class="platform-badge"><span class="platform-dot ${c.platform.toLowerCase()}"></span>${c.platform}</span></td><td class="r">${c.views.toLocaleString()}</td><td class="r">${c.engagement.toLocaleString()}</td><td class="r" style="color:${c.rate>5?'#4ade80':c.rate>2?'#fbbf24':'#777'}">${c.rate.toFixed(1)}%</td>`;tb.appendChild(row);});}
+const rtb=document.getElementById('recs');RECS.forEach(x=>{const row=document.createElement('tr');row.innerHTML=`<td><span class="priority-badge priority-${x.p.toLowerCase()}">${x.p}</span></td><td>${x.r}</td><td class="m">${x.i}</td>`;rtb.appendChild(row);});
+function CHARTS(d){if(typeof Chart==='undefined')return;Chart.defaults.color='#777';Chart.defaults.borderColor='#222';Chart.defaults.font.family="'Space Mono', monospace";Chart.defaults.font.size=11;if(CH.p)CH.p.destroy();CH.p=new Chart(document.getElementById('pc').getContext('2d'),{type:'bar',data:{labels:['YouTube','Instagram','TikTok','LinkedIn'],datasets:[{data:[d.platforms.youtube.views,d.platforms.instagram.views,d.platforms.tiktok.views,d.platforms.linkedin.impressions],backgroundColor:['rgba(255,0,0,0.7)','rgba(225,48,108,0.7)','rgba(240,236,228,0.7)','rgba(0,119,181,0.7)'],borderRadius:2}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{y:{beginAtZero:true,grid:{color:'#1a1a1a'},ticks:{color:'#777',font:{size:11}}},x:{grid:{display:false},ticks:{color:'#777',font:{size:11}}}}}});const top=d.topContent.slice(0,10);if(CH.t)CH.t.destroy();CH.t=new Chart(document.getElementById('tc').getContext('2d'),{type:'bar',data:{labels:top.map(c=>c.title.substring(0,18)+'...'),datasets:[{data:top.map(c=>c.views),backgroundColor:top.map(c=>c.platform==='Instagram'?'rgba(225,48,108,0.7)':'rgba(255,0,0,0.7)'),borderRadius:2}]},options:{indexAxis:'y',responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{beginAtZero:true,grid:{color:'#1a1a1a'},ticks:{color:'#777',font:{size:10}}},y:{grid:{display:false},ticks:{color:'#f0ece4',font:{size:10}}}}}});if(CH.l)CH.l.destroy();CH.l=new Chart(document.getElementById('lc').getContext('2d'),{type:'line',data:{labels:d.timeseries.linkedin.map(x=>x.date),datasets:[{label:'Impressions',data:d.timeseries.linkedin.map(x=>x.impressions),borderColor:'#60a5fa',borderWidth:1.5,fill:false,tension:0.3,pointRadius:1.5},{label:'Engagement',data:d.timeseries.linkedin.map(x=>x.engagement),borderColor:'#4ade80',borderWidth:1.5,fill:false,tension:0.3,pointRadius:1.5},{label:'Clicks',data:d.timeseries.linkedin.map(x=>x.clicks),borderColor:'#fbbf24',borderWidth:1.5,fill:false,tension:0.3,pointRadius:1.5}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:true,position:'top',align:'end',labels:{color:'#777',usePointStyle:true,font:{size:11}}}},scales:{y:{beginAtZero:true,grid:{color:'#1a1a1a'},ticks:{color:'#777',font:{size:11}}},x:{grid:{display:false},ticks:{color:'#777',font:{size:10}}}}}});}
 UPD();
 </script></body></html>
