@@ -94,7 +94,12 @@ select.s-input{cursor:pointer}
 .s-actions{display:flex;gap:8px;margin-top:20px;padding-top:16px;border-top:1px solid var(--border)}
 .s-toast{position:fixed;bottom:28px;right:28px;z-index:1000;background:var(--surface);border:1px solid var(--border2);padding:12px 18px;font-size:12px;color:var(--green);box-shadow:0 4px 24px rgba(0,0,0,0.5);display:none}
 .s-month-bar{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
-.s-csv-area{background:var(--surface2);border:1px solid var(--border2);color:var(--text);padding:10px;font-size:11px;font-family:'Space Mono',monospace;outline:none;width:100%;min-height:100px;resize:vertical;margin-top:8px}
+.s-upload-zone{border:2px dashed var(--border2);padding:28px 20px;text-align:center;color:var(--muted2);font-size:12px;transition:border-color 0.2s,background 0.2s;cursor:pointer;margin-bottom:4px}
+.s-upload-zone.dragover{border-color:var(--accent);background:rgba(232,228,220,0.04)}
+.s-upload-icon{font-size:24px;margin-bottom:8px;color:var(--muted)}
+.s-upload-link{color:var(--accent);cursor:pointer;text-decoration:underline}
+.s-upload-hint{font-size:10px;color:var(--muted);margin-top:8px;letter-spacing:0.04em}
+.s-upload-ok{font-size:11px;color:var(--green);margin-top:8px}
 </style>
 </head><body>
 <div class="container">
@@ -151,12 +156,23 @@ select.s-input{cursor:pointer}
 
 <div class="s-section">
 <div class="s-title">Platform Stats — <span id="editMonthLabel">select a month</span></div>
+<div class="s-upload-zone" id="platformDropZone">
+<div class="s-upload-icon">&#8593;</div>
+<div>Drop CSV or Excel file here, or <label class="s-upload-link">browse<input type="file" accept=".csv,.xlsx,.xls" onchange="handleUpload(this,'platform')" hidden></label></div>
+<div class="s-upload-hint">Columns: platform, views, reach, engagement, impressions, clicks</div>
+</div>
+<div id="platformPreview" style="margin-top:12px"></div>
 <div id="platformForms"></div>
 </div>
 
 <div class="s-section">
 <div class="s-title">Top Content — <span id="contentMonthLabel">select a month</span></div>
-<div style="overflow-x:auto">
+<div class="s-upload-zone" id="contentDropZone">
+<div class="s-upload-icon">&#8593;</div>
+<div>Drop CSV or Excel file here, or <label class="s-upload-link">browse<input type="file" accept=".csv,.xlsx,.xls" onchange="handleUpload(this,'content')" hidden></label></div>
+<div class="s-upload-hint">Columns: platform, title, views, reach, engagement</div>
+</div>
+<div style="overflow-x:auto;margin-top:12px">
 <table class="s-tbl" id="contentEditTbl">
 <thead><tr><th>Platform</th><th>Title</th><th>Views</th><th>Reach</th><th>Engagement</th><th></th></tr></thead>
 <tbody id="contentEditBody"></tbody>
@@ -167,9 +183,11 @@ select.s-input{cursor:pointer}
 
 <div class="s-section">
 <div class="s-title">LinkedIn Timeseries — <span id="tsMonthLabel">select a month</span></div>
-<div class="s-lbl" style="margin-bottom:4px">Paste CSV (date,impressions,engagement,clicks) or edit rows below</div>
-<textarea class="s-csv-area" id="csvArea" placeholder="01/01,14,2,0&#10;01/02,14,1,1&#10;..."></textarea>
-<button class="s-btn s-btn-secondary s-btn-sm" onclick="parseCSV()" style="margin-top:8px">Parse CSV</button>
+<div class="s-upload-zone" id="tsDropZone">
+<div class="s-upload-icon">&#8593;</div>
+<div>Drop CSV or Excel file here, or <label class="s-upload-link">browse<input type="file" accept=".csv,.xlsx,.xls" onchange="handleUpload(this,'timeseries')" hidden></label></div>
+<div class="s-upload-hint">Columns: date, impressions, engagement, clicks</div>
+</div>
 <div style="overflow-x:auto;margin-top:12px">
 <table class="s-tbl" id="tsEditTbl">
 <thead><tr><th>Date</th><th>Impressions</th><th>Engagement</th><th>Clicks</th><th></th></tr></thead>
@@ -181,7 +199,12 @@ select.s-input{cursor:pointer}
 
 <div class="s-section">
 <div class="s-title">Recommendations</div>
-<div style="overflow-x:auto">
+<div class="s-upload-zone" id="recsDropZone">
+<div class="s-upload-icon">&#8593;</div>
+<div>Drop CSV or Excel file here, or <label class="s-upload-link">browse<input type="file" accept=".csv,.xlsx,.xls" onchange="handleUpload(this,'recs')" hidden></label></div>
+<div class="s-upload-hint">Columns: priority, recommendation, insight</div>
+</div>
+<div style="overflow-x:auto;margin-top:12px">
 <table class="s-tbl" id="recsEditTbl">
 <thead><tr><th>Priority</th><th>Recommendation</th><th>Insight</th><th></th></tr></thead>
 <tbody id="recsEditBody"></tbody>
@@ -191,10 +214,10 @@ select.s-input{cursor:pointer}
 </div>
 
 <div class="s-section">
-<div class="s-title">Import / Export</div>
+<div class="s-title">Backup</div>
 <div class="s-row">
-<button class="s-btn s-btn-secondary" onclick="exportJSON()">Download JSON</button>
-<button class="s-btn s-btn-secondary" onclick="document.getElementById('importFile').click()">Import JSON</button>
+<button class="s-btn s-btn-secondary" onclick="exportJSON()">Download Backup</button>
+<button class="s-btn s-btn-secondary" onclick="document.getElementById('importFile').click()">Restore Backup</button>
 <input type="file" id="importFile" accept=".json" style="display:none" onchange="importJSON(this)">
 <button class="s-btn s-btn-danger" onclick="resetData()">Reset to Defaults</button>
 </div>
@@ -209,6 +232,7 @@ select.s-input{cursor:pointer}
 </div>
 <div class="s-toast" id="toast"></div>
 
+<script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.js" onerror="document.querySelectorAll('.chart-container').forEach(c=>c.innerHTML='<p style=\'color:#777;text-align:center;padding-top:4rem;font-size:10px\'>Charts failed to load</p>')"></script>
 <script>
 /* ── Default Data ── */
@@ -369,14 +393,11 @@ tb.appendChild(tr);
 
 function renderTsEdit(d){
 const tb=document.getElementById('tsEditBody');tb.innerHTML='';
-const csv=[];
 (d.timeseries.linkedin||[]).forEach((r,i)=>{
-csv.push(r.date+','+r.impressions+','+r.engagement+','+r.clicks);
 const tr=document.createElement('tr');
 tr.innerHTML='<td><input class="s-input" data-ti="'+i+'" data-tf="date" value="'+r.date+'" style="width:70px"></td><td><input class="s-input" type="number" data-ti="'+i+'" data-tf="impressions" value="'+r.impressions+'" style="width:90px"></td><td><input class="s-input" type="number" data-ti="'+i+'" data-tf="engagement" value="'+r.engagement+'" style="width:90px"></td><td><input class="s-input" type="number" data-ti="'+i+'" data-tf="clicks" value="'+r.clicks+'" style="width:70px"></td><td><button class="s-btn s-btn-danger s-btn-sm" onclick="removeTsRow('+i+')">X</button></td>';
 tb.appendChild(tr);
 });
-document.getElementById('csvArea').value=csv.join('\n');
 }
 
 function renderRecsEdit(){
@@ -416,15 +437,151 @@ renderTsEdit(DATA[editMonth]);
 }
 function removeTsRow(i){DATA[editMonth].timeseries.linkedin.splice(i,1);renderTsEdit(DATA[editMonth]);}
 
-function parseCSV(){
-if(!editMonth)return;
-const lines=document.getElementById('csvArea').value.trim().split('\n').filter(l=>l.trim());
-const rows=[];
-lines.forEach(l=>{const p=l.split(',');if(p.length>=4)rows.push({date:p[0].trim(),impressions:n(p[1]),engagement:n(p[2]),clicks:n(p[3])});});
-if(rows.length>0){DATA[editMonth].timeseries.linkedin=rows;renderTsEdit(DATA[editMonth]);toast('Parsed '+rows.length+' rows');}
+function addRecRow(){RECS.push({r:'',i:'',p:'Medium'});renderRecsEdit();}
+
+/* ── File upload (CSV + Excel) ── */
+function fileToRows(file,cb){
+const ext=file.name.split('.').pop().toLowerCase();
+const reader=new FileReader();
+if(ext==='csv'){
+reader.onload=function(e){
+const lines=e.target.result.split('\n').map(l=>l.trim()).filter(l=>l);
+const rows=lines.map(l=>parseCSVLine(l));
+cb(rows);
+};
+reader.readAsText(file);
+}else{
+reader.onload=function(e){
+try{
+const wb=XLSX.read(e.target.result,{type:'array'});
+const ws=wb.Sheets[wb.SheetNames[0]];
+const rows=XLSX.utils.sheet_to_json(ws,{header:1,defval:''});
+cb(rows.filter(r=>r.some(c=>c!=='')));
+}catch(err){toast('Could not read file');cb([]);}
+};
+reader.readAsArrayBuffer(file);
+}
 }
 
-function addRecRow(){RECS.push({r:'',i:'',p:'Medium'});renderRecsEdit();}
+function parseCSVLine(line){
+const result=[];let cur='';let inQ=false;
+for(let i=0;i<line.length;i++){
+const c=line[i];
+if(c==='"'){inQ=!inQ;}
+else if(c===','&&!inQ){result.push(cur.trim());cur='';}
+else{cur+=c;}
+}
+result.push(cur.trim());
+return result;
+}
+
+function normalizeHeader(h){return String(h).toLowerCase().replace(/[^a-z]/g,'');}
+
+function matchCol(headers,candidates){
+for(const c of candidates){const i=headers.indexOf(c);if(i>=0)return i;}
+return -1;
+}
+
+function handleUpload(input,type){
+const file=input.files[0];if(!file||!editMonth)return;
+fileToRows(file,function(rows){
+if(rows.length<2){toast('File has no data rows');return;}
+const headers=rows[0].map(normalizeHeader);
+const dataRows=rows.slice(1);
+if(type==='platform')parsePlatformFile(headers,dataRows);
+else if(type==='content')parseContentFile(headers,dataRows);
+else if(type==='timeseries')parseTimeseriesFile(headers,dataRows);
+else if(type==='recs')parseRecsFile(headers,dataRows);
+});
+input.value='';
+}
+
+function parsePlatformFile(h,rows){
+const d=DATA[editMonth];
+const iPlat=matchCol(h,['platform','name','channel']);
+const iViews=matchCol(h,['views','videoviews']);
+const iReach=matchCol(h,['reach','accounts reached','accountsreached']);
+const iEng=matchCol(h,['engagement','engagements','totalengagement']);
+const iImp=matchCol(h,['impressions','imps']);
+const iClicks=matchCol(h,['clicks','linkclicks']);
+if(iPlat<0){toast('Missing "platform" column');return;}
+let count=0;
+rows.forEach(r=>{
+const p=String(r[iPlat]||'').toLowerCase().trim();
+if(p.includes('youtube')){d.platforms.youtube.views=n(r[iViews]);d.platforms.youtube.engagement=n(r[iEng]);count++;}
+else if(p.includes('instagram')){d.platforms.instagram.views=n(r[iViews]);d.platforms.instagram.reach=n(r[iReach]);d.platforms.instagram.engagement=n(r[iEng]);count++;}
+else if(p.includes('tiktok')){d.platforms.tiktok.views=n(r[iViews]);d.platforms.tiktok.engagement=n(r[iEng]);count++;}
+else if(p.includes('linkedin')){d.platforms.linkedin.impressions=n(r[iImp]>=0?r[iImp]:r[iViews]);d.platforms.linkedin.clicks=n(r[iClicks]);d.platforms.linkedin.engagement=n(r[iEng]);count++;}
+});
+const pl=d.platforms;
+d.summary.totalViews=pl.youtube.views+pl.instagram.views+pl.tiktok.views+pl.linkedin.impressions;
+d.summary.totalReach=pl.instagram.reach;
+d.summary.totalEngagement=pl.youtube.engagement+pl.instagram.engagement+pl.tiktok.engagement+pl.linkedin.engagement;
+d.summary.avgEngagementRate=d.summary.totalViews>0?Math.round(d.summary.totalEngagement/d.summary.totalViews*10000)/100:0;
+recompute();persist();renderSettings();toast('Imported '+count+' platforms');
+}
+
+function parseContentFile(h,rows){
+const d=DATA[editMonth];
+const iPlat=matchCol(h,['platform','channel']);
+const iTitle=matchCol(h,['title','post','caption','description','content']);
+const iViews=matchCol(h,['views','videoviews','plays']);
+const iReach=matchCol(h,['reach','accountsreached']);
+const iEng=matchCol(h,['engagement','engagements','interactions','likes']);
+if(iTitle<0&&iViews<0){toast('Need at least "title" or "views" column');return;}
+d.topContent=[];
+rows.forEach(r=>{
+const title=iTitle>=0?String(r[iTitle]||''):'';
+const views=n(r[iViews]);
+const reach=n(r[iReach]);
+const eng=n(r[iEng]);
+const plat=iPlat>=0?capPlatform(String(r[iPlat]||'')):'Instagram';
+const rate=views>0?Math.round(eng/views*10000)/100:0;
+if(title||views)d.topContent.push({platform:plat,title:title,views:views,reach:reach,engagement:eng,rate:rate});
+});
+d.topContent.sort((a,b)=>b.views-a.views);
+recompute();persist();renderSettings();toast('Imported '+d.topContent.length+' content items');
+}
+
+function parseTimeseriesFile(h,rows){
+const d=DATA[editMonth];
+const iDate=matchCol(h,['date','day']);
+const iImp=matchCol(h,['impressions','imps','views']);
+const iEng=matchCol(h,['engagement','engagements']);
+const iClicks=matchCol(h,['clicks','linkclicks']);
+if(iDate<0){toast('Missing "date" column');return;}
+d.timeseries.linkedin=[];
+rows.forEach(r=>{
+const date=String(r[iDate]||'').trim();
+if(date)d.timeseries.linkedin.push({date:date,impressions:n(r[iImp]),engagement:n(r[iEng]),clicks:n(r[iClicks])});
+});
+recompute();persist();renderSettings();toast('Imported '+d.timeseries.linkedin.length+' days');
+}
+
+function parseRecsFile(h,rows){
+const iPri=matchCol(h,['priority','pri','level']);
+const iRec=matchCol(h,['recommendation','rec','action','suggestion']);
+const iIns=matchCol(h,['insight','reason','note','notes']);
+if(iRec<0){toast('Missing "recommendation" column');return;}
+RECS.length=0;
+rows.forEach(r=>{
+const rec=String(r[iRec]||'').trim();
+const ins=iIns>=0?String(r[iIns]||''):'';
+let pri=iPri>=0?String(r[iPri]||''):'Medium';
+pri=pri.charAt(0).toUpperCase()+pri.slice(1).toLowerCase();
+if(!['High','Medium','Low'].includes(pri))pri='Medium';
+if(rec)RECS.push({r:rec,i:ins,p:pri});
+});
+persist();renderSettings();toast('Imported '+RECS.length+' recommendations');
+}
+
+function capPlatform(s){
+const l=s.toLowerCase().trim();
+if(l.includes('youtube'))return 'YouTube';
+if(l.includes('tiktok'))return 'TikTok';
+if(l.includes('linkedin'))return 'LinkedIn';
+return 'Instagram';
+}
 function removeRecRow(i){RECS.splice(i,1);renderRecsEdit();}
 
 function saveAll(){
@@ -545,4 +702,25 @@ REND_RECS();
 UPD();
 initSort('contentTable',contentSort,TBL);
 initSort('recsTable',recsSort,REND_RECS);
+
+/* ── Drag & drop on upload zones ── */
+[['platformDropZone','platform'],['contentDropZone','content'],['tsDropZone','timeseries'],['recsDropZone','recs']].forEach(([id,type])=>{
+const zone=document.getElementById(id);if(!zone)return;
+zone.addEventListener('dragover',e=>{e.preventDefault();zone.classList.add('dragover');});
+zone.addEventListener('dragleave',()=>zone.classList.remove('dragover'));
+zone.addEventListener('drop',e=>{
+e.preventDefault();zone.classList.remove('dragover');
+const file=e.dataTransfer.files[0];if(!file)return;
+if(!editMonth&&type!=='recs'){toast('Select a month first');return;}
+fileToRows(file,function(rows){
+if(rows.length<2){toast('File has no data rows');return;}
+const headers=rows[0].map(normalizeHeader);
+const dataRows=rows.slice(1);
+if(type==='platform')parsePlatformFile(headers,dataRows);
+else if(type==='content')parseContentFile(headers,dataRows);
+else if(type==='timeseries')parseTimeseriesFile(headers,dataRows);
+else if(type==='recs')parseRecsFile(headers,dataRows);
+});
+});
+});
 </script></body></html>
