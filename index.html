@@ -148,7 +148,8 @@ select.s-input{cursor:pointer}
 <div class="s-title">Manage Months</div>
 <div class="s-month-bar" id="monthBar"></div>
 <div class="s-row" style="margin-top:12px">
-<div class="s-field"><div class="s-lbl">New Month</div><input class="s-input" id="newMonthName" placeholder="e.g. March 2026" style="width:200px"></div>
+<div class="s-field"><div class="s-lbl">Month</div><select class="s-input" id="newMonthMonth" style="width:130px"><option value="January">January</option><option value="February">February</option><option value="March">March</option><option value="April">April</option><option value="May">May</option><option value="June">June</option><option value="July">July</option><option value="August">August</option><option value="September">September</option><option value="October">October</option><option value="November">November</option><option value="December">December</option></select></div>
+<div class="s-field"><div class="s-lbl">Year</div><select class="s-input" id="newMonthYear" style="width:100px"></select></div>
 <button class="s-btn s-btn-primary" onclick="addMonth()">Add Month</button>
 </div>
 </div>
@@ -343,6 +344,9 @@ renderUploadStatus();
 // Recommendations editor
 renderRecsEditor();
 
+// Month picker defaults
+initMonthPicker();
+
 // Delete month btn
 const existing=document.getElementById('deleteMonthBtn');
 if(existing)existing.remove();
@@ -391,14 +395,47 @@ el.appendChild(row);
 function addRec(){RECS.push({r:'',i:'',p:'Medium'});persist();renderRecsEditor();REND_RECS();}
 
 /* ── Settings actions ── */
+function initMonthPicker(){
+const yearSel=document.getElementById('newMonthYear');
+const monthSel=document.getElementById('newMonthMonth');
+// Populate years
+const curYear=new Date().getFullYear();
+yearSel.innerHTML='';
+for(let y=curYear-1;y<=curYear+2;y++){
+const o=document.createElement('option');o.value=y;o.textContent=y;yearSel.appendChild(o);
+}
+// Default to next month after the latest existing month
+const keys=monthKeys();
+const months=['january','february','march','april','may','june','july','august','september','october','november','december'];
+if(keys.length>0){
+const last=keys[keys.length-1];
+// Try to parse month/year from key or label
+const label=(DATA[last].label||last).toLowerCase();
+let foundM=-1,foundY=curYear;
+months.forEach((m,i)=>{if(label.includes(m))foundM=i;});
+const ym=label.match(/(\d{4})/);if(ym)foundY=parseInt(ym[1]);
+if(foundM>=0){
+let nextM=foundM+1,nextY=foundY;
+if(nextM>11){nextM=0;nextY++;}
+monthSel.value=months[nextM].charAt(0).toUpperCase()+months[nextM].slice(1);
+yearSel.value=nextY;
+}
+}else{
+// Default to current month
+const now=new Date();
+monthSel.selectedIndex=now.getMonth();
+yearSel.value=curYear;
+}
+}
+
 function addMonth(){
-const name=document.getElementById('newMonthName').value.trim();
-if(!name)return;
+const monthName=document.getElementById('newMonthMonth').value;
+const year=document.getElementById('newMonthYear').value;
+const name=monthName+' '+year;
 const key=name.toLowerCase().replace(/[^a-z0-9]/g,'_');
-if(DATA[key]){toast('Month already exists');return;}
+if(DATA[key]){toast(name+' already exists');return;}
 DATA[key]={label:name,summary:{totalViews:0,totalReach:0,totalEngagement:0,avgEngagementRate:0},platforms:{youtube:{views:0,engagement:0},instagram:{views:0,reach:0,engagement:0},tiktok:{views:0,engagement:0},linkedin:{impressions:0,clicks:0,engagement:0}},topContent:[],timeseries:{linkedin:[],tiktok:[]},_igPosts:{views:0,reach:0,engagement:0},_igStories:{views:0,reach:0,engagement:0},_ytVideos:{views:0,engagement:0},_ytShorts:{views:0,engagement:0}};
 editMonth=key;
-document.getElementById('newMonthName').value='';
 recompute();persist();renderSettings();toast('Added '+name);
 }
 
