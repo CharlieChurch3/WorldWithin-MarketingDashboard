@@ -13,11 +13,10 @@ body{font-family:'Space Mono',monospace;background:var(--bg);color:var(--text);f
 .header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:24px;padding-bottom:16px;border-bottom:1px solid var(--border)}
 .header h1{font-size:14px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:var(--text)}
 .header-right{display:flex;align-items:center;gap:12px}
-.view-tabs{display:flex;gap:0;margin-top:8px;margin-bottom:4px}
-.view-tab{font-size:11px;font-weight:400;letter-spacing:0.08em;color:var(--muted2);cursor:pointer;padding:6px 14px;border:none;background:none;border-bottom:2px solid transparent;text-transform:uppercase;font-family:'Space Mono',monospace;transition:color 0.15s}
-.view-tab:hover{color:var(--text)}
-.view-tab.active{color:var(--text);font-weight:700;border-bottom-color:var(--accent)}
-.header-tabs{display:flex;gap:0;margin-top:4px}
+.settings-link{background:none;border:1px solid var(--border2);color:var(--muted2);cursor:pointer;padding:6px 10px;font-size:16px;line-height:1;transition:color 0.15s,border-color 0.15s;display:flex;align-items:center;gap:6px;font-family:'Space Mono',monospace}
+.settings-link:hover{color:var(--text);border-color:var(--muted2)}
+.settings-link span{font-size:11px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase}
+.header-tabs{display:flex;gap:0;margin-top:8px}
 .tab{font-size:12px;font-weight:400;letter-spacing:0.08em;color:var(--muted2);cursor:pointer;padding:10px 16px;border:none;background:none;border-bottom:2px solid transparent;text-transform:uppercase;font-family:'Space Mono',monospace;transition:color 0.15s}
 .tab:hover{color:var(--text)}
 .tab.active{color:var(--text);font-weight:700;border-bottom-color:var(--accent)}
@@ -106,10 +105,6 @@ select.s-input{cursor:pointer}
 <div class="header">
 <div>
 <h1>World Within</h1>
-<div class="view-tabs">
-<div class="view-tab active" onclick="showView('dash')">Dashboard</div>
-<div class="view-tab" onclick="showView('settings')">Settings</div>
-</div>
 <div class="header-tabs" id="platformTabs">
 <div class="tab active" data-platform="all">All</div>
 <div class="tab" data-platform="youtube">YouTube</div>
@@ -120,6 +115,7 @@ select.s-input{cursor:pointer}
 </div>
 <div class="header-right">
 <select class="month-selector" id="monthSel"></select>
+<button class="settings-link" onclick="showView('settings')">&#9881;<span>Settings</span></button>
 </div>
 </div>
 
@@ -183,7 +179,7 @@ select.s-input{cursor:pointer}
 </div>
 
 <div class="s-actions">
-<button class="s-btn s-btn-secondary" onclick="showView('dash')">Back to Dashboard</button>
+<button class="s-btn s-btn-primary" onclick="showView('dash')">&#8592; Back to Dashboard</button>
 </div>
 </div>
 
@@ -276,8 +272,7 @@ function showView(v){
 document.getElementById('dashView').style.display=v==='dash'?'':'none';
 document.getElementById('settingsView').style.display=v==='settings'?'':'none';
 document.getElementById('platformTabs').style.display=v==='dash'?'flex':'none';
-document.querySelectorAll('.view-tab').forEach(t=>t.classList.remove('active'));
-document.querySelector('.view-tab[onclick*="'+v+'"]').classList.add('active');
+document.querySelector('.header-right').style.display=v==='dash'?'flex':'none';
 if(v==='settings')renderSettings();
 if(v==='dash'){recompute();populateMonthSel();UPD();}
 }
@@ -827,29 +822,40 @@ recompute();persist();editMonth=monthKeys()[0]||null;populateMonthSel();renderSe
 
 /* ── Dashboard logic ── */
 document.getElementById('monthSel').onchange=function(){M=this.value;UPD();};
-document.querySelectorAll('.tab').forEach(t=>t.onclick=function(){F=this.dataset.platform;document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));this.classList.add('active');TBL();});
+document.querySelectorAll('.tab').forEach(t=>t.onclick=function(){F=this.dataset.platform;document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));this.classList.add('active');UPD();});
 function initSort(tableId,sortState,renderFn){document.querySelectorAll('#'+tableId+' thead th[data-sort]').forEach(th=>{th.onclick=function(){const k=this.dataset.sort;if(sortState.key===k){sortState.dir*=-1;}else{sortState.key=k;sortState.dir=-1;}document.querySelectorAll('#'+tableId+' thead th').forEach(h=>{h.classList.remove('sorted');const a=h.querySelector('.sort-arrow');if(a)a.textContent='';});this.classList.add('sorted');this.querySelector('.sort-arrow').textContent=sortState.dir===1?' \u25B2':' \u25BC';renderFn();};});}
 function sortArr(arr,key,dir,keyMap){return[...arr].sort((a,b)=>{const av=keyMap?keyMap(a,key):a[key];const bv=keyMap?keyMap(b,key):b[key];if(typeof av==='string')return dir*av.localeCompare(bv);return dir*(av-bv);});}
 
+function platformStats(d,platform){
+// Return views, reach, engagement, rate for a specific platform or all
+if(platform==='all')return{views:d.summary.totalViews,reach:d.summary.totalReach,engagement:d.summary.totalEngagement,rate:d.summary.avgEngagementRate};
+const p=d.platforms;
+if(platform==='youtube'){const v=p.youtube.views,e=p.youtube.engagement;return{views:v,reach:0,engagement:e,rate:v>0?Math.round(e/v*10000)/100:0};}
+if(platform==='instagram'){const v=p.instagram.views,r=p.instagram.reach,e=p.instagram.engagement;return{views:v,reach:r,engagement:e,rate:v>0?Math.round(e/v*10000)/100:0};}
+if(platform==='tiktok'){const v=p.tiktok.views,e=p.tiktok.engagement;return{views:v,reach:0,engagement:e,rate:v>0?Math.round(e/v*10000)/100:0};}
+if(platform==='linkedin'){const v=p.linkedin.impressions,e=p.linkedin.engagement;return{views:v,reach:0,engagement:e,rate:v>0?Math.round(e/v*10000)/100:0};}
+return{views:0,reach:0,engagement:0,rate:0};
+}
+
 function UPD(){
 const d=DATA[M];if(!d)return;
-const s=d.summary;
-document.getElementById('v').textContent=fmtK(s.totalViews);
-document.getElementById('r').textContent=fmtK(s.totalReach);
-document.getElementById('e').textContent=fmtK(s.totalEngagement);
-document.getElementById('er').textContent=s.avgEngagementRate.toFixed(1)+'%';
-// Targets (simple heuristic: 110% of actual for single months, sum for combined)
-const keys=monthKeys();
-let tv=s.totalViews*1.1,tr=s.totalReach*1.1,te=s.totalEngagement*1.1,ter=s.avgEngagementRate*1.3;
-document.getElementById('vb').style.width=Math.min(100,Math.round(s.totalViews/tv*100))+'%';
-document.getElementById('rb').style.width=Math.min(100,Math.round(s.totalReach/tr*100))+'%';
-document.getElementById('eb').style.width=Math.min(100,Math.round(s.totalEngagement/te*100))+'%';
-document.getElementById('erb').style.width=Math.min(100,Math.round(s.avgEngagementRate/ter*100))+'%';
+const ps=platformStats(d,F);
+document.getElementById('v').textContent=fmtK(ps.views);
+document.getElementById('r').textContent=fmtK(ps.reach);
+document.getElementById('e').textContent=fmtK(ps.engagement);
+document.getElementById('er').textContent=ps.rate.toFixed(1)+'%';
+// Targets (simple heuristic: 110% of actual)
+let tv=ps.views*1.1||1,tr=ps.reach*1.1||1,te=ps.engagement*1.1||1,ter=ps.rate*1.3||1;
+document.getElementById('vb').style.width=Math.min(100,Math.round(ps.views/tv*100))+'%';
+document.getElementById('rb').style.width=Math.min(100,Math.round(ps.reach/tr*100))+'%';
+document.getElementById('eb').style.width=Math.min(100,Math.round(ps.engagement/te*100))+'%';
+document.getElementById('erb').style.width=Math.min(100,Math.round(ps.rate/ter*100))+'%';
 document.getElementById('vt').textContent='Target: '+fmtK(Math.round(tv));
 document.getElementById('rt').textContent='Target: '+fmtK(Math.round(tr));
 document.getElementById('et').textContent='Target: '+fmtK(Math.round(te));
 document.getElementById('ert').textContent='Target: '+ter.toFixed(1)+'%';
 // Growth
+const keys=monthKeys();
 if(M==='combined'&&DATA.growth){
 document.getElementById('vc').textContent='+'+DATA.growth.views+'% MoM';
 document.getElementById('rc').textContent='+'+DATA.growth.reach+'% MoM';
@@ -864,6 +870,9 @@ document.getElementById('erc').textContent='';
 document.getElementById('vc').textContent='';document.getElementById('rc').textContent='';
 document.getElementById('ec').textContent='';document.getElementById('erc').textContent='';
 }
+// Update stat labels based on platform
+document.querySelectorAll('.stat-label')[0].textContent=F==='linkedin'?'Impressions':'Total Views';
+document.querySelectorAll('.stat-label')[1].textContent=F==='all'||F==='instagram'?'Total Reach':'Reach';
 document.getElementById('lct').textContent='Daily Trends'+(d.label?' ('+d.label+')':'');
 TBL();CHARTS(d);
 }
