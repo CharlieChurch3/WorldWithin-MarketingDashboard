@@ -155,66 +155,18 @@ select.s-input{cursor:pointer}
 </div>
 
 <div class="s-section">
-<div class="s-title">Platform Stats — <span id="editMonthLabel">select a month</span></div>
-<div class="s-upload-zone" id="platformDropZone">
-<div class="s-upload-icon">&#8593;</div>
-<div>Drop CSV or Excel file here, or <label class="s-upload-link">browse<input type="file" accept=".csv,.xlsx,.xls" onchange="handleUpload(this,'platform')" hidden></label></div>
-<div class="s-upload-hint">Columns: platform, views, reach, engagement, impressions, clicks</div>
-</div>
-<div id="platformPreview" style="margin-top:12px"></div>
-<div id="platformForms"></div>
+<div class="s-title">Upload Data — <span id="editMonthLabel">select a month</span></div>
+<p style="color:var(--muted2);font-size:11px;margin-bottom:16px;letter-spacing:0.02em">Upload the export files from each platform. Data is auto-saved on upload.</p>
+<div id="uploadZones"></div>
 </div>
 
 <div class="s-section">
-<div class="s-title">Top Content — <span id="contentMonthLabel">select a month</span></div>
-<div class="s-upload-zone" id="contentDropZone">
-<div class="s-upload-icon">&#8593;</div>
-<div>Drop CSV or Excel file here, or <label class="s-upload-link">browse<input type="file" accept=".csv,.xlsx,.xls" onchange="handleUpload(this,'content')" hidden></label></div>
-<div class="s-upload-hint">Columns: platform, title, views, reach, engagement</div>
-</div>
-<div style="overflow-x:auto;margin-top:12px">
-<table class="s-tbl" id="contentEditTbl">
-<thead><tr><th>Platform</th><th>Title</th><th>Views</th><th>Reach</th><th>Engagement</th><th></th></tr></thead>
-<tbody id="contentEditBody"></tbody>
-</table>
-</div>
-<button class="s-btn s-btn-secondary s-btn-sm" onclick="addContentRow()" style="margin-top:8px">+ Add Row</button>
+<div class="s-title">Upload Status</div>
+<div id="uploadStatus" style="font-size:12px;color:var(--muted2)"></div>
 </div>
 
 <div class="s-section">
-<div class="s-title">LinkedIn Timeseries — <span id="tsMonthLabel">select a month</span></div>
-<div class="s-upload-zone" id="tsDropZone">
-<div class="s-upload-icon">&#8593;</div>
-<div>Drop CSV or Excel file here, or <label class="s-upload-link">browse<input type="file" accept=".csv,.xlsx,.xls" onchange="handleUpload(this,'timeseries')" hidden></label></div>
-<div class="s-upload-hint">Columns: date, impressions, engagement, clicks</div>
-</div>
-<div style="overflow-x:auto;margin-top:12px">
-<table class="s-tbl" id="tsEditTbl">
-<thead><tr><th>Date</th><th>Impressions</th><th>Engagement</th><th>Clicks</th><th></th></tr></thead>
-<tbody id="tsEditBody"></tbody>
-</table>
-</div>
-<button class="s-btn s-btn-secondary s-btn-sm" onclick="addTsRow()" style="margin-top:8px">+ Add Row</button>
-</div>
-
-<div class="s-section">
-<div class="s-title">Recommendations</div>
-<div class="s-upload-zone" id="recsDropZone">
-<div class="s-upload-icon">&#8593;</div>
-<div>Drop CSV or Excel file here, or <label class="s-upload-link">browse<input type="file" accept=".csv,.xlsx,.xls" onchange="handleUpload(this,'recs')" hidden></label></div>
-<div class="s-upload-hint">Columns: priority, recommendation, insight</div>
-</div>
-<div style="overflow-x:auto;margin-top:12px">
-<table class="s-tbl" id="recsEditTbl">
-<thead><tr><th>Priority</th><th>Recommendation</th><th>Insight</th><th></th></tr></thead>
-<tbody id="recsEditBody"></tbody>
-</table>
-</div>
-<button class="s-btn s-btn-secondary s-btn-sm" onclick="addRecRow()" style="margin-top:8px">+ Add Row</button>
-</div>
-
-<div class="s-section">
-<div class="s-title">Backup</div>
+<div class="s-title">Data Management</div>
 <div class="s-row">
 <button class="s-btn s-btn-secondary" onclick="exportJSON()">Download Backup</button>
 <button class="s-btn s-btn-secondary" onclick="document.getElementById('importFile').click()">Restore Backup</button>
@@ -224,7 +176,6 @@ select.s-input{cursor:pointer}
 </div>
 
 <div class="s-actions">
-<button class="s-btn s-btn-primary" onclick="saveAll()">Save Changes</button>
 <button class="s-btn s-btn-secondary" onclick="showView('dash')">Back to Dashboard</button>
 </div>
 </div>
@@ -323,10 +274,19 @@ if(v==='settings')renderSettings();
 if(v==='dash'){recompute();populateMonthSel();UPD();}
 }
 
+/* ── Upload zone definitions ── */
+const UPLOAD_ZONES=[
+{id:'tiktok',label:'TikTok',dot:'tiktok',accept:'.csv',hint:'TikTok daily data CSV (Date, Video Views, Likes, Comments, Shares)'},
+{id:'metaPosts',label:'Instagram Posts',dot:'instagram',accept:'.csv',hint:'Meta Posts CSV export (Post ID, Views, Reach, Likes, Shares, Comments, Saves)'},
+{id:'metaStories',label:'Instagram Stories',dot:'instagram',accept:'.csv',hint:'Meta Stories CSV export (Post ID, Views, Reach, Likes, Shares, Replies)'},
+{id:'ytVideos',label:'YouTube Videos',dot:'youtube',accept:'.csv',hint:'YouTube Videos CSV export (Video title, Views, Likes, Shares, Comments)'},
+{id:'ytShorts',label:'YouTube Shorts',dot:'youtube',accept:'.csv',hint:'YouTube Shorts CSV export (Video title, Views, Likes, Shares, Comments)'},
+{id:'linkedin',label:'LinkedIn',dot:'linkedin',accept:'.xls,.xlsx,.csv',hint:'LinkedIn analytics XLS/CSV export (Metrics + All Posts sheets)'}
+];
+
 /* ── Settings rendering ── */
 function renderSettings(){
 const keys=monthKeys();
-// Month bar
 const bar=document.getElementById('monthBar');
 bar.innerHTML='';
 keys.forEach(k=>{
@@ -337,40 +297,40 @@ btn.onclick=()=>{editMonth=k;renderSettings();};
 bar.appendChild(btn);
 });
 if(!editMonth&&keys.length>0)editMonth=keys[0];
-if(!editMonth){document.getElementById('platformForms').innerHTML='<p style="color:var(--muted2)">Add a month first.</p>';return;}
-const d=DATA[editMonth];
-const lbl=d.label||editMonth;
+const lbl=editMonth?(DATA[editMonth].label||editMonth):'select a month';
 document.getElementById('editMonthLabel').textContent=lbl;
-document.getElementById('contentMonthLabel').textContent=lbl;
-document.getElementById('tsMonthLabel').textContent=lbl;
 
-// Platform forms
-const pf=document.getElementById('platformForms');
-pf.innerHTML='';
-const platforms=[
-{key:'youtube',name:'YouTube',fields:[['views','Views'],['engagement','Engagement']]},
-{key:'instagram',name:'Instagram',fields:[['views','Views'],['reach','Reach'],['engagement','Engagement']]},
-{key:'tiktok',name:'TikTok',fields:[['views','Views'],['engagement','Engagement']]},
-{key:'linkedin',name:'LinkedIn',fields:[['impressions','Impressions'],['clicks','Clicks'],['engagement','Engagement']]}
-];
-platforms.forEach(p=>{
-const h=document.createElement('div');h.className='s-subtitle';h.innerHTML='<span class="platform-dot '+p.key+'" style="display:inline-block;vertical-align:middle;margin-right:6px"></span>'+p.name;
-pf.appendChild(h);
-const g=document.createElement('div');g.className='s-grid';
-p.fields.forEach(([fk,fl])=>{
-const fd=document.createElement('div');fd.className='s-field';
-fd.innerHTML='<div class="s-lbl">'+fl+'</div><input class="s-input" data-p="'+p.key+'" data-f="'+fk+'" type="number" value="'+(d.platforms[p.key][fk]||0)+'">';
-g.appendChild(fd);
-});
-pf.appendChild(g);
+// Build upload zones
+const container=document.getElementById('uploadZones');
+container.innerHTML='';
+if(!editMonth){container.innerHTML='<p style="color:var(--muted2)">Add a month first.</p>';return;}
+UPLOAD_ZONES.forEach(z=>{
+const div=document.createElement('div');div.style.marginBottom='16px';
+div.innerHTML='<div class="s-subtitle"><span class="platform-dot '+z.dot+'" style="display:inline-block;vertical-align:middle;margin-right:6px"></span>'+z.label+'</div>'+
+'<div class="s-upload-zone" id="zone_'+z.id+'">'+
+'<div class="s-upload-icon">&#8593;</div>'+
+'<div>Drop file here, or <label class="s-upload-link">browse<input type="file" accept="'+z.accept+'" onchange="handlePlatformUpload(this,\''+z.id+'\')" hidden></label></div>'+
+'<div class="s-upload-hint">'+z.hint+'</div>'+
+'</div>'+
+'<div id="status_'+z.id+'" style="font-size:11px;margin-top:4px"></div>';
+container.appendChild(div);
 });
 
-// Top content table
-renderContentEdit(d);
-// Timeseries
-renderTsEdit(d);
-// Recs
-renderRecsEdit();
+// Setup drag-drop for each zone
+UPLOAD_ZONES.forEach(z=>{
+const zone=document.getElementById('zone_'+z.id);if(!zone)return;
+zone.addEventListener('dragover',e=>{e.preventDefault();zone.classList.add('dragover');});
+zone.addEventListener('dragleave',()=>zone.classList.remove('dragover'));
+zone.addEventListener('drop',e=>{
+e.preventDefault();zone.classList.remove('dragover');
+const file=e.dataTransfer.files[0];if(!file||!editMonth)return;
+processUpload(file,z.id);
+});
+});
+
+// Upload status summary
+renderUploadStatus();
+
 // Delete month btn
 const existing=document.getElementById('deleteMonthBtn');
 if(existing)existing.remove();
@@ -382,31 +342,22 @@ document.getElementById('monthBar').parentElement.appendChild(db);
 }
 }
 
-function renderContentEdit(d){
-const tb=document.getElementById('contentEditBody');tb.innerHTML='';
-(d.topContent||[]).forEach((c,i)=>{
-const tr=document.createElement('tr');
-tr.innerHTML='<td><select class="s-input" data-ci="'+i+'" data-cf="platform"><option'+(c.platform==='Instagram'?' selected':'')+'>Instagram</option><option'+(c.platform==='YouTube'?' selected':'')+'>YouTube</option><option'+(c.platform==='TikTok'?' selected':'')+'>TikTok</option><option'+(c.platform==='LinkedIn'?' selected':'')+'>LinkedIn</option></select></td><td><input class="s-input" data-ci="'+i+'" data-cf="title" value="'+escH(c.title)+'"></td><td><input class="s-input" type="number" data-ci="'+i+'" data-cf="views" value="'+c.views+'" style="width:90px"></td><td><input class="s-input" type="number" data-ci="'+i+'" data-cf="reach" value="'+(c.reach||0)+'" style="width:90px"></td><td><input class="s-input" type="number" data-ci="'+i+'" data-cf="engagement" value="'+c.engagement+'" style="width:90px"></td><td><button class="s-btn s-btn-danger s-btn-sm" onclick="removeContentRow('+i+')">X</button></td>';
-tb.appendChild(tr);
-});
-}
-
-function renderTsEdit(d){
-const tb=document.getElementById('tsEditBody');tb.innerHTML='';
-(d.timeseries.linkedin||[]).forEach((r,i)=>{
-const tr=document.createElement('tr');
-tr.innerHTML='<td><input class="s-input" data-ti="'+i+'" data-tf="date" value="'+r.date+'" style="width:70px"></td><td><input class="s-input" type="number" data-ti="'+i+'" data-tf="impressions" value="'+r.impressions+'" style="width:90px"></td><td><input class="s-input" type="number" data-ti="'+i+'" data-tf="engagement" value="'+r.engagement+'" style="width:90px"></td><td><input class="s-input" type="number" data-ti="'+i+'" data-tf="clicks" value="'+r.clicks+'" style="width:70px"></td><td><button class="s-btn s-btn-danger s-btn-sm" onclick="removeTsRow('+i+')">X</button></td>';
-tb.appendChild(tr);
-});
-}
-
-function renderRecsEdit(){
-const tb=document.getElementById('recsEditBody');tb.innerHTML='';
-RECS.forEach((x,i)=>{
-const tr=document.createElement('tr');
-tr.innerHTML='<td><select class="s-input" data-ri="'+i+'" data-rf="p"><option'+(x.p==='High'?' selected':'')+'>High</option><option'+(x.p==='Medium'?' selected':'')+'>Medium</option><option'+(x.p==='Low'?' selected':'')+'>Low</option></select></td><td><input class="s-input" data-ri="'+i+'" data-rf="r" value="'+escH(x.r)+'"></td><td><input class="s-input" data-ri="'+i+'" data-rf="i" value="'+escH(x.i)+'"></td><td><button class="s-btn s-btn-danger s-btn-sm" onclick="removeRecRow('+i+')">X</button></td>';
-tb.appendChild(tr);
-});
+function renderUploadStatus(){
+const el=document.getElementById('uploadStatus');
+if(!editMonth){el.innerHTML='Select a month first.';return;}
+const d=DATA[editMonth];
+const checks=[];
+const yt=d.platforms.youtube;
+const ig=d.platforms.instagram;
+const tk=d.platforms.tiktok;
+const li=d.platforms.linkedin;
+checks.push({name:'TikTok',ok:tk.views>0,val:tk.views+' views'});
+checks.push({name:'Instagram Posts',ok:ig.views>0,val:ig.views+' views'});
+checks.push({name:'Instagram Stories',ok:(d._storiesUploaded||false),val:d._storiesUploaded?'uploaded':'—'});
+checks.push({name:'YouTube Videos',ok:(d._ytVideosUploaded||false),val:d._ytVideosUploaded?'uploaded':'—'});
+checks.push({name:'YouTube Shorts',ok:(d._ytShortsUploaded||false),val:d._ytShortsUploaded?'uploaded':'—'});
+checks.push({name:'LinkedIn',ok:li.impressions>0,val:li.impressions+' impressions'});
+el.innerHTML=checks.map(c=>'<div style="padding:4px 0;display:flex;gap:8px;align-items:center"><span style="color:'+(c.ok?'#4ade80':'#777')+'">'+( c.ok?'&#10003;':'&#9675;')+'</span><span>'+c.name+'</span><span style="color:var(--muted)">'+c.val+'</span></div>').join('');
 }
 
 function escH(s){return String(s).replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;');}
@@ -423,30 +374,13 @@ document.getElementById('newMonthName').value='';
 recompute();persist();renderSettings();toast('Added '+name);
 }
 
-function addContentRow(){
-if(!editMonth)return;
-DATA[editMonth].topContent.push({platform:'Instagram',title:'',views:0,reach:0,engagement:0,rate:0});
-renderContentEdit(DATA[editMonth]);
-}
-function removeContentRow(i){DATA[editMonth].topContent.splice(i,1);renderContentEdit(DATA[editMonth]);}
-
-function addTsRow(){
-if(!editMonth)return;
-DATA[editMonth].timeseries.linkedin.push({date:'',impressions:0,engagement:0,clicks:0});
-renderTsEdit(DATA[editMonth]);
-}
-function removeTsRow(i){DATA[editMonth].timeseries.linkedin.splice(i,1);renderTsEdit(DATA[editMonth]);}
-
-function addRecRow(){RECS.push({r:'',i:'',p:'Medium'});renderRecsEdit();}
-
-/* ── File upload (CSV + Excel) ── */
+/* ── CSV + Excel file reading ── */
 function fileToRows(file,cb){
 const ext=file.name.split('.').pop().toLowerCase();
 const reader=new FileReader();
 if(ext==='csv'){
 reader.onload=function(e){
-const lines=e.target.result.split('\n').map(l=>l.trim()).filter(l=>l);
-const rows=lines.map(l=>parseCSVLine(l));
+const rows=parseCSV(e.target.result);
 cb(rows);
 };
 reader.readAsText(file);
@@ -454,172 +388,355 @@ reader.readAsText(file);
 reader.onload=function(e){
 try{
 const wb=XLSX.read(e.target.result,{type:'array'});
-const ws=wb.Sheets[wb.SheetNames[0]];
-const rows=XLSX.utils.sheet_to_json(ws,{header:1,defval:''});
-cb(rows.filter(r=>r.some(c=>c!=='')));
+cb(null,wb);
 }catch(err){toast('Could not read file');cb([]);}
 };
 reader.readAsArrayBuffer(file);
 }
 }
 
-function parseCSVLine(line){
-const result=[];let cur='';let inQ=false;
-for(let i=0;i<line.length;i++){
-const c=line[i];
-if(c==='"'){inQ=!inQ;}
-else if(c===','&&!inQ){result.push(cur.trim());cur='';}
-else{cur+=c;}
+function parseCSV(text){
+const rows=[];let cur=[];let field='';let inQ=false;
+for(let i=0;i<text.length;i++){
+const c=text[i];
+if(inQ){
+if(c==='"'&&text[i+1]==='"'){field+='"';i++;}
+else if(c==='"'){inQ=false;}
+else{field+=c;}
+}else{
+if(c==='"'){inQ=true;}
+else if(c===','){cur.push(field.trim());field='';}
+else if(c==='\n'||c==='\r'){
+if(c==='\r'&&text[i+1]==='\n')i++;
+cur.push(field.trim());
+if(cur.some(x=>x!==''))rows.push(cur);
+cur=[];field='';
+}else{field+=c;}
 }
-result.push(cur.trim());
-return result;
+}
+cur.push(field.trim());
+if(cur.some(x=>x!==''))rows.push(cur);
+return rows;
 }
 
 function normalizeHeader(h){return String(h).toLowerCase().replace(/[^a-z]/g,'');}
+function findCol(headers,candidates){for(const c of candidates){const i=headers.indexOf(c);if(i>=0)return i;}return-1;}
 
-function matchCol(headers,candidates){
-for(const c of candidates){const i=headers.indexOf(c);if(i>=0)return i;}
-return -1;
-}
-
-function handleUpload(input,type){
+/* ── Per-platform upload handler ── */
+function handlePlatformUpload(input,type){
 const file=input.files[0];if(!file||!editMonth)return;
-fileToRows(file,function(rows){
-if(rows.length<2){toast('File has no data rows');return;}
-const headers=rows[0].map(normalizeHeader);
-const dataRows=rows.slice(1);
-if(type==='platform')parsePlatformFile(headers,dataRows);
-else if(type==='content')parseContentFile(headers,dataRows);
-else if(type==='timeseries')parseTimeseriesFile(headers,dataRows);
-else if(type==='recs')parseRecsFile(headers,dataRows);
-});
+processUpload(file,type);
 input.value='';
 }
 
-function parsePlatformFile(h,rows){
-const d=DATA[editMonth];
-const iPlat=matchCol(h,['platform','name','channel']);
-const iViews=matchCol(h,['views','videoviews']);
-const iReach=matchCol(h,['reach','accounts reached','accountsreached']);
-const iEng=matchCol(h,['engagement','engagements','totalengagement']);
-const iImp=matchCol(h,['impressions','imps']);
-const iClicks=matchCol(h,['clicks','linkclicks']);
-if(iPlat<0){toast('Missing "platform" column');return;}
-let count=0;
-rows.forEach(r=>{
-const p=String(r[iPlat]||'').toLowerCase().trim();
-if(p.includes('youtube')){d.platforms.youtube.views=n(r[iViews]);d.platforms.youtube.engagement=n(r[iEng]);count++;}
-else if(p.includes('instagram')){d.platforms.instagram.views=n(r[iViews]);d.platforms.instagram.reach=n(r[iReach]);d.platforms.instagram.engagement=n(r[iEng]);count++;}
-else if(p.includes('tiktok')){d.platforms.tiktok.views=n(r[iViews]);d.platforms.tiktok.engagement=n(r[iEng]);count++;}
-else if(p.includes('linkedin')){d.platforms.linkedin.impressions=n(r[iImp]>=0?r[iImp]:r[iViews]);d.platforms.linkedin.clicks=n(r[iClicks]);d.platforms.linkedin.engagement=n(r[iEng]);count++;}
-});
-const pl=d.platforms;
-d.summary.totalViews=pl.youtube.views+pl.instagram.views+pl.tiktok.views+pl.linkedin.impressions;
-d.summary.totalReach=pl.instagram.reach;
-d.summary.totalEngagement=pl.youtube.engagement+pl.instagram.engagement+pl.tiktok.engagement+pl.linkedin.engagement;
-d.summary.avgEngagementRate=d.summary.totalViews>0?Math.round(d.summary.totalEngagement/d.summary.totalViews*10000)/100:0;
-recompute();persist();renderSettings();toast('Imported '+count+' platforms');
+function processUpload(file,type){
+if(!editMonth){toast('Select a month first');return;}
+const ext=file.name.split('.').pop().toLowerCase();
+if(type==='linkedin'&&(ext==='xls'||ext==='xlsx')){
+// LinkedIn Excel: read both sheets
+const reader=new FileReader();
+reader.onload=function(e){
+try{
+const wb=XLSX.read(e.target.result,{type:'array'});
+parseLinkedInExcel(wb);
+}catch(err){toast('Could not read LinkedIn file: '+err.message);}
+};
+reader.readAsArrayBuffer(file);
+return;
+}
+// CSV files
+const reader=new FileReader();
+reader.onload=function(e){
+const rows=parseCSV(e.target.result);
+if(rows.length<2){toast('File has no data rows');return;}
+if(type==='tiktok')parseTikTokCSV(rows);
+else if(type==='metaPosts')parseMetaPostsCSV(rows);
+else if(type==='metaStories')parseMetaStoriesCSV(rows);
+else if(type==='ytVideos')parseYouTubeCSV(rows,'videos');
+else if(type==='ytShorts')parseYouTubeCSV(rows,'shorts');
+else if(type==='linkedin')parseLinkedInCSV(rows);
+};
+reader.readAsText(file);
 }
 
-function parseContentFile(h,rows){
+/* ── TikTok CSV parser ── */
+function parseTikTokCSV(rows){
 const d=DATA[editMonth];
-const iPlat=matchCol(h,['platform','channel']);
-const iTitle=matchCol(h,['title','post','caption','description','content']);
-const iViews=matchCol(h,['views','videoviews','plays']);
-const iReach=matchCol(h,['reach','accountsreached']);
-const iEng=matchCol(h,['engagement','engagements','interactions','likes']);
-if(iTitle<0&&iViews<0){toast('Need at least "title" or "views" column');return;}
-d.topContent=[];
-rows.forEach(r=>{
-const title=iTitle>=0?String(r[iTitle]||''):'';
+const headers=rows[0].map(normalizeHeader);
+const iViews=findCol(headers,['videoviews','views']);
+const iLikes=findCol(headers,['likes']);
+const iComments=findCol(headers,['comments']);
+const iShares=findCol(headers,['shares']);
+let totalViews=0,totalEng=0;
+rows.slice(1).forEach(r=>{
+totalViews+=n(r[iViews]);
+totalEng+=n(r[iLikes])+n(r[iComments])+n(r[iShares]);
+});
+d.platforms.tiktok.views=totalViews;
+d.platforms.tiktok.engagement=totalEng;
+recalcSummary(d);
+const statusEl=document.getElementById('status_tiktok');
+if(statusEl)statusEl.innerHTML='<span style="color:#4ade80">&#10003; '+totalViews.toLocaleString()+' views, '+totalEng.toLocaleString()+' engagements from '+(rows.length-1)+' days</span>';
+recompute();persist();renderUploadStatus();toast('TikTok: '+totalViews.toLocaleString()+' views');
+}
+
+/* ── Meta Posts CSV parser (Instagram) ── */
+function parseMetaPostsCSV(rows){
+const d=DATA[editMonth];
+const headers=rows[0].map(normalizeHeader);
+const iDesc=findCol(headers,['description']);
+const iViews=findCol(headers,['views']);
+const iReach=findCol(headers,['reach']);
+const iLikes=findCol(headers,['likes']);
+const iShares=findCol(headers,['shares']);
+const iComments=findCol(headers,['comments']);
+const iSaves=findCol(headers,['saves']);
+const iType=findCol(headers,['posttype']);
+const iPubTime=findCol(headers,['publishtime']);
+let totalViews=0,totalReach=0,totalEng=0;
+const content=[];
+rows.slice(1).forEach(r=>{
 const views=n(r[iViews]);
 const reach=n(r[iReach]);
-const eng=n(r[iEng]);
-const plat=iPlat>=0?capPlatform(String(r[iPlat]||'')):'Instagram';
+const likes=n(r[iLikes]);
+const shares=n(r[iShares]);
+const comments=n(r[iComments]);
+const saves=n(r[iSaves]);
+const eng=likes+shares+comments+saves;
+totalViews+=views;
+totalReach+=reach;
+totalEng+=eng;
+const desc=iDesc>=0?String(r[iDesc]||'').substring(0,80):'';
 const rate=views>0?Math.round(eng/views*10000)/100:0;
-if(title||views)d.topContent.push({platform:plat,title:title,views:views,reach:reach,engagement:eng,rate:rate});
+if(views>0||desc)content.push({platform:'Instagram',title:desc,views:views,reach:reach,engagement:eng,rate:rate});
+});
+d.platforms.instagram.views=totalViews;
+d.platforms.instagram.reach=totalReach;
+d.platforms.instagram.engagement=totalEng;
+// Merge content: remove old Instagram items, add new ones
+d.topContent=(d.topContent||[]).filter(c=>c.platform!=='Instagram');
+d.topContent=d.topContent.concat(content);
+d.topContent.sort((a,b)=>b.views-a.views);
+recalcSummary(d);
+const statusEl=document.getElementById('status_metaPosts');
+if(statusEl)statusEl.innerHTML='<span style="color:#4ade80">&#10003; '+content.length+' posts — '+totalViews.toLocaleString()+' views, '+totalReach.toLocaleString()+' reach</span>';
+recompute();persist();renderUploadStatus();toast('Instagram Posts: '+content.length+' items');
+}
+
+/* ── Meta Stories CSV parser ── */
+function parseMetaStoriesCSV(rows){
+const d=DATA[editMonth];
+const headers=rows[0].map(normalizeHeader);
+const iViews=findCol(headers,['views']);
+const iReach=findCol(headers,['reach']);
+const iLikes=findCol(headers,['likes']);
+const iShares=findCol(headers,['shares']);
+const iReplies=findCol(headers,['replies']);
+let totalViews=0,totalReach=0,totalEng=0;
+rows.slice(1).forEach(r=>{
+const views=n(r[iViews]);
+const reach=n(r[iReach]);
+const likes=n(r[iLikes]);
+const shares=n(r[iShares]);
+const replies=n(r[iReplies]);
+totalViews+=views;
+totalReach+=reach;
+totalEng+=likes+shares+replies;
+});
+// Add story stats to Instagram totals (additive on top of posts)
+d.platforms.instagram.views+=totalViews;
+d.platforms.instagram.reach+=totalReach;
+d.platforms.instagram.engagement+=totalEng;
+d._storiesUploaded=true;
+recalcSummary(d);
+const statusEl=document.getElementById('status_metaStories');
+if(statusEl)statusEl.innerHTML='<span style="color:#4ade80">&#10003; '+(rows.length-1)+' stories — '+totalViews.toLocaleString()+' views added</span>';
+recompute();persist();renderUploadStatus();toast('Instagram Stories: '+(rows.length-1)+' stories');
+}
+
+/* ── YouTube CSV parser (Videos or Shorts) ── */
+function parseYouTubeCSV(rows,subtype){
+const d=DATA[editMonth];
+const headers=rows[0].map(normalizeHeader);
+const iContent=findCol(headers,['content']);
+const iTitle=findCol(headers,['videotitle']);
+const iViews=findCol(headers,['views']);
+const iLikes=findCol(headers,['likes']);
+const iShares=findCol(headers,['shares']);
+const iComments=findCol(headers,['commentsadded','comments']);
+const iSubsGained=findCol(headers,['subscribersgained']);
+
+// First data row is the "Total" row
+let totalViews=0,totalEng=0;
+const totalRow=rows[1];
+if(totalRow){
+totalViews=n(totalRow[iViews]);
+const likes=n(totalRow[iLikes]);
+const shares=n(totalRow[iShares]);
+const comments=n(totalRow[iComments]);
+totalEng=likes+shares+comments;
+}
+
+// Content items from individual video rows (skip Total row and empty rows)
+const content=[];
+rows.slice(2).forEach(r=>{
+const views=n(r[iViews]);
+const title=iTitle>=0?String(r[iTitle]||''):'';
+if(!title&&!views)return;
+const likes=n(r[iLikes]);
+const shares=n(r[iShares]);
+const comments=n(r[iComments]);
+const eng=likes+shares+comments;
+const rate=views>0?Math.round(eng/views*10000)/100:0;
+if(views>0)content.push({platform:'YouTube',title:title+(subtype==='shorts'?' (Short)':''),views:views,reach:0,engagement:eng,rate:rate});
+});
+
+// Add to YouTube totals (additive for shorts on top of videos)
+if(subtype==='videos'){
+d.platforms.youtube.views=totalViews;
+d.platforms.youtube.engagement=totalEng;
+d._ytVideosUploaded=true;
+// Replace YouTube content items (non-shorts)
+d.topContent=(d.topContent||[]).filter(c=>c.platform!=='YouTube'||c.title.includes('(Short)'));
+}else{
+d.platforms.youtube.views+=totalViews;
+d.platforms.youtube.engagement+=totalEng;
+d._ytShortsUploaded=true;
+// Replace YouTube shorts content items
+d.topContent=(d.topContent||[]).filter(c=>!(c.platform==='YouTube'&&c.title.includes('(Short)')));
+}
+d.topContent=d.topContent.concat(content);
+d.topContent.sort((a,b)=>b.views-a.views);
+recalcSummary(d);
+
+const label=subtype==='shorts'?'YouTube Shorts':'YouTube Videos';
+const statusId=subtype==='shorts'?'status_ytShorts':'status_ytVideos';
+const statusEl=document.getElementById(statusId);
+if(statusEl)statusEl.innerHTML='<span style="color:#4ade80">&#10003; '+content.length+' '+subtype+' — '+totalViews.toLocaleString()+' views</span>';
+recompute();persist();renderUploadStatus();toast(label+': '+totalViews.toLocaleString()+' views');
+}
+
+/* ── LinkedIn Excel parser ── */
+function parseLinkedInExcel(wb){
+const d=DATA[editMonth];
+
+// Sheet 1: Metrics (daily timeseries)
+const metricsSheet=wb.SheetNames.find(s=>s.toLowerCase().includes('metric'));
+if(metricsSheet){
+const ws=wb.Sheets[metricsSheet];
+const rows=XLSX.utils.sheet_to_json(ws,{header:1,defval:''}).filter(r=>r.some(c=>c!==''));
+if(rows.length>1){
+const headers=rows[0].map(normalizeHeader);
+const iDate=findCol(headers,['date']);
+const iImpTotal=findCol(headers,['impressionstotal']);
+const iImpOrg=findCol(headers,['impressionsorganic']);
+const iClicksTotal=findCol(headers,['clickstotal']);
+const iClicksOrg=findCol(headers,['clicksorganic']);
+const iReactTotal=findCol(headers,['reactionstotal']);
+const iReactOrg=findCol(headers,['reactionsorganic']);
+const iCommentsTotal=findCol(headers,['commentstotal']);
+const iRepostsTotal=findCol(headers,['repoststotal']);
+let totalImp=0,totalClicks=0,totalEng=0;
+d.timeseries.linkedin=[];
+rows.slice(1).forEach(r=>{
+const date=String(r[iDate]||'').trim();
+if(!date)return;
+const imp=iImpTotal>=0?n(r[iImpTotal]):(iImpOrg>=0?n(r[iImpOrg]):0);
+const clicks=iClicksTotal>=0?n(r[iClicksTotal]):(iClicksOrg>=0?n(r[iClicksOrg]):0);
+const react=iReactTotal>=0?n(r[iReactTotal]):(iReactOrg>=0?n(r[iReactOrg]):0);
+const comments=iCommentsTotal>=0?n(r[iCommentsTotal]):0;
+const reposts=iRepostsTotal>=0?n(r[iRepostsTotal]):0;
+const eng=react+comments+reposts;
+totalImp+=imp;totalClicks+=clicks;totalEng+=eng;
+// Convert date format MM/DD/YYYY → MM/DD
+const shortDate=date.replace(/\/\d{4}$/,'');
+d.timeseries.linkedin.push({date:shortDate,impressions:imp,engagement:eng,clicks:clicks});
+});
+d.platforms.linkedin.impressions=totalImp;
+d.platforms.linkedin.clicks=totalClicks;
+d.platforms.linkedin.engagement=totalEng;
+}
+}
+
+// Sheet 2: All posts (content)
+const postsSheet=wb.SheetNames.find(s=>s.toLowerCase().includes('post'));
+if(postsSheet){
+const ws=wb.Sheets[postsSheet];
+const rows=XLSX.utils.sheet_to_json(ws,{header:1,defval:''}).filter(r=>r.some(c=>c!==''));
+if(rows.length>1){
+const headers=rows[0].map(normalizeHeader);
+const iTitle=findCol(headers,['posttitle']);
+const iImp=findCol(headers,['impressions']);
+const iViews=findCol(headers,['views']);
+const iClicks=findCol(headers,['clicks']);
+const iLikes=findCol(headers,['likes']);
+const iComments=findCol(headers,['comments']);
+const iReposts=findCol(headers,['reposts']);
+const iFollows=findCol(headers,['follows']);
+// Remove old LinkedIn content, add new
+d.topContent=(d.topContent||[]).filter(c=>c.platform!=='LinkedIn');
+rows.slice(1).forEach(r=>{
+const title=iTitle>=0?String(r[iTitle]||'').substring(0,80):'';
+const views=n(r[iViews])||n(r[iImp]);
+const likes=n(r[iLikes]);
+const comments=n(r[iComments]);
+const reposts=n(r[iReposts]);
+const eng=likes+comments+reposts;
+const rate=views>0?Math.round(eng/views*10000)/100:0;
+if(views>0||title)d.topContent.push({platform:'LinkedIn',title:title,views:views,reach:0,engagement:eng,rate:rate});
 });
 d.topContent.sort((a,b)=>b.views-a.views);
-recompute();persist();renderSettings();toast('Imported '+d.topContent.length+' content items');
+}
 }
 
-function parseTimeseriesFile(h,rows){
+recalcSummary(d);
+const statusEl=document.getElementById('status_linkedin');
+if(statusEl)statusEl.innerHTML='<span style="color:#4ade80">&#10003; '+d.timeseries.linkedin.length+' days, '+d.platforms.linkedin.impressions.toLocaleString()+' impressions</span>';
+recompute();persist();renderUploadStatus();toast('LinkedIn: '+d.platforms.linkedin.impressions.toLocaleString()+' impressions');
+}
+
+/* ── LinkedIn CSV fallback ── */
+function parseLinkedInCSV(rows){
 const d=DATA[editMonth];
-const iDate=matchCol(h,['date','day']);
-const iImp=matchCol(h,['impressions','imps','views']);
-const iEng=matchCol(h,['engagement','engagements']);
-const iClicks=matchCol(h,['clicks','linkclicks']);
-if(iDate<0){toast('Missing "date" column');return;}
+const headers=rows[0].map(normalizeHeader);
+const iDate=findCol(headers,['date']);
+if(iDate>=0){
+// Looks like the Metrics sheet exported as CSV
+const iImpTotal=findCol(headers,['impressionstotal','impressionsorganic','impressions']);
+const iClicksTotal=findCol(headers,['clickstotal','clicksorganic','clicks']);
+const iReactTotal=findCol(headers,['reactionstotal','reactionsorganic','reactions']);
+const iCommentsTotal=findCol(headers,['commentstotal','comments']);
+const iRepostsTotal=findCol(headers,['repoststotal','reposts']);
+let totalImp=0,totalClicks=0,totalEng=0;
 d.timeseries.linkedin=[];
-rows.forEach(r=>{
+rows.slice(1).forEach(r=>{
 const date=String(r[iDate]||'').trim();
-if(date)d.timeseries.linkedin.push({date:date,impressions:n(r[iImp]),engagement:n(r[iEng]),clicks:n(r[iClicks])});
+if(!date)return;
+const imp=n(r[iImpTotal]);
+const clicks=n(r[iClicksTotal]);
+const react=n(r[iReactTotal]);
+const comments=n(r[iCommentsTotal]);
+const reposts=n(r[iRepostsTotal]);
+const eng=react+comments+reposts;
+totalImp+=imp;totalClicks+=clicks;totalEng+=eng;
+const shortDate=date.replace(/\/\d{4}$/,'');
+d.timeseries.linkedin.push({date:shortDate,impressions:imp,engagement:eng,clicks:clicks});
 });
-recompute();persist();renderSettings();toast('Imported '+d.timeseries.linkedin.length+' days');
+d.platforms.linkedin.impressions=totalImp;
+d.platforms.linkedin.clicks=totalClicks;
+d.platforms.linkedin.engagement=totalEng;
+}
+recalcSummary(d);
+recompute();persist();renderUploadStatus();toast('LinkedIn CSV imported');
 }
 
-function parseRecsFile(h,rows){
-const iPri=matchCol(h,['priority','pri','level']);
-const iRec=matchCol(h,['recommendation','rec','action','suggestion']);
-const iIns=matchCol(h,['insight','reason','note','notes']);
-if(iRec<0){toast('Missing "recommendation" column');return;}
-RECS.length=0;
-rows.forEach(r=>{
-const rec=String(r[iRec]||'').trim();
-const ins=iIns>=0?String(r[iIns]||''):'';
-let pri=iPri>=0?String(r[iPri]||''):'Medium';
-pri=pri.charAt(0).toUpperCase()+pri.slice(1).toLowerCase();
-if(!['High','Medium','Low'].includes(pri))pri='Medium';
-if(rec)RECS.push({r:rec,i:ins,p:pri});
-});
-persist();renderSettings();toast('Imported '+RECS.length+' recommendations');
-}
-
-function capPlatform(s){
-const l=s.toLowerCase().trim();
-if(l.includes('youtube'))return 'YouTube';
-if(l.includes('tiktok'))return 'TikTok';
-if(l.includes('linkedin'))return 'LinkedIn';
-return 'Instagram';
-}
-function removeRecRow(i){RECS.splice(i,1);renderRecsEdit();}
-
-function saveAll(){
-if(!editMonth)return;
-const d=DATA[editMonth];
-// Read platform inputs
-document.querySelectorAll('#platformForms [data-p]').forEach(inp=>{
-const p=inp.dataset.p,f=inp.dataset.f;
-d.platforms[p][f]=n(inp.value);
-});
-// Recompute summary from platforms
+/* ── Recalculate summary from platform data ── */
+function recalcSummary(d){
 const pl=d.platforms;
 d.summary.totalViews=pl.youtube.views+pl.instagram.views+pl.tiktok.views+pl.linkedin.impressions;
 d.summary.totalReach=pl.instagram.reach;
 d.summary.totalEngagement=pl.youtube.engagement+pl.instagram.engagement+pl.tiktok.engagement+pl.linkedin.engagement;
 d.summary.avgEngagementRate=d.summary.totalViews>0?Math.round(d.summary.totalEngagement/d.summary.totalViews*10000)/100:0;
-// Read content inputs
-document.querySelectorAll('#contentEditBody [data-ci]').forEach(inp=>{
-const i=parseInt(inp.dataset.ci),f=inp.dataset.cf;
-if(!d.topContent[i])return;
-if(f==='views'||f==='reach'||f==='engagement')d.topContent[i][f]=n(inp.value);
-else d.topContent[i][f]=inp.value;
-});
-d.topContent.forEach(c=>{c.rate=c.views>0?Math.round(c.engagement/c.views*10000)/100:0;});
-// Read timeseries inputs
-document.querySelectorAll('#tsEditBody [data-ti]').forEach(inp=>{
-const i=parseInt(inp.dataset.ti),f=inp.dataset.tf;
-if(!d.timeseries.linkedin[i])return;
-if(f==='date')d.timeseries.linkedin[i][f]=inp.value;
-else d.timeseries.linkedin[i][f]=n(inp.value);
-});
-// Read recs
-document.querySelectorAll('#recsEditBody [data-ri]').forEach(inp=>{
-const i=parseInt(inp.dataset.ri),f=inp.dataset.rf;
-if(!RECS[i])return;
-RECS[i][f]=inp.value;
-});
-recompute();persist();toast('Saved');renderSettings();
 }
 
 function exportJSON(){
@@ -703,24 +820,5 @@ UPD();
 initSort('contentTable',contentSort,TBL);
 initSort('recsTable',recsSort,REND_RECS);
 
-/* ── Drag & drop on upload zones ── */
-[['platformDropZone','platform'],['contentDropZone','content'],['tsDropZone','timeseries'],['recsDropZone','recs']].forEach(([id,type])=>{
-const zone=document.getElementById(id);if(!zone)return;
-zone.addEventListener('dragover',e=>{e.preventDefault();zone.classList.add('dragover');});
-zone.addEventListener('dragleave',()=>zone.classList.remove('dragover'));
-zone.addEventListener('drop',e=>{
-e.preventDefault();zone.classList.remove('dragover');
-const file=e.dataTransfer.files[0];if(!file)return;
-if(!editMonth&&type!=='recs'){toast('Select a month first');return;}
-fileToRows(file,function(rows){
-if(rows.length<2){toast('File has no data rows');return;}
-const headers=rows[0].map(normalizeHeader);
-const dataRows=rows.slice(1);
-if(type==='platform')parsePlatformFile(headers,dataRows);
-else if(type==='content')parseContentFile(headers,dataRows);
-else if(type==='timeseries')parseTimeseriesFile(headers,dataRows);
-else if(type==='recs')parseRecsFile(headers,dataRows);
-});
-});
-});
+/* ── Drag & drop zones are set up dynamically in renderSettings() ── */
 </script></body></html>
