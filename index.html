@@ -134,7 +134,7 @@ select.s-input{cursor:pointer}
 <div class="charts-grid">
 <div class="chart-card"><div class="chart-title">Views by Platform</div><div class="chart-container"><canvas id="pc"></canvas></div></div>
 <div class="chart-card"><div class="chart-title">Top 10 Content</div><div class="chart-container"><canvas id="tc"></canvas></div></div>
-<div class="chart-card full"><div class="chart-title" id="lct">LinkedIn</div><div class="chart-container" style="height:340px"><canvas id="lc"></canvas></div></div>
+<div class="chart-card full"><div class="chart-title" id="lct">Daily Trends</div><div class="chart-container" style="height:340px"><canvas id="lc"></canvas></div></div>
 </div>
 <div class="table-container"><div class="table-header"><div class="table-title">Recommendations</div></div>
 <table id="recsTable"><thead><tr><th data-sort="priority">Priority<span class="sort-arrow"></span></th><th data-sort="recommendation">Recommendation<span class="sort-arrow"></span></th><th data-sort="insight">Insight<span class="sort-arrow"></span></th></tr></thead><tbody id="recs"></tbody></table></div>
@@ -163,6 +163,13 @@ select.s-input{cursor:pointer}
 <div class="s-section">
 <div class="s-title">Upload Status</div>
 <div id="uploadStatus" style="font-size:12px;color:var(--muted2)"></div>
+</div>
+
+<div class="s-section">
+<div class="s-title">Recommendations</div>
+<p style="color:var(--muted2);font-size:11px;margin-bottom:12px;letter-spacing:0.02em">Add strategic recommendations. These apply across all months.</p>
+<div id="recsEditor"></div>
+<button class="s-btn s-btn-secondary s-btn-sm" onclick="addRec()" style="margin-top:8px">+ Add Recommendation</button>
 </div>
 
 <div class="s-section">
@@ -210,7 +217,7 @@ function toast(msg){const t=document.getElementById('toast');t.textContent=msg;t
 function recompute(){
 const keys=monthKeys();
 if(keys.length===0){delete DATA.combined;delete DATA.growth;return;}
-const c={summary:{totalViews:0,totalReach:0,totalEngagement:0,avgEngagementRate:0},platforms:{youtube:{views:0,engagement:0},instagram:{views:0,reach:0,engagement:0},tiktok:{views:0,engagement:0},linkedin:{impressions:0,clicks:0,engagement:0}},topContent:[],timeseries:{linkedin:[]}};
+const c={summary:{totalViews:0,totalReach:0,totalEngagement:0,avgEngagementRate:0},platforms:{youtube:{views:0,engagement:0},instagram:{views:0,reach:0,engagement:0},tiktok:{views:0,engagement:0},linkedin:{impressions:0,clicks:0,engagement:0}},topContent:[],timeseries:{linkedin:[],tiktok:[]}};
 let rateSum=0;
 keys.forEach(k=>{
 const d=DATA[k];
@@ -229,7 +236,8 @@ c.platforms.linkedin.impressions+=d.platforms.linkedin.impressions;
 c.platforms.linkedin.clicks+=d.platforms.linkedin.clicks;
 c.platforms.linkedin.engagement+=d.platforms.linkedin.engagement;
 c.topContent=c.topContent.concat(d.topContent);
-c.timeseries.linkedin=c.timeseries.linkedin.concat(d.timeseries.linkedin);
+c.timeseries.linkedin=c.timeseries.linkedin.concat(d.timeseries.linkedin||[]);
+c.timeseries.tiktok=c.timeseries.tiktok.concat(d.timeseries.tiktok||[]);
 });
 c.summary.avgEngagementRate=Math.round((rateSum/keys.length)*100)/100;
 c.topContent.sort((a,b)=>b.views-a.views);
@@ -331,6 +339,9 @@ processUpload(file,z.id);
 // Upload status summary
 renderUploadStatus();
 
+// Recommendations editor
+renderRecsEditor();
+
 // Delete month btn
 const existing=document.getElementById('deleteMonthBtn');
 if(existing)existing.remove();
@@ -362,13 +373,29 @@ el.innerHTML=checks.map(c=>'<div style="padding:4px 0;display:flex;gap:8px;align
 
 function escH(s){return String(s).replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;');}
 
+/* ── Recommendations editor ── */
+function renderRecsEditor(){
+const el=document.getElementById('recsEditor');if(!el)return;
+el.innerHTML='';
+RECS.forEach((x,i)=>{
+const row=document.createElement('div');
+row.style.cssText='display:flex;gap:8px;align-items:flex-start;margin-bottom:8px;padding:8px;background:var(--surface2);border:1px solid var(--border)';
+row.innerHTML='<select class="s-input" style="width:90px" onchange="RECS['+i+'].p=this.value;persist();REND_RECS()"><option'+(x.p==='High'?' selected':'')+'>High</option><option'+(x.p==='Medium'?' selected':'')+'>Medium</option><option'+(x.p==='Low'?' selected':'')+'>Low</option></select>'+
+'<input class="s-input" style="flex:2" placeholder="Recommendation" value="'+escH(x.r)+'" onchange="RECS['+i+'].r=this.value;persist();REND_RECS()">'+
+'<input class="s-input" style="flex:2" placeholder="Insight" value="'+escH(x.i)+'" onchange="RECS['+i+'].i=this.value;persist();REND_RECS()">'+
+'<button class="s-btn s-btn-danger s-btn-sm" onclick="RECS.splice('+i+',1);persist();REND_RECS();renderRecsEditor()">X</button>';
+el.appendChild(row);
+});
+}
+function addRec(){RECS.push({r:'',i:'',p:'Medium'});persist();renderRecsEditor();REND_RECS();}
+
 /* ── Settings actions ── */
 function addMonth(){
 const name=document.getElementById('newMonthName').value.trim();
 if(!name)return;
 const key=name.toLowerCase().replace(/[^a-z0-9]/g,'_');
 if(DATA[key]){toast('Month already exists');return;}
-DATA[key]={label:name,summary:{totalViews:0,totalReach:0,totalEngagement:0,avgEngagementRate:0},platforms:{youtube:{views:0,engagement:0},instagram:{views:0,reach:0,engagement:0},tiktok:{views:0,engagement:0},linkedin:{impressions:0,clicks:0,engagement:0}},topContent:[],timeseries:{linkedin:[]}};
+DATA[key]={label:name,summary:{totalViews:0,totalReach:0,totalEngagement:0,avgEngagementRate:0},platforms:{youtube:{views:0,engagement:0},instagram:{views:0,reach:0,engagement:0},tiktok:{views:0,engagement:0},linkedin:{impressions:0,clicks:0,engagement:0}},topContent:[],timeseries:{linkedin:[],tiktok:[]},_igPosts:{views:0,reach:0,engagement:0},_igStories:{views:0,reach:0,engagement:0},_ytVideos:{views:0,engagement:0},_ytShorts:{views:0,engagement:0}};
 editMonth=key;
 document.getElementById('newMonthName').value='';
 recompute();persist();renderSettings();toast('Added '+name);
@@ -463,14 +490,26 @@ reader.readAsText(file);
 function parseTikTokCSV(rows){
 const d=DATA[editMonth];
 const headers=rows[0].map(normalizeHeader);
+const iDate=findCol(headers,['date']);
 const iViews=findCol(headers,['videoviews','views']);
 const iLikes=findCol(headers,['likes']);
 const iComments=findCol(headers,['comments']);
 const iShares=findCol(headers,['shares']);
+const iProfileViews=findCol(headers,['profileviews']);
 let totalViews=0,totalEng=0;
+if(!d.timeseries)d.timeseries={linkedin:[],tiktok:[]};
+d.timeseries.tiktok=[];
 rows.slice(1).forEach(r=>{
-totalViews+=n(r[iViews]);
-totalEng+=n(r[iLikes])+n(r[iComments])+n(r[iShares]);
+const views=n(r[iViews]);
+const likes=n(r[iLikes]);
+const comments=n(r[iComments]);
+const shares=n(r[iShares]);
+const eng=likes+comments+shares;
+totalViews+=views;
+totalEng+=eng;
+// Store daily data for timeseries chart
+const date=iDate>=0?String(r[iDate]||'').trim():'';
+if(date)d.timeseries.tiktok.push({date:date,views:views,engagement:eng});
 });
 d.platforms.tiktok.views=totalViews;
 d.platforms.tiktok.engagement=totalEng;
@@ -510,9 +549,12 @@ const desc=iDesc>=0?String(r[iDesc]||'').substring(0,80):'';
 const rate=views>0?Math.round(eng/views*10000)/100:0;
 if(views>0||desc)content.push({platform:'Instagram',title:desc,views:views,reach:reach,engagement:eng,rate:rate});
 });
-d.platforms.instagram.views=totalViews;
-d.platforms.instagram.reach=totalReach;
-d.platforms.instagram.engagement=totalEng;
+// Store in sub-source
+if(!d._igPosts)d._igPosts={views:0,reach:0,engagement:0};
+d._igPosts.views=totalViews;
+d._igPosts.reach=totalReach;
+d._igPosts.engagement=totalEng;
+recalcInstagram(d);
 // Merge content: remove old Instagram items, add new ones
 d.topContent=(d.topContent||[]).filter(c=>c.platform!=='Instagram');
 d.topContent=d.topContent.concat(content);
@@ -543,11 +585,13 @@ totalViews+=views;
 totalReach+=reach;
 totalEng+=likes+shares+replies;
 });
-// Add story stats to Instagram totals (additive on top of posts)
-d.platforms.instagram.views+=totalViews;
-d.platforms.instagram.reach+=totalReach;
-d.platforms.instagram.engagement+=totalEng;
+// Store in sub-source, then recalculate Instagram totals from both sources
+if(!d._igStories)d._igStories={views:0,reach:0,engagement:0};
+d._igStories.views=totalViews;
+d._igStories.reach=totalReach;
+d._igStories.engagement=totalEng;
 d._storiesUploaded=true;
+recalcInstagram(d);
 recalcSummary(d);
 const statusEl=document.getElementById('status_metaStories');
 if(statusEl)statusEl.innerHTML='<span style="color:#4ade80">&#10003; '+(rows.length-1)+' stories — '+totalViews.toLocaleString()+' views added</span>';
@@ -591,20 +635,23 @@ const rate=views>0?Math.round(eng/views*10000)/100:0;
 if(views>0)content.push({platform:'YouTube',title:title+(subtype==='shorts'?' (Short)':''),views:views,reach:0,engagement:eng,rate:rate});
 });
 
-// Add to YouTube totals (additive for shorts on top of videos)
+// Store in sub-source, then recalculate YouTube totals from both sources
 if(subtype==='videos'){
-d.platforms.youtube.views=totalViews;
-d.platforms.youtube.engagement=totalEng;
+if(!d._ytVideos)d._ytVideos={views:0,engagement:0};
+d._ytVideos.views=totalViews;
+d._ytVideos.engagement=totalEng;
 d._ytVideosUploaded=true;
 // Replace YouTube content items (non-shorts)
 d.topContent=(d.topContent||[]).filter(c=>c.platform!=='YouTube'||c.title.includes('(Short)'));
 }else{
-d.platforms.youtube.views+=totalViews;
-d.platforms.youtube.engagement+=totalEng;
+if(!d._ytShorts)d._ytShorts={views:0,engagement:0};
+d._ytShorts.views=totalViews;
+d._ytShorts.engagement=totalEng;
 d._ytShortsUploaded=true;
 // Replace YouTube shorts content items
 d.topContent=(d.topContent||[]).filter(c=>!(c.platform==='YouTube'&&c.title.includes('(Short)')));
 }
+recalcYouTube(d);
 d.topContent=d.topContent.concat(content);
 d.topContent.sort((a,b)=>b.views-a.views);
 recalcSummary(d);
@@ -730,6 +777,21 @@ recalcSummary(d);
 recompute();persist();renderUploadStatus();toast('LinkedIn CSV imported');
 }
 
+/* ── Recalculate platform totals from sub-sources ── */
+function recalcInstagram(d){
+const posts=d._igPosts||{views:0,reach:0,engagement:0};
+const stories=d._igStories||{views:0,reach:0,engagement:0};
+d.platforms.instagram.views=posts.views+stories.views;
+d.platforms.instagram.reach=posts.reach+stories.reach;
+d.platforms.instagram.engagement=posts.engagement+stories.engagement;
+}
+function recalcYouTube(d){
+const vids=d._ytVideos||{views:0,engagement:0};
+const shorts=d._ytShorts||{views:0,engagement:0};
+d.platforms.youtube.views=vids.views+shorts.views;
+d.platforms.youtube.engagement=vids.engagement+shorts.engagement;
+}
+
 /* ── Recalculate summary from platform data ── */
 function recalcSummary(d){
 const pl=d.platforms;
@@ -802,7 +864,7 @@ document.getElementById('erc').textContent='';
 document.getElementById('vc').textContent='';document.getElementById('rc').textContent='';
 document.getElementById('ec').textContent='';document.getElementById('erc').textContent='';
 }
-document.getElementById('lct').textContent='LinkedIn'+(d.label?' ('+d.label+')':'');
+document.getElementById('lct').textContent='Daily Trends'+(d.label?' ('+d.label+')':'');
 TBL();CHARTS(d);
 }
 
@@ -810,7 +872,23 @@ function TBL(){const d=DATA[M];if(!d)return;const tb=document.getElementById('co
 
 function REND_RECS(){const rtb=document.getElementById('recs');rtb.innerHTML='';const pOrd={High:0,Medium:1,Low:2};let r=[...RECS];if(recsSort.key){r=sortArr(r,recsSort.key,recsSort.dir,(item,k)=>{if(k==='priority')return pOrd[item.p]!=null?pOrd[item.p]:99;if(k==='recommendation')return item.r.toLowerCase();if(k==='insight')return item.i.toLowerCase();return 0;});}r.forEach(x=>{const row=document.createElement('tr');row.innerHTML='<td><span class="priority-badge priority-'+x.p.toLowerCase()+'">'+x.p+'</span></td><td>'+escH(x.r)+'</td><td class="m">'+escH(x.i)+'</td>';rtb.appendChild(row);});}
 
-function CHARTS(d){if(typeof Chart==='undefined')return;Chart.defaults.color='#777';Chart.defaults.borderColor='#222';Chart.defaults.font.family="'Space Mono', monospace";Chart.defaults.font.size=11;if(CH.p)CH.p.destroy();const pCtx=document.getElementById('pc').getContext('2d');const gYT=pCtx.createLinearGradient(0,0,0,260);gYT.addColorStop(0,'rgba(255,0,0,0.85)');gYT.addColorStop(1,'rgba(204,0,0,0.6)');const gIG=pCtx.createLinearGradient(0,0,0,260);gIG.addColorStop(0,'rgba(64,93,230,0.85)');gIG.addColorStop(0.5,'rgba(225,48,108,0.85)');gIG.addColorStop(1,'rgba(252,175,69,0.7)');const gTK=pCtx.createLinearGradient(0,0,0,260);gTK.addColorStop(0,'rgba(37,244,238,0.85)');gTK.addColorStop(1,'rgba(254,44,85,0.7)');const gLI=pCtx.createLinearGradient(0,0,0,260);gLI.addColorStop(0,'rgba(0,160,220,0.85)');gLI.addColorStop(1,'rgba(0,119,181,0.7)');CH.p=new Chart(pCtx,{type:'bar',data:{labels:['YouTube','Instagram','TikTok','LinkedIn'],datasets:[{data:[d.platforms.youtube.views,d.platforms.instagram.views,d.platforms.tiktok.views,d.platforms.linkedin.impressions],backgroundColor:[gYT,gIG,gTK,gLI],borderRadius:2}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{y:{beginAtZero:true,grid:{color:'#1a1a1a'},ticks:{color:'#777',font:{size:11}}},x:{grid:{display:false},ticks:{color:'#777',font:{size:11}}}}}});const top=(d.topContent||[]).slice(0,10);if(CH.t)CH.t.destroy();const tCtx=document.getElementById('tc').getContext('2d');const pColors={Instagram:function(){const g=tCtx.createLinearGradient(0,0,400,0);g.addColorStop(0,'rgba(64,93,230,0.85)');g.addColorStop(0.5,'rgba(225,48,108,0.85)');g.addColorStop(1,'rgba(252,175,69,0.7)');return g;},YouTube:function(){const g=tCtx.createLinearGradient(0,0,400,0);g.addColorStop(0,'rgba(255,0,0,0.85)');g.addColorStop(1,'rgba(204,0,0,0.6)');return g;},TikTok:function(){const g=tCtx.createLinearGradient(0,0,400,0);g.addColorStop(0,'rgba(37,244,238,0.85)');g.addColorStop(1,'rgba(254,44,85,0.7)');return g;},LinkedIn:function(){const g=tCtx.createLinearGradient(0,0,400,0);g.addColorStop(0,'rgba(0,160,220,0.85)');g.addColorStop(1,'rgba(0,119,181,0.7)');return g;}};CH.t=new Chart(tCtx,{type:'bar',data:{labels:top.map(c=>(c.title||'').substring(0,18)+'...'),datasets:[{data:top.map(c=>c.views),backgroundColor:top.map(c=>(pColors[c.platform]||pColors.Instagram)()),borderRadius:2}]},options:{indexAxis:'y',responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{beginAtZero:true,grid:{color:'#1a1a1a'},ticks:{color:'#777',font:{size:10}}},y:{grid:{display:false},ticks:{color:'#f0ece4',font:{size:10}}}}}});const ts=d.timeseries&&d.timeseries.linkedin?d.timeseries.linkedin:[];if(CH.l)CH.l.destroy();CH.l=new Chart(document.getElementById('lc').getContext('2d'),{type:'line',data:{labels:ts.map(x=>x.date),datasets:[{label:'Impressions',data:ts.map(x=>x.impressions),borderColor:'#60a5fa',borderWidth:1.5,fill:false,tension:0.3,pointRadius:1.5},{label:'Engagement',data:ts.map(x=>x.engagement),borderColor:'#4ade80',borderWidth:1.5,fill:false,tension:0.3,pointRadius:1.5},{label:'Clicks',data:ts.map(x=>x.clicks),borderColor:'#fbbf24',borderWidth:1.5,fill:false,tension:0.3,pointRadius:1.5}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:true,position:'top',align:'end',labels:{color:'#777',usePointStyle:true,font:{size:11}}}},scales:{y:{beginAtZero:true,grid:{color:'#1a1a1a'},ticks:{color:'#777',font:{size:11}}},x:{grid:{display:false},ticks:{color:'#777',font:{size:10}}}}}});}
+function CHARTS(d){if(typeof Chart==='undefined')return;Chart.defaults.color='#777';Chart.defaults.borderColor='#222';Chart.defaults.font.family="'Space Mono', monospace";Chart.defaults.font.size=11;if(CH.p)CH.p.destroy();const pCtx=document.getElementById('pc').getContext('2d');const gYT=pCtx.createLinearGradient(0,0,0,260);gYT.addColorStop(0,'rgba(255,0,0,0.85)');gYT.addColorStop(1,'rgba(204,0,0,0.6)');const gIG=pCtx.createLinearGradient(0,0,0,260);gIG.addColorStop(0,'rgba(64,93,230,0.85)');gIG.addColorStop(0.5,'rgba(225,48,108,0.85)');gIG.addColorStop(1,'rgba(252,175,69,0.7)');const gTK=pCtx.createLinearGradient(0,0,0,260);gTK.addColorStop(0,'rgba(37,244,238,0.85)');gTK.addColorStop(1,'rgba(254,44,85,0.7)');const gLI=pCtx.createLinearGradient(0,0,0,260);gLI.addColorStop(0,'rgba(0,160,220,0.85)');gLI.addColorStop(1,'rgba(0,119,181,0.7)');CH.p=new Chart(pCtx,{type:'bar',data:{labels:['YouTube','Instagram','TikTok','LinkedIn'],datasets:[{data:[d.platforms.youtube.views,d.platforms.instagram.views,d.platforms.tiktok.views,d.platforms.linkedin.impressions],backgroundColor:[gYT,gIG,gTK,gLI],borderRadius:2}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{y:{beginAtZero:true,grid:{color:'#1a1a1a'},ticks:{color:'#777',font:{size:11}}},x:{grid:{display:false},ticks:{color:'#777',font:{size:11}}}}}});const top=(d.topContent||[]).slice(0,10);if(CH.t)CH.t.destroy();const tCtx=document.getElementById('tc').getContext('2d');const pColors={Instagram:function(){const g=tCtx.createLinearGradient(0,0,400,0);g.addColorStop(0,'rgba(64,93,230,0.85)');g.addColorStop(0.5,'rgba(225,48,108,0.85)');g.addColorStop(1,'rgba(252,175,69,0.7)');return g;},YouTube:function(){const g=tCtx.createLinearGradient(0,0,400,0);g.addColorStop(0,'rgba(255,0,0,0.85)');g.addColorStop(1,'rgba(204,0,0,0.6)');return g;},TikTok:function(){const g=tCtx.createLinearGradient(0,0,400,0);g.addColorStop(0,'rgba(37,244,238,0.85)');g.addColorStop(1,'rgba(254,44,85,0.7)');return g;},LinkedIn:function(){const g=tCtx.createLinearGradient(0,0,400,0);g.addColorStop(0,'rgba(0,160,220,0.85)');g.addColorStop(1,'rgba(0,119,181,0.7)');return g;}};CH.t=new Chart(tCtx,{type:'bar',data:{labels:top.map(c=>(c.title||'').substring(0,18)+'...'),datasets:[{data:top.map(c=>c.views),backgroundColor:top.map(c=>(pColors[c.platform]||pColors.Instagram)()),borderRadius:2}]},options:{indexAxis:'y',responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{beginAtZero:true,grid:{color:'#1a1a1a'},ticks:{color:'#777',font:{size:10}}},y:{grid:{display:false},ticks:{color:'#f0ece4',font:{size:10}}}}}});const liTs=d.timeseries&&d.timeseries.linkedin?d.timeseries.linkedin:[];
+const tkTs=d.timeseries&&d.timeseries.tiktok?d.timeseries.tiktok:[];
+// Build unified date labels from whichever has more data points
+const tsLabels=liTs.length>=tkTs.length?liTs.map(x=>x.date):tkTs.map(x=>x.date);
+const datasets=[];
+if(liTs.length>0){
+datasets.push({label:'LinkedIn Impressions',data:liTs.map(x=>x.impressions),borderColor:'#0077b5',borderWidth:1.5,fill:false,tension:0.3,pointRadius:1.5});
+datasets.push({label:'LinkedIn Clicks',data:liTs.map(x=>x.clicks),borderColor:'#00a0dc',borderWidth:1.5,fill:false,tension:0.3,pointRadius:1.5});
+}
+if(tkTs.length>0){
+datasets.push({label:'TikTok Views',data:tkTs.map(x=>x.views),borderColor:'#25f4ee',borderWidth:1.5,fill:false,tension:0.3,pointRadius:1.5});
+datasets.push({label:'TikTok Engagement',data:tkTs.map(x=>x.engagement),borderColor:'#fe2c55',borderWidth:1.5,fill:false,tension:0.3,pointRadius:1.5});
+}
+if(datasets.length===0){
+datasets.push({label:'No daily data',data:[],borderColor:'#777',borderWidth:1});
+}
+if(CH.l)CH.l.destroy();CH.l=new Chart(document.getElementById('lc').getContext('2d'),{type:'line',data:{labels:tsLabels,datasets:datasets},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:true,position:'top',align:'end',labels:{color:'#777',usePointStyle:true,font:{size:11}}}},scales:{y:{beginAtZero:true,grid:{color:'#1a1a1a'},ticks:{color:'#777',font:{size:11}}},x:{grid:{display:false},ticks:{color:'#777',font:{size:10}}}}}});}
 
 /* ── Init ── */
 recompute();
