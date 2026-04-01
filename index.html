@@ -1315,7 +1315,8 @@ return{views:0,reach:0,engagement:0,rate:0};
 }
 
 function UPD(){
-const d=DATA[M];if(!d)return;
+const d=DATA[M];
+if(!d){document.getElementById('v').textContent='—';document.getElementById('r').textContent='—';document.getElementById('e').textContent='—';document.getElementById('er').textContent='—';document.getElementById('vc').textContent='';document.getElementById('rc').textContent='';document.getElementById('ec').textContent='';document.getElementById('erc').textContent='';document.getElementById('content').innerHTML='<tr><td colspan="9" style="text-align:center;padding:40px;color:var(--muted2);font-size:12px">No data yet. Add a month and upload files in Settings.</td></tr>';document.getElementById('gaTrafficSection').style.display='none';TBL();return;}
 const ps=platformStats(d,F);
 document.getElementById('v').textContent=fmtK(ps.views);
 document.getElementById('r').textContent=fmtK(ps.reach);
@@ -1494,7 +1495,7 @@ return stats;
 }
 
 function FUNNEL_UPD(){
-const d=DATA[M];if(!d)return;
+const d=DATA[M];if(!d){document.getElementById('funnelCards').innerHTML='<div class="funnel-card" style="grid-column:1/-1"><div class="funnel-empty">No data yet<div class="funnel-empty-hint">Add a month and upload files in Settings.</div></div></div>';document.getElementById('funnelContent').innerHTML='';return;}
 const stats=computeFunnelStats(d);
 renderFunnelCards(stats,d);
 renderFunnelCharts(stats);
