@@ -17,6 +17,65 @@ body{font-family:'Space Mono',monospace;background:var(--bg);color:var(--text);f
 .settings-link{background:none;border:1px solid var(--border2);color:var(--muted2);cursor:pointer;padding:0 10px;font-size:14px;line-height:1;transition:color 0.15s,border-color 0.15s;display:flex;align-items:center;gap:6px;font-family:'Space Mono',monospace;height:34px}
 .settings-link:hover{color:var(--text);border-color:var(--muted2)}
 .settings-link span{font-size:10px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase}
+.client-select{background:var(--surface2);border:1px solid var(--border2);color:var(--text);padding:0 10px;font-size:11px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;font-family:'Space Mono',monospace;cursor:pointer;outline:none;height:34px}
+.client-select:hover{border-color:var(--muted2)}
+.s-platform-checks{display:flex;gap:16px;flex-wrap:wrap;margin:8px 0}
+.s-platform-check{display:flex;align-items:center;gap:6px;cursor:pointer;font-size:11px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;color:var(--muted2)}
+.s-platform-check input{accent-color:var(--accent)}
+.s-client-item{display:flex;align-items:center;justify-content:space-between;padding:10px 12px;border:1px solid var(--border);margin-bottom:8px;background:var(--surface2)}
+.s-client-item.active{border-color:var(--accent)}
+.s-client-name{font-size:12px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase}
+.s-client-platforms{font-size:10px;color:var(--muted2);margin-top:4px;letter-spacing:0.04em}
+.stage-select{background:var(--surface2);border:1px solid var(--border);color:var(--muted2);padding:3px 6px;font-size:10px;font-weight:700;letter-spacing:0.04em;text-transform:uppercase;font-family:'Space Mono',monospace;cursor:pointer;outline:none;min-width:80px}
+.stage-select:hover{border-color:var(--muted2)}
+.stage-select.stage-discover{background:var(--red-dim);color:var(--red);border-color:var(--red)}
+.stage-select.stage-engage{background:var(--amber-dim);color:var(--amber);border-color:var(--amber)}
+.stage-select.stage-convert{background:var(--green-dim);color:var(--green);border-color:var(--green)}
+.stage-select.stage-partner{background:var(--blue-dim);color:var(--blue);border-color:var(--blue)}
+.goal-row{display:flex;gap:8px;align-items:center;margin-bottom:8px;padding:8px;background:var(--surface2);border:1px solid var(--border)}
+.goal-row .s-input{font-size:11px;padding:6px 8px}
+.goal-progress{display:flex;align-items:center;gap:10px;margin-bottom:10px;padding:8px 10px;background:var(--surface2);border:1px solid var(--border)}
+.goal-progress-label{font-size:11px;font-weight:700;letter-spacing:0.04em;text-transform:uppercase;min-width:120px;color:var(--text)}
+.goal-progress-target{font-size:10px;color:var(--muted2);min-width:60px;text-align:right}
+.goal-progress-bar{flex:1;height:6px;background:var(--surface3);border-radius:3px;overflow:hidden;min-width:80px}
+.goal-progress-fill{height:100%;border-radius:3px;transition:width 0.3s}
+.goal-progress-val{width:70px}
+.goal-progress-pct{font-size:11px;font-weight:700;min-width:45px;text-align:right}
+.stage-header{display:flex;align-items:center;gap:8px;margin-bottom:10px;margin-top:16px;padding-bottom:6px;border-bottom:1px solid var(--border)}
+.stage-header:first-of-type{margin-top:0}
+.stage-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
+.stage-dot-discover{background:var(--red)}
+.stage-dot-engage{background:var(--amber)}
+.stage-dot-convert{background:var(--green)}
+.stage-dot-partner{background:var(--blue)}
+.tab-separator{width:1px;height:16px;background:var(--border2);margin:0 6px;align-self:center;flex-shrink:0}
+.funnel-card{background:var(--surface);border:1px solid var(--border2);padding:20px 24px;position:relative;overflow:hidden}
+.funnel-card-accent{position:absolute;top:0;left:0;right:0;height:3px}
+.funnel-card-header{display:flex;align-items:center;gap:8px;margin-bottom:14px}
+.funnel-card-stage{font-size:11px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase}
+.funnel-card-metric{margin-bottom:10px}
+.funnel-card-metric-value{font-size:28px;font-weight:700;color:var(--text)}
+.funnel-card-metric-label{font-size:10px;color:var(--muted2);letter-spacing:0.08em;text-transform:uppercase;margin-top:2px}
+.funnel-card-row{display:flex;gap:20px}
+.funnel-card-stat-value{font-size:16px;font-weight:700;color:var(--text)}
+.funnel-card-stat-label{font-size:10px;color:var(--muted2);letter-spacing:0.06em;text-transform:uppercase}
+.funnel-goal-bar{margin-top:12px;padding-top:10px;border-top:1px solid var(--border)}
+.funnel-goal-name{font-size:10px;color:var(--muted2);letter-spacing:0.04em;text-transform:uppercase;margin-bottom:4px}
+.funnel-goal-track{height:4px;background:var(--surface3);border-radius:2px;overflow:hidden;margin-bottom:8px}
+.funnel-goal-fill{height:100%;border-radius:2px}
+.funnel-empty{text-align:center;padding:48px 24px;color:var(--muted2);font-size:12px;letter-spacing:0.04em}
+.funnel-empty-hint{font-size:11px;color:var(--muted);margin-top:8px}
+#authGate{position:fixed;inset:0;background:var(--bg);z-index:9999;display:flex;align-items:center;justify-content:center}
+.auth-box{background:var(--surface);border:1px solid var(--border2);padding:48px 40px;max-width:360px;width:90%;text-align:center}
+.auth-title{font-size:14px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:var(--text);margin-bottom:24px}
+.auth-input{background:var(--surface2);border:1px solid var(--border2);color:var(--text);padding:12px 14px;font-size:13px;font-family:'Space Mono',monospace;outline:none;width:100%;margin-bottom:12px;text-align:center}
+.auth-input:focus{border-color:var(--muted2)}
+.auth-remember{display:flex;align-items:center;justify-content:center;gap:6px;font-size:11px;color:var(--muted2);margin-bottom:16px;cursor:pointer}
+.auth-remember input{accent-color:var(--accent)}
+.auth-btn{width:100%;padding:12px;font-size:11px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;font-family:'Space Mono',monospace;cursor:pointer;border:none;background:var(--accent);color:#080808;transition:opacity 0.15s}
+.auth-btn:hover{opacity:0.85}
+.auth-error{font-size:11px;color:var(--red);margin-top:12px;min-height:16px}
+.ga-col-hidden .ga-col{display:none}
 .filter-bar{display:flex;justify-content:space-between;align-items:center;padding:12px 0;margin-bottom:20px}
 .header-tabs{display:flex;gap:0}
 .tab{font-size:11px;font-weight:400;letter-spacing:0.08em;color:var(--muted2);cursor:pointer;padding:8px 14px;border:none;background:none;border-bottom:2px solid transparent;text-transform:uppercase;font-family:'Space Mono',monospace;transition:color 0.15s}
@@ -36,7 +95,9 @@ body{font-family:'Space Mono',monospace;background:var(--bg);color:var(--text);f
 .stat-change{font-size:12px;margin-top:8px;color:var(--green);letter-spacing:0.02em}
 
 .charts-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:24px}
-@media(max-width:900px){.charts-grid{grid-template-columns:1fr}}
+@media(max-width:900px){.charts-grid{grid-template-columns:1fr}.stats-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:768px){.table-container{overflow-x:auto}table{min-width:650px}.header{flex-wrap:wrap;gap:8px}.header-tabs{flex-wrap:wrap;gap:0}.filter-bar{flex-wrap:wrap;gap:8px}.s-input{padding:10px}.s-btn{padding:10px 16px}.auth-box{padding:32px 20px}}
+@media(max-width:480px){.stats-grid{grid-template-columns:1fr}.container{padding:12px}}
 .chart-card{background:var(--surface);border:1px solid var(--border2);padding:20px}
 .chart-card.full{grid-column:1/-1}
 .chart-title{font-size:12px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted2);margin-bottom:16px}
@@ -105,23 +166,25 @@ select.s-input{cursor:pointer}
 .s-upload-ok{font-size:11px;color:var(--green);margin-top:8px}
 </style>
 </head><body>
+<div id="authGate" style="display:none">
+<div class="auth-box">
+<div class="auth-title">Dashboard Locked</div>
+<input class="auth-input" type="password" id="authInput" placeholder="Enter password" onkeydown="if(event.key==='Enter')tryAuth()">
+<label class="auth-remember"><input type="checkbox" id="authRemember">Remember me</label>
+<button class="auth-btn" onclick="tryAuth()">Unlock</button>
+<div class="auth-error" id="authError"></div>
+</div>
+</div>
 <div class="container">
 <div class="header">
 <h1 onclick="showView('dash')"><svg class="ww-logo" viewBox="0 0 417 236" fill="none" xmlns="http://www.w3.org/2000/svg"><g clip-path="url(#wwclip)"><path d="M249.518 125.854V148.447C249.518 148.604 249.39 148.733 249.233 148.733H246.692C246.535 148.733 246.406 148.604 246.406 148.447V120.744C246.406 120.587 246.535 120.459 246.692 120.459H250.474C250.574 120.459 250.674 120.516 250.717 120.601L262.95 143.024C263.093 143.281 263.478 143.181 263.478 142.881V120.73C263.478 120.573 263.607 120.444 263.764 120.444H266.304C266.461 120.444 266.59 120.573 266.59 120.73V148.433C266.59 148.59 266.461 148.718 266.304 148.718H262.879C262.779 148.718 262.679 148.661 262.636 148.576L250.046 125.697C249.903 125.44 249.518 125.54 249.518 125.839V125.854Z" fill="white"/><path d="M239.426 148.504V120.701C239.426 120.573 239.526 120.473 239.655 120.473H242.452C242.581 120.473 242.681 120.573 242.681 120.701V148.504C242.681 148.633 242.581 148.732 242.452 148.732H239.655C239.526 148.732 239.426 148.633 239.426 148.504Z" fill="white"/><path d="M235.487 148.732H232.689C232.561 148.732 232.461 148.633 232.461 148.504V135.93C232.461 135.801 232.361 135.702 232.233 135.702H219.857C219.729 135.702 219.629 135.801 219.629 135.93V148.504C219.629 148.633 219.529 148.732 219.4 148.732H216.588C216.46 148.732 216.36 148.633 216.36 148.504V120.701C216.36 120.573 216.46 120.473 216.588 120.473H219.4C219.529 120.473 219.629 120.573 219.629 120.701V132.719C219.629 132.847 219.729 132.947 219.857 132.947H232.233C232.361 132.947 232.461 132.847 232.461 132.719V120.701C232.461 120.573 232.561 120.473 232.689 120.473H235.487C235.616 120.473 235.716 120.573 235.716 120.701V148.504C235.716 148.633 235.616 148.732 235.487 148.732Z" fill="white"/><path d="M194.506 120.473H213.719C213.847 120.473 213.947 120.573 213.947 120.701V123.027C213.947 123.156 213.847 123.256 213.719 123.256H205.982C205.854 123.256 205.754 123.356 205.754 123.484V148.49C205.754 148.618 205.654 148.718 205.525 148.718H202.713C202.585 148.718 202.485 148.618 202.485 148.49V123.484C202.485 123.356 202.385 123.256 202.256 123.256H194.52C194.391 123.256 194.292 123.156 194.292 123.027V120.701C194.292 120.573 194.391 120.473 194.52 120.473H194.506Z" fill="white"/><path d="M188.21 148.504V120.701C188.21 120.573 188.31 120.473 188.438 120.473H191.236C191.365 120.473 191.464 120.573 191.464 120.701V148.504C191.464 148.633 191.365 148.732 191.236 148.732H188.438C188.31 148.732 188.21 148.633 188.21 148.504Z" fill="white"/><path d="M166.157 120.473H169.668C169.811 120.473 169.94 120.573 169.968 120.701L176.377 144.251C176.463 144.565 176.92 144.565 177.005 144.251L182.572 120.73C182.601 120.587 182.729 120.487 182.872 120.487H185.498C185.698 120.487 185.855 120.672 185.798 120.872L178.975 148.476C178.932 148.633 178.789 148.747 178.618 148.747H174.978C174.821 148.747 174.679 148.633 174.636 148.476L168.198 125.04C168.112 124.726 167.67 124.726 167.584 125.04L161.261 148.461C161.218 148.618 161.075 148.732 160.918 148.732H157.321C157.15 148.732 157.007 148.618 156.964 148.461L150.027 120.858C149.984 120.658 150.127 120.473 150.327 120.473H153.153C153.296 120.473 153.424 120.573 153.453 120.715L158.906 144.222C158.977 144.551 159.434 144.551 159.534 144.222L165.857 120.701C165.9 120.558 166.014 120.473 166.157 120.473Z" fill="white"/><path d="M274.739 101.847C274.739 110.239 269.529 115.977 260.237 115.977H250.787C250.687 115.977 250.602 115.891 250.602 115.791V87.9023C250.602 87.8024 250.687 87.7168 250.787 87.7168H260.237C269.529 87.7168 274.739 93.4544 274.739 101.847ZM271.456 101.847C271.456 94.2108 267.017 90.4143 259.666 90.4143H254.056C253.956 90.4143 253.87 90.5 253.87 90.5999V113.065C253.87 113.165 253.956 113.251 254.056 113.251H259.666C267.017 113.251 271.456 109.454 271.456 101.818V101.847Z" fill="white"/><path d="M248.005 115.977H232.532C232.446 115.977 232.375 115.905 232.375 115.82V87.8738C232.375 87.7882 232.446 87.7168 232.532 87.7168H235.487C235.572 87.7168 235.644 87.7882 235.644 87.8738V113.022C235.644 113.108 235.715 113.179 235.801 113.179H247.991C248.077 113.179 248.148 113.251 248.148 113.336V115.805C248.148 115.891 248.077 115.962 247.991 115.962L248.005 115.977Z" fill="white"/><path d="M226.807 115.891L219.513 103.702C219.513 103.702 219.427 103.616 219.37 103.616H213.632C213.532 103.616 213.461 103.688 213.461 103.787V115.791C213.461 115.891 213.389 115.962 213.289 115.962H210.363C210.263 115.962 210.192 115.891 210.192 115.791V87.8734C210.192 87.7735 210.263 87.7021 210.363 87.7021H219.67C225.651 87.7021 229.119 90.7708 229.119 95.5378C229.119 98.2353 227.749 101.918 222.853 103.159C222.739 103.188 222.682 103.316 222.739 103.416L230.361 115.719C230.433 115.834 230.361 115.991 230.218 115.991H226.95C226.95 115.991 226.835 115.962 226.807 115.905V115.891ZM225.851 95.6663C225.851 92.1552 223.267 90.4996 219.513 90.4996H213.632C213.532 90.4996 213.461 90.571 213.461 90.6709V100.662C213.461 100.762 213.532 100.833 213.632 100.833H219.513C223.267 100.833 225.851 99.0204 225.851 95.6663Z" fill="white"/><path d="M158.02 87.7021H161.531C161.674 87.7021 161.802 87.8021 161.831 87.9305L168.24 111.48C168.326 111.794 168.782 111.794 168.868 111.48L174.435 87.9591C174.463 87.8163 174.592 87.7164 174.735 87.7164H177.361C177.561 87.7164 177.718 87.902 177.661 88.1018L170.838 115.705C170.795 115.862 170.652 115.976 170.481 115.976H166.841C166.684 115.976 166.541 115.862 166.498 115.705L160.061 92.2694C159.975 91.9554 159.533 91.9554 159.447 92.2694L153.124 115.691C153.081 115.848 152.938 115.962 152.781 115.962H149.184C149.013 115.962 148.87 115.848 148.827 115.691L141.89 88.0875C141.847 87.8877 141.99 87.7021 142.19 87.7021H145.016C145.159 87.7021 145.287 87.8021 145.316 87.9448L150.768 111.452C150.84 111.78 151.297 111.78 151.397 111.452L157.72 87.9305C157.763 87.7878 157.877 87.7021 158.02 87.7021Z" fill="white"/><path d="M192.549 117.432C184.242 117.432 177.476 110.681 177.476 102.375C177.476 94.068 184.242 87.3027 192.549 87.3027C200.857 87.3027 207.622 94.0537 207.622 102.375C207.622 110.696 200.857 117.432 192.549 117.432ZM192.549 89.8147C185.626 89.8147 179.988 95.4524 179.988 102.375C179.988 109.297 185.626 114.935 192.549 114.935C199.472 114.935 205.11 109.297 205.11 102.375C205.11 95.4524 199.472 89.8147 192.549 89.8147Z" fill="white"/><path d="M192.549 113.679C186.312 113.679 181.23 108.612 181.23 102.375C181.23 96.1377 186.312 91.0566 192.549 91.0566C198.787 91.0566 203.869 96.1377 203.869 102.375C203.869 108.612 198.787 113.679 192.549 113.679ZM192.549 93.5686C187.696 93.5686 183.742 97.5221 183.742 102.375C183.742 107.228 187.696 111.181 192.549 111.181C197.403 111.181 201.356 107.228 201.356 102.375C201.356 97.5221 197.403 93.5686 192.549 93.5686Z" fill="white"/><path d="M355.024 54.248C323.221 40.6605 283.039 32.0113 238.861 29.2566C237.733 29.1853 236.62 28.8427 235.649 28.2718C211.127 13.9136 185.69 4.67916 162.066 1.53918C128.622 -2.91388 102.072 5.16443 87.2845 24.2612C82.674 30.2129 79.3624 37.1066 77.4354 44.7853C76.8358 47.1688 75.1515 49.0956 72.9247 49.9091C69.1564 51.3079 65.4737 52.7637 61.9765 54.2623C22.3802 71.1754 0.569336 93.8403 0.569336 118.075C0.569336 142.31 22.3802 164.975 61.9765 181.902C93.7935 195.504 133.961 204.139 178.153 206.908C179.281 206.98 180.38 207.322 181.365 207.893C212.097 225.834 244.328 235.71 272.106 235.71C297.742 235.71 317.654 227.489 329.702 211.918C334.312 205.966 337.624 199.058 339.551 191.394C340.15 189.01 341.834 187.083 344.061 186.27C347.858 184.871 351.541 183.401 355.009 181.917C394.606 164.989 416.417 142.324 416.417 118.09C416.417 93.8546 394.606 71.1896 355.009 54.2623L355.024 54.248ZM244.899 33.3814C244.97 33.1673 245.17 32.939 245.513 32.939C245.527 32.939 245.556 32.939 245.57 32.939C292.032 36.55 334.512 47.0261 365.158 62.4262C380.375 70.0764 392.251 78.6685 400.444 87.9885C408.923 97.6083 413.219 107.742 413.219 118.075C413.219 143.238 387.255 167.13 341.977 183.644C341.763 183.715 341.52 183.687 341.349 183.544C341.178 183.401 341.078 183.187 341.107 182.959C345.931 141.382 314.742 86.7754 263.47 47.0974C257.646 42.5873 251.479 38.2341 245.156 34.1522C244.842 33.9523 244.813 33.6098 244.885 33.3957L244.899 33.3814ZM332.542 186.884C305.364 195.676 273.219 201.47 239.575 203.64C239.561 203.64 239.546 203.64 239.518 203.64C239.161 203.64 238.933 203.383 238.875 203.112C238.818 202.855 238.904 202.512 239.289 202.369C256.39 196.104 271.049 184.914 281.669 169.999C292.532 154.756 298.27 136.801 298.27 118.061C298.27 102.361 294.13 86.8753 286.28 73.3163C286.066 72.9452 286.237 72.6312 286.451 72.4742C286.565 72.3886 286.708 72.3315 286.851 72.3315C286.993 72.3315 287.165 72.3886 287.307 72.5313C304.122 89.6299 317.683 108.555 326.547 127.267C335.34 145.821 339.379 163.89 338.237 179.533C337.98 182.959 335.739 185.842 332.528 186.884H332.542ZM208.5 31.5117C256.233 31.5117 295.073 70.3476 295.073 118.075C295.073 165.803 256.233 204.639 208.5 204.639C160.768 204.639 121.928 165.803 121.928 118.075C121.928 70.3476 160.768 31.5117 208.5 31.5117ZM84.4582 49.2669C111.636 40.4749 143.781 34.6802 177.425 32.5108C177.44 32.5108 177.454 32.5108 177.483 32.5108C177.839 32.5108 178.068 32.7677 178.111 33.0389C178.168 33.2958 178.096 33.6383 177.697 33.7811C160.596 40.0468 145.937 51.2365 135.317 66.1514C124.454 81.3946 118.716 99.3496 118.716 118.09C118.716 133.789 122.87 149.275 130.706 162.849C130.92 163.22 130.749 163.534 130.535 163.691C130.307 163.862 129.95 163.919 129.664 163.634C112.849 146.535 99.289 127.609 90.4248 108.898C81.6319 90.3435 77.5924 72.2744 78.7343 56.6316C78.9912 53.2061 81.2323 50.3231 84.4439 49.2812L84.4582 49.2669ZM228.027 28.2005C227.97 28.4288 227.77 28.6857 227.37 28.6857C220.976 28.4431 214.624 28.3146 208.5 28.3146C161.824 28.3146 117.803 34.7802 81.1894 47.0261C80.9611 47.0974 80.7184 47.0546 80.5471 46.8833C80.3758 46.7264 80.3045 46.4837 80.3473 46.2553C82.1601 38.7479 85.3575 32.0113 89.8396 26.2308C101.344 11.373 120.5 3.5659 144.766 3.5659C150.162 3.5659 155.8 3.95126 161.667 4.73625C182.792 7.54796 205.645 15.4122 227.727 27.4726C228.056 27.6581 228.098 27.9864 228.041 28.2147L228.027 28.2005ZM189.059 207.964C189.116 207.736 189.316 207.479 189.687 207.479C189.687 207.479 189.701 207.479 189.715 207.479C196.053 207.722 202.377 207.85 208.5 207.85C255.176 207.85 299.198 201.385 335.811 189.139C336.039 189.067 336.282 189.11 336.467 189.281C336.639 189.438 336.71 189.681 336.653 189.909C334.84 197.417 331.643 204.154 327.161 209.934C315.67 224.763 296.686 232.585 272.148 232.585C271.52 232.585 270.892 232.585 270.264 232.57C245.599 232.171 216.865 223.707 189.344 208.721C189.016 208.535 188.959 208.207 189.03 207.979L189.059 207.964ZM172.101 202.769C172.03 202.983 171.83 203.212 171.487 203.212C171.473 203.212 171.445 203.212 171.43 203.212C124.968 199.601 82.5027 189.124 51.8419 173.724C36.6257 166.074 24.7497 157.482 16.5563 148.162C8.07751 138.542 3.78101 128.409 3.78101 118.075C3.78101 92.9126 29.7456 69.0202 75.023 52.5068C75.0944 52.4782 75.1801 52.4639 75.2514 52.4639C75.3942 52.4639 75.5369 52.5068 75.6511 52.6067C75.8224 52.7494 75.9223 52.9635 75.8938 53.1919C71.0691 94.768 102.258 149.375 153.531 189.053C159.412 193.606 165.578 197.973 171.83 201.998C172.144 202.198 172.173 202.526 172.101 202.755V202.769Z" fill="white"/></g><defs><clipPath id="wwclip"><rect width="415.862" height="235.356" fill="white" transform="translate(0.569336 0.339844)"/></clipPath></defs></svg></h1>
 <div class="header-right">
+<select class="client-select" id="clientSel" onchange="switchClient(this.value)"></select>
+<button class="settings-link" id="lockBtn" onclick="lockDashboard()" style="display:none">&#128274;<span>Lock</span></button>
 <button class="settings-link" onclick="showView('settings')">&#9881;<span>Settings</span></button>
 </div>
 </div>
-<div class="filter-bar" id="filterBar">
-<div class="header-tabs" id="platformTabs">
-<div class="tab active" data-platform="all">All</div>
-<div class="tab" data-platform="youtube">YouTube</div>
-<div class="tab" data-platform="instagram">Instagram</div>
-<div class="tab" data-platform="tiktok">TikTok</div>
-<div class="tab" data-platform="linkedin">LinkedIn</div>
-</div>
-<select class="month-selector" id="monthSel"></select>
-</div>
+<div class="filter-bar" id="filterBar"></div>
 
 <!-- DASHBOARD VIEW -->
 <div id="dashView">
@@ -136,34 +199,76 @@ select.s-input{cursor:pointer}
 <div class="chart-card"><div class="chart-title">Top 10 Content</div><div class="chart-container"><canvas id="tc"></canvas></div></div>
 <div class="chart-card full"><div class="chart-title" id="lct">Daily Trends</div><div class="chart-container" style="height:340px"><canvas id="lc"></canvas></div></div>
 </div>
+<div id="gaTrafficSection" style="display:none">
+<div class="stats-grid" style="margin-bottom:16px">
+<div class="stat-card"><div class="stat-label">Website Sessions</div><div class="stat-value" id="gaSess">—</div><div class="stat-change" id="gaMatchPct"></div></div>
+<div class="stat-card"><div class="stat-label">Key Events</div><div class="stat-value" id="gaConv">—</div><div class="stat-change" id="gaConvRate"></div></div>
+</div>
+<div class="charts-grid" style="margin-bottom:24px"><div class="chart-card"><div class="chart-title">Traffic by Channel</div><div class="chart-container"><canvas id="gaChannelChart"></canvas></div></div><div class="chart-card"><div class="chart-title">Sessions by Campaign</div><div style="font-size:10px;color:var(--muted);margin-bottom:8px;display:flex;gap:12px"><span><span style="display:inline-block;width:8px;height:8px;background:rgba(74,222,128,0.7);margin-right:4px;vertical-align:middle"></span>Matched to post</span><span><span style="display:inline-block;width:8px;height:8px;background:rgba(119,119,119,0.4);margin-right:4px;vertical-align:middle"></span>Unmatched</span></div><div class="chart-container"><canvas id="gaCampChart"></canvas></div></div></div>
+</div>
 <div class="table-container"><div class="table-header"><div class="table-title">Recommendations</div></div>
 <table id="recsTable"><thead><tr><th data-sort="priority">Priority<span class="sort-arrow"></span></th><th data-sort="recommendation">Recommendation<span class="sort-arrow"></span></th><th data-sort="insight">Insight<span class="sort-arrow"></span></th></tr></thead><tbody id="recs"></tbody></table></div>
 <div class="table-container"><div class="table-header"><div class="table-title">Top Content</div></div>
-<table id="contentTable"><thead><tr><th class="r" data-sort="index">#<span class="sort-arrow"></span></th><th data-sort="title">Title<span class="sort-arrow"></span></th><th data-sort="platform">Platform<span class="sort-arrow"></span></th><th class="r" data-sort="views">Views<span class="sort-arrow"></span></th><th class="r" data-sort="engagement">Engagement<span class="sort-arrow"></span></th><th class="r" data-sort="rate">Rate<span class="sort-arrow"></span></th></tr></thead><tbody id="content"></tbody></table></div>
+<table id="contentTable"><thead><tr><th class="r" data-sort="index">#<span class="sort-arrow"></span></th><th data-sort="title">Title<span class="sort-arrow"></span></th><th data-sort="platform">Platform<span class="sort-arrow"></span></th><th class="r" data-sort="views">Views<span class="sort-arrow"></span></th><th class="r" data-sort="engagement">Engagement<span class="sort-arrow"></span></th><th class="r" data-sort="rate">Rate<span class="sort-arrow"></span></th><th class="r ga-col" data-sort="sessions">Sessions<span class="sort-arrow"></span></th><th class="r ga-col" data-sort="conversions">Conv.<span class="sort-arrow"></span></th><th data-sort="stage">Stage<span class="sort-arrow"></span></th></tr></thead><tbody id="content"></tbody></table></div>
+</div>
+
+<!-- FUNNEL VIEW -->
+<div id="funnelView" style="display:none">
+<div class="stats-grid" id="funnelCards"></div>
+<div class="charts-grid">
+<div class="chart-card"><div class="chart-title">Views by Funnel Stage</div><div class="chart-container"><canvas id="funnelChart"></canvas></div></div>
+<div class="chart-card"><div class="chart-title">Goal Progress</div><div class="chart-container"><canvas id="goalChart"></canvas></div></div>
+</div>
+<div class="table-container"><div class="table-header"><div class="table-title">Content by Stage</div></div>
+<table><thead><tr><th style="width:100px">Stage</th><th>Title</th><th>Platform</th><th class="r">Views</th><th class="r">Engagement</th><th class="r">Sessions</th><th class="r">Conv.</th></tr></thead><tbody id="funnelContent"></tbody></table></div>
 </div>
 
 <!-- SETTINGS VIEW -->
 <div id="settingsView" style="display:none">
 
 <div class="s-section">
-<div class="s-title">Manage Months</div>
+<div class="s-title">Clients</div>
+<div id="clientList"></div>
+<div id="addClientForm" style="margin-top:12px;display:none">
+<div class="s-row">
+<div class="s-field"><div class="s-lbl">Client Name</div><input class="s-input" id="newClientName" placeholder="e.g. Acme Corp" style="width:200px"></div>
+</div>
+<div class="s-lbl" style="margin-bottom:4px">Platforms</div>
+<div class="s-platform-checks" id="newClientPlatforms">
+<label class="s-platform-check"><input type="checkbox" value="youtube" checked><span class="platform-dot youtube" style="display:inline-block"></span>YouTube</label>
+<label class="s-platform-check"><input type="checkbox" value="instagram" checked><span class="platform-dot instagram" style="display:inline-block"></span>Instagram</label>
+<label class="s-platform-check"><input type="checkbox" value="tiktok" checked><span class="platform-dot tiktok" style="display:inline-block"></span>TikTok</label>
+<label class="s-platform-check"><input type="checkbox" value="linkedin" checked><span class="platform-dot linkedin" style="display:inline-block"></span>LinkedIn</label>
+</div>
+<div class="s-row" style="margin-top:8px">
+<button class="s-btn s-btn-primary" onclick="createClient()">Create Client</button>
+<button class="s-btn s-btn-secondary" onclick="toggleAddClient(false)">Cancel</button>
+</div>
+</div>
+<button class="s-btn s-btn-secondary s-btn-sm" id="addClientBtn" onclick="toggleAddClient(true)" style="margin-top:8px">+ Add Client</button>
+</div>
+
+<div class="s-section">
+<div class="s-title">Data Import</div>
 <div class="s-month-bar" id="monthBar"></div>
 <div class="s-row" style="margin-top:12px">
 <div class="s-field"><div class="s-lbl">Month</div><select class="s-input" id="newMonthMonth" style="width:130px"><option value="January">January</option><option value="February">February</option><option value="March">March</option><option value="April">April</option><option value="May">May</option><option value="June">June</option><option value="July">July</option><option value="August">August</option><option value="September">September</option><option value="October">October</option><option value="November">November</option><option value="December">December</option></select></div>
 <div class="s-field"><div class="s-lbl">Year</div><select class="s-input" id="newMonthYear" style="width:100px"></select></div>
 <button class="s-btn s-btn-primary" onclick="addMonth()">Add Month</button>
 </div>
+<div id="importArea" style="margin-top:20px"></div>
+</div>
+
+<div class="s-section" id="goalValuesSection" style="display:none">
+<div class="s-title">Goal Values — <span id="goalValuesLabel">select a month</span></div>
+<p style="color:var(--muted2);font-size:11px;margin-bottom:12px;letter-spacing:0.02em">Enter actual values for each conversion goal this month.</p>
+<div id="goalValuesEditor"></div>
 </div>
 
 <div class="s-section">
-<div class="s-title">Upload Data — <span id="editMonthLabel">select a month</span></div>
-<p style="color:var(--muted2);font-size:11px;margin-bottom:16px;letter-spacing:0.02em">Upload the export files from each platform. Data is auto-saved on upload.</p>
-<div id="uploadZones"></div>
-</div>
-
-<div class="s-section">
-<div class="s-title">Upload Status</div>
-<div id="uploadStatus" style="font-size:12px;color:var(--muted2)"></div>
+<div class="s-title">Conversion Goals</div>
+<p style="color:var(--muted2);font-size:11px;margin-bottom:12px;letter-spacing:0.02em">Define measurable goals for each funnel stage. Targets are monthly.</p>
+<div id="goalsEditor"></div>
 </div>
 
 <div class="s-section">
@@ -171,6 +276,12 @@ select.s-input{cursor:pointer}
 <p style="color:var(--muted2);font-size:11px;margin-bottom:12px;letter-spacing:0.02em">Add strategic recommendations. These apply across all months.</p>
 <div id="recsEditor"></div>
 <button class="s-btn s-btn-secondary s-btn-sm" onclick="addRec()" style="margin-top:8px">+ Add Recommendation</button>
+</div>
+
+<div class="s-section">
+<div class="s-title">Security</div>
+<p style="color:var(--muted2);font-size:11px;margin-bottom:12px;letter-spacing:0.02em">Protect this dashboard with a password.</p>
+<div id="securityEditor"></div>
 </div>
 
 <div class="s-section">
@@ -196,17 +307,58 @@ const DEFAULT_DATA={"january":{"label":"January 2026","summary":{"totalViews":72
 const DEFAULT_RECS=[{r:"Focus on personality-driven storytelling",i:"People content drives 10x more views",p:"High"},{r:"Create provocative questions",i:"'Do rich people wear coats?' = 227K views",p:"High"},{r:"Expand YouTube",i:"Instagram=97%, YouTube underused",p:"Medium"},{r:"Balance climate + human stories",i:"10%+ engagement on climate",p:"High"},{r:"Post 5-7x per week",i:"Builds momentum",p:"Medium"},{r:"Instagram > YouTube Shorts",i:"Minimal effort, new audience",p:"Medium"}];
 
 /* ── State ── */
-let DATA,RECS;
-try{DATA=JSON.parse(localStorage.getItem('ww_data'))||JSON.parse(JSON.stringify(DEFAULT_DATA));}catch(e){DATA=JSON.parse(JSON.stringify(DEFAULT_DATA));}
-try{RECS=JSON.parse(localStorage.getItem('ww_recs'))||JSON.parse(JSON.stringify(DEFAULT_RECS));}catch(e){RECS=JSON.parse(JSON.stringify(DEFAULT_RECS));}
+const PLATFORM_LABELS={youtube:'YouTube',instagram:'Instagram',tiktok:'TikTok',linkedin:'LinkedIn'};
+const FUNNEL_STAGES=[{id:'discover',label:'Discover'},{id:'engage',label:'Engage'},{id:'convert',label:'Convert'},{id:'partner',label:'Partner'}];
+const DEFAULT_CLIENTS=[{id:'world_within',name:'World Within',platforms:['youtube','instagram','tiktok','linkedin']},{id:'big_buoy',name:'Big Buoy',platforms:['instagram','linkedin']}];
+let CLIENTS,ACTIVE_CLIENT,DATA,RECS;
 
-let M='combined',F='all',CH={};
+function initClients(){
+try{CLIENTS=JSON.parse(localStorage.getItem('ww_clients'));}catch(e){CLIENTS=null;}
+if(!CLIENTS){
+CLIENTS=JSON.parse(JSON.stringify(DEFAULT_CLIENTS));
+const oldData=localStorage.getItem('ww_data');
+const oldRecs=localStorage.getItem('ww_recs');
+if(oldData){localStorage.setItem('ww_world_within_data',oldData);localStorage.removeItem('ww_data');}
+if(oldRecs){localStorage.setItem('ww_world_within_recs',oldRecs);localStorage.removeItem('ww_recs');}
+localStorage.setItem('ww_clients',JSON.stringify(CLIENTS));
+}
+ACTIVE_CLIENT=localStorage.getItem('ww_active_client')||CLIENTS[0].id;
+localStorage.setItem('ww_active_client',ACTIVE_CLIENT);
+}
+
+function getClientConfig(){return CLIENTS.find(c=>c.id===ACTIVE_CLIENT)||CLIENTS[0];}
+
+function loadClientData(){
+const cid=getClientConfig().id;
+try{DATA=JSON.parse(localStorage.getItem('ww_'+cid+'_data'));}catch(e){DATA=null;}
+if(!DATA){DATA=cid==='world_within'?JSON.parse(JSON.stringify(DEFAULT_DATA)):{};}
+try{RECS=JSON.parse(localStorage.getItem('ww_'+cid+'_recs'));}catch(e){RECS=null;}
+if(!RECS){RECS=cid==='world_within'?JSON.parse(JSON.stringify(DEFAULT_RECS)):[];}
+}
+
+function populateClientSel(){
+const sel=document.getElementById('clientSel');if(!sel)return;
+sel.innerHTML='';
+CLIENTS.forEach(c=>{const o=document.createElement('option');o.value=c.id;o.textContent=c.name;sel.appendChild(o);});
+sel.value=ACTIVE_CLIENT;
+}
+
+function switchClient(id){
+ACTIVE_CLIENT=id;localStorage.setItem('ww_active_client',id);
+loadClientData();F='all';M='combined';editMonth=null;
+const inSettings=document.getElementById('settingsView').style.display!=='none';
+if(inSettings){recompute();renderSettings();}else{showView('dash');}
+}
+
+let M='combined',F='all',V='overview',CH={};
+let _funnelItems=[];
 let contentSort={key:'views',dir:-1};
 let recsSort={key:null,dir:1};
 let editMonth=null;
+let _tblItems=[];
 
 /* ── Helpers ── */
-function monthKeys(){return Object.keys(DATA).filter(k=>k!=='combined'&&k!=='growth');}
+function monthKeys(){return Object.keys(DATA).filter(k=>k!=='combined'&&k!=='growth'&&!k.startsWith('_'));}
 function n(v){return parseFloat(v)||0;}
 function fmtK(v){if(v>=1000000)return(v/1000000).toFixed(1)+'M';if(v>=1000)return(v/1000).toFixed(1)+'K';return String(v);}
 function toast(msg){const t=document.getElementById('toast');t.textContent=msg;t.style.display='block';setTimeout(()=>t.style.display='none',2500);}
@@ -251,10 +403,11 @@ reach:Math.round((last.summary.totalReach-first.summary.totalReach)/first.summar
 engagement:Math.round((last.summary.totalEngagement-first.summary.totalEngagement)/first.summary.totalEngagement*1000)/10
 };
 }else{DATA.growth={views:0,reach:0,engagement:0};}
+keys.forEach(k=>{if(DATA[k]._ga&&DATA[k]._ga.rows)applyGAMatches(DATA[k]);});
 }
 
 /* ── Persist ── */
-function persist(){localStorage.setItem('ww_data',JSON.stringify(DATA));localStorage.setItem('ww_recs',JSON.stringify(RECS));}
+function persist(){const cid=getClientConfig().id;localStorage.setItem('ww_'+cid+'_data',JSON.stringify(DATA));localStorage.setItem('ww_'+cid+'_recs',JSON.stringify(RECS));}
 
 /* ── Month selector ── */
 function populateMonthSel(){
@@ -271,31 +424,29 @@ M=sel.value;
 
 /* ── View toggle ── */
 function showView(v){
-document.getElementById('dashView').style.display=v==='dash'?'':'none';
+document.getElementById('dashView').style.display=(v==='dash'&&V==='overview')?'':'none';
+document.getElementById('funnelView').style.display=(v==='dash'&&V==='funnel')?'':'none';
 document.getElementById('settingsView').style.display=v==='settings'?'':'none';
 const fb=document.getElementById('filterBar');
 if(v==='dash'){
-fb.innerHTML='<div class="header-tabs" id="platformTabs"><div class="tab" data-platform="all">All</div><div class="tab" data-platform="youtube">YouTube</div><div class="tab" data-platform="instagram">Instagram</div><div class="tab" data-platform="tiktok">TikTok</div><div class="tab" data-platform="linkedin">LinkedIn</div></div><select class="month-selector" id="monthSel"></select>';
-const at=fb.querySelector('[data-platform="'+F+'"]');if(at)at.classList.add('active');
-bindTabs();recompute();populateMonthSel();UPD();
+const cc=getClientConfig();
+const vTabs='<div class="tab'+(V==='overview'?' active':'')+'" onclick="setDashView(\'overview\')">Overview</div><div class="tab'+(V==='funnel'?' active':'')+'" onclick="setDashView(\'funnel\')">Funnel</div>';
+let platSection='';
+if(V==='overview'){const platTabs=cc.platforms.map(p=>'<div class="tab" data-platform="'+p+'">'+PLATFORM_LABELS[p]+'</div>').join('');platSection='<div class="tab-separator"></div><div class="tab" data-platform="all">All</div>'+platTabs;}
+fb.innerHTML='<div class="header-tabs" id="platformTabs">'+vTabs+platSection+'</div><select class="month-selector" id="monthSel"></select>';
+if(V==='overview'){const at=fb.querySelector('[data-platform="'+F+'"]');if(at)at.classList.add('active');}
+bindTabs();recompute();populateMonthSel();REND_RECS();
+if(V==='overview')UPD();else FUNNEL_UPD();
 }else{
-fb.innerHTML='<button class="back-link" onclick="showView(\'dash\')">&#8592; Back to Dashboard</button>';
+fb.innerHTML='<button class="back-link" onclick="showView(\'dash\')">&#8592; Back to '+(V==='funnel'?'Funnel':'Dashboard')+'</button>';
 renderSettings();
 }
 }
-
-/* ── Upload zone definitions ── */
-const UPLOAD_ZONES=[
-{id:'tiktok',label:'TikTok',dot:'tiktok',accept:'.csv',hint:'TikTok daily data CSV (Date, Video Views, Likes, Comments, Shares)'},
-{id:'metaPosts',label:'Instagram Posts',dot:'instagram',accept:'.csv',hint:'Meta Posts CSV export (Post ID, Views, Reach, Likes, Shares, Comments, Saves)'},
-{id:'metaStories',label:'Instagram Stories',dot:'instagram',accept:'.csv',hint:'Meta Stories CSV export (Post ID, Views, Reach, Likes, Shares, Replies)'},
-{id:'ytVideos',label:'YouTube Videos',dot:'youtube',accept:'.csv',hint:'YouTube Videos CSV export (Video title, Views, Likes, Shares, Comments)'},
-{id:'ytShorts',label:'YouTube Shorts',dot:'youtube',accept:'.csv',hint:'YouTube Shorts CSV export (Video title, Views, Likes, Shares, Comments)'},
-{id:'linkedin',label:'LinkedIn',dot:'linkedin',accept:'.xls,.xlsx,.csv',hint:'LinkedIn analytics XLS/CSV export (Metrics + All Posts sheets)'}
-];
+function setDashView(v){V=v;showView('dash');}
 
 /* ── Settings rendering ── */
 function renderSettings(){
+renderClientList();
 const keys=monthKeys();
 const bar=document.getElementById('monthBar');
 bar.innerHTML='';
@@ -307,42 +458,19 @@ btn.onclick=()=>{editMonth=k;renderSettings();};
 bar.appendChild(btn);
 });
 if(!editMonth&&keys.length>0)editMonth=keys[0];
-const lbl=editMonth?(DATA[editMonth].label||editMonth):'select a month';
-document.getElementById('editMonthLabel').textContent=lbl;
 
-// Build upload zones
-const container=document.getElementById('uploadZones');
-container.innerHTML='';
-if(!editMonth){container.innerHTML='<p style="color:var(--muted2)">Add a month first.</p>';return;}
-UPLOAD_ZONES.forEach(z=>{
-const div=document.createElement('div');div.style.marginBottom='16px';
-div.innerHTML='<div class="s-subtitle"><span class="platform-dot '+z.dot+'" style="display:inline-block;vertical-align:middle;margin-right:6px"></span>'+z.label+'</div>'+
-'<div class="s-upload-zone" id="zone_'+z.id+'">'+
-'<div class="s-upload-icon">&#8593;</div>'+
-'<div>Drop file here, or <label class="s-upload-link">browse<input type="file" accept="'+z.accept+'" onchange="handlePlatformUpload(this,\''+z.id+'\')" hidden></label></div>'+
-'<div class="s-upload-hint">'+z.hint+'</div>'+
-'</div>'+
-'<div id="status_'+z.id+'" style="font-size:11px;margin-top:4px"></div>';
-container.appendChild(div);
-});
+// Data import area (universal upload + status + GA matching)
+renderImportArea();
 
-// Setup drag-drop for each zone
-UPLOAD_ZONES.forEach(z=>{
-const zone=document.getElementById('zone_'+z.id);if(!zone)return;
-zone.addEventListener('dragover',e=>{e.preventDefault();zone.classList.add('dragover');});
-zone.addEventListener('dragleave',()=>zone.classList.remove('dragover'));
-zone.addEventListener('drop',e=>{
-e.preventDefault();zone.classList.remove('dragover');
-const file=e.dataTransfer.files[0];if(!file||!editMonth)return;
-processUpload(file,z.id);
-});
-});
-
-// Upload status summary
-renderUploadStatus();
+// Conversion goals
+renderGoalsEditor();
+renderGoalValues();
 
 // Recommendations editor
 renderRecsEditor();
+
+// Security
+renderSecurity();
 
 // Month picker defaults
 initMonthPicker();
@@ -367,12 +495,14 @@ const yt=d.platforms.youtube;
 const ig=d.platforms.instagram;
 const tk=d.platforms.tiktok;
 const li=d.platforms.linkedin;
-checks.push({name:'TikTok',ok:tk.views>0,val:tk.views+' views'});
-checks.push({name:'Instagram Posts',ok:ig.views>0,val:ig.views+' views'});
-checks.push({name:'Instagram Stories',ok:(d._storiesUploaded||false),val:d._storiesUploaded?'uploaded':'—'});
-checks.push({name:'YouTube Videos',ok:(d._ytVideosUploaded||false),val:d._ytVideosUploaded?'uploaded':'—'});
-checks.push({name:'YouTube Shorts',ok:(d._ytShortsUploaded||false),val:d._ytShortsUploaded?'uploaded':'—'});
-checks.push({name:'LinkedIn',ok:li.impressions>0,val:li.impressions+' impressions'});
+const cp=getClientConfig().platforms;
+if(cp.includes('tiktok'))checks.push({name:'TikTok',ok:tk.views>0,val:tk.views+' views'});
+if(cp.includes('instagram'))checks.push({name:'Instagram Posts',ok:ig.views>0,val:ig.views+' views'});
+if(cp.includes('instagram'))checks.push({name:'Instagram Stories',ok:(d._storiesUploaded||false),val:d._storiesUploaded?'uploaded':'—'});
+if(cp.includes('youtube'))checks.push({name:'YouTube Videos',ok:(d._ytVideosUploaded||false),val:d._ytVideosUploaded?'uploaded':'—'});
+if(cp.includes('youtube'))checks.push({name:'YouTube Shorts',ok:(d._ytShortsUploaded||false),val:d._ytShortsUploaded?'uploaded':'—'});
+if(cp.includes('linkedin'))checks.push({name:'LinkedIn',ok:li.impressions>0,val:li.impressions+' impressions'});
+if(d._ga&&d._ga.rows&&d._ga.rows.length>0){const gm=Object.keys(d._ga.matches||{}).length;checks.push({name:'Google Analytics',ok:gm>0,val:d._ga.rows.length+' campaigns, '+gm+' matched'});}
 el.innerHTML=checks.map(c=>'<div style="padding:4px 0;display:flex;gap:8px;align-items:center"><span style="color:'+(c.ok?'#4ade80':'#777')+'">'+( c.ok?'&#10003;':'&#9675;')+'</span><span>'+c.name+'</span><span style="color:var(--muted)">'+c.val+'</span></div>').join('');
 }
 
@@ -393,6 +523,109 @@ el.appendChild(row);
 });
 }
 function addRec(){RECS.push({r:'',i:'',p:'Medium'});persist();renderRecsEditor();REND_RECS();}
+
+/* ── Client management ── */
+function renderClientList(){
+const el=document.getElementById('clientList');if(!el)return;
+el.innerHTML='';
+CLIENTS.forEach(c=>{
+const isActive=c.id===ACTIVE_CLIENT;
+const div=document.createElement('div');
+div.className='s-client-item'+(isActive?' active':'');
+div.innerHTML='<div><div class="s-client-name">'+escH(c.name)+(isActive?' &#9679;':'')+'</div><div class="s-client-platforms">'+c.platforms.map(p=>PLATFORM_LABELS[p]).join(', ')+'</div></div><div style="display:flex;gap:8px;align-items:center">'+(!isActive?'<button class="s-btn s-btn-secondary s-btn-sm" onclick="switchClient(\''+c.id+'\')">Switch</button>':'<span style="font-size:10px;color:var(--accent);font-weight:700;letter-spacing:0.08em;text-transform:uppercase">ACTIVE</span>')+(CLIENTS.length>1&&!isActive?'<button class="s-btn s-btn-danger s-btn-sm" onclick="deleteClient(\''+c.id+'\')">Delete</button>':'')+'</div>';
+el.appendChild(div);
+});
+}
+function toggleAddClient(show){document.getElementById('addClientForm').style.display=show?'':'none';document.getElementById('addClientBtn').style.display=show?'none':'';}
+function createClient(){
+const name=document.getElementById('newClientName').value.trim();
+if(!name){toast('Enter a client name');return;}
+const id=name.toLowerCase().replace(/[^a-z0-9]/g,'_');
+if(CLIENTS.find(c=>c.id===id)){toast('Client already exists');return;}
+const checks=document.querySelectorAll('#newClientPlatforms input:checked');
+const platforms=Array.from(checks).map(c=>c.value);
+if(platforms.length===0){toast('Select at least one platform');return;}
+CLIENTS.push({id:id,name:name,platforms:platforms});
+localStorage.setItem('ww_clients',JSON.stringify(CLIENTS));
+ACTIVE_CLIENT=id;localStorage.setItem('ww_active_client',id);
+DATA={};RECS=[];persist();
+loadClientData();
+toggleAddClient(false);
+document.getElementById('newClientName').value='';
+document.querySelectorAll('#newClientPlatforms input').forEach(cb=>cb.checked=true);
+populateClientSel();
+renderSettings();
+toast('Created '+name);
+}
+function deleteClient(id){
+const client=CLIENTS.find(c=>c.id===id);
+if(!client||id===ACTIVE_CLIENT)return;
+if(!confirm('Delete "'+client.name+'"? This removes all their data.'))return;
+CLIENTS=CLIENTS.filter(c=>c.id!==id);
+localStorage.removeItem('ww_'+id+'_data');
+localStorage.removeItem('ww_'+id+'_recs');
+localStorage.setItem('ww_clients',JSON.stringify(CLIENTS));
+populateClientSel();
+renderSettings();
+toast('Deleted '+client.name);
+}
+
+/* ── Conversion Goals ── */
+function ensureGoals(){if(!DATA._goals)DATA._goals={discover:[],engage:[],convert:[],partner:[]};}
+function renderGoalsEditor(){
+ensureGoals();
+const el=document.getElementById('goalsEditor');if(!el)return;
+el.innerHTML='';
+FUNNEL_STAGES.forEach(s=>{
+const goals=DATA._goals[s.id]||[];
+let html='<div class="stage-header"><span class="stage-dot stage-dot-'+s.id+'"></span><span style="font-size:11px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--text)">'+s.label+'</span></div>';
+goals.forEach((g,i)=>{
+html+='<div class="goal-row"><input class="s-input" style="flex:2" placeholder="Goal name" value="'+escH(g.name)+'" onchange="updateGoal(\''+s.id+'\','+i+',\'name\',this.value)"><input class="s-input" style="width:90px" type="number" placeholder="Target" value="'+(g.target||'')+'" onchange="updateGoal(\''+s.id+'\','+i+',\'target\',parseInt(this.value)||0)"><button class="s-btn s-btn-danger s-btn-sm" onclick="removeGoal(\''+s.id+'\','+i+')">X</button></div>';
+});
+html+='<button class="s-btn s-btn-secondary s-btn-sm" onclick="addGoal(\''+s.id+'\')" style="margin-top:4px">+ Add Goal</button>';
+el.innerHTML+=html;
+});
+}
+function addGoal(stage){ensureGoals();if(!DATA._goals[stage])DATA._goals[stage]=[];DATA._goals[stage].push({name:'',target:0});persist();renderGoalsEditor();renderGoalValues();}
+function removeGoal(stage,idx){ensureGoals();DATA._goals[stage].splice(idx,1);persist();renderGoalsEditor();renderGoalValues();}
+function updateGoal(stage,idx,field,value){ensureGoals();if(DATA._goals[stage][idx])DATA._goals[stage][idx][field]=value;persist();renderGoalValues();}
+
+function renderGoalValues(){
+const section=document.getElementById('goalValuesSection');
+const el=document.getElementById('goalValuesEditor');
+if(!section||!el)return;
+ensureGoals();
+const hasGoals=Object.values(DATA._goals).some(arr=>arr.length>0);
+if(!editMonth||!hasGoals){section.style.display='none';return;}
+section.style.display='';
+document.getElementById('goalValuesLabel').textContent=DATA[editMonth]?DATA[editMonth].label||editMonth:'';
+const d=DATA[editMonth];if(!d)return;
+if(!d._goalValues)d._goalValues={};
+el.innerHTML='';
+FUNNEL_STAGES.forEach(s=>{
+const goals=DATA._goals[s.id]||[];
+if(goals.length===0)return;
+let html='<div class="stage-header"><span class="stage-dot stage-dot-'+s.id+'"></span><span style="font-size:11px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--text)">'+s.label+'</span></div>';
+const stageColors={discover:'var(--red)',engage:'var(--amber)',convert:'var(--green)',partner:'var(--blue)'};
+goals.forEach((g,i)=>{
+if(!g.name)return;
+const key=s.id+'|'+g.name;
+const actual=d._goalValues[key]||0;
+const target=g.target||1;
+const pct=Math.min(100,Math.round(actual/target*100));
+const color=stageColors[s.id]||'var(--accent)';
+html+='<div class="goal-progress"><div class="goal-progress-label">'+escH(g.name)+'</div><input class="s-input goal-progress-val" type="number" placeholder="0" value="'+(actual||'')+'" onchange="setGoalValue(\''+escH(key)+'\',parseInt(this.value)||0)"><div class="goal-progress-bar"><div class="goal-progress-fill" style="width:'+pct+'%;background:'+color+'"></div></div><div class="goal-progress-target">/ '+g.target.toLocaleString()+'</div><div class="goal-progress-pct" style="color:'+color+'">'+pct+'%</div></div>';
+});
+el.innerHTML+=html;
+});
+}
+function setGoalValue(key,value){
+if(!editMonth||!DATA[editMonth])return;
+if(!DATA[editMonth]._goalValues)DATA[editMonth]._goalValues={};
+DATA[editMonth]._goalValues[key]=value;
+persist();
+renderGoalValues();
+}
 
 /* ── Settings actions ── */
 function initMonthPicker(){
@@ -486,43 +719,6 @@ return rows;
 
 function normalizeHeader(h){return String(h).toLowerCase().replace(/[^a-z]/g,'');}
 function findCol(headers,candidates){for(const c of candidates){const i=headers.indexOf(c);if(i>=0)return i;}return-1;}
-
-/* ── Per-platform upload handler ── */
-function handlePlatformUpload(input,type){
-const file=input.files[0];if(!file||!editMonth)return;
-processUpload(file,type);
-input.value='';
-}
-
-function processUpload(file,type){
-if(!editMonth){toast('Select a month first');return;}
-const ext=file.name.split('.').pop().toLowerCase();
-if(type==='linkedin'&&(ext==='xls'||ext==='xlsx')){
-// LinkedIn Excel: read both sheets
-const reader=new FileReader();
-reader.onload=function(e){
-try{
-const wb=XLSX.read(e.target.result,{type:'array'});
-parseLinkedInExcel(wb);
-}catch(err){toast('Could not read LinkedIn file: '+err.message);}
-};
-reader.readAsArrayBuffer(file);
-return;
-}
-// CSV files
-const reader=new FileReader();
-reader.onload=function(e){
-const rows=parseCSV(e.target.result);
-if(rows.length<2){toast('File has no data rows');return;}
-if(type==='tiktok')parseTikTokCSV(rows);
-else if(type==='metaPosts')parseMetaPostsCSV(rows);
-else if(type==='metaStories')parseMetaStoriesCSV(rows);
-else if(type==='ytVideos')parseYouTubeCSV(rows,'videos');
-else if(type==='ytShorts')parseYouTubeCSV(rows,'shorts');
-else if(type==='linkedin')parseLinkedInCSV(rows);
-};
-reader.readAsText(file);
-}
 
 /* ── TikTok CSV parser ── */
 function parseTikTokCSV(rows){
@@ -815,6 +1011,211 @@ recalcSummary(d);
 recompute();persist();renderUploadStatus();toast('LinkedIn CSV imported');
 }
 
+/* ── Google Analytics Integration ── */
+
+function autoMatchGA(d){
+const ga=d._ga;if(!ga||!ga.rows)return;
+ga.matches={};
+const content=d.topContent||[];
+ga.rows.forEach((row,ri)=>{
+const cNorm=(row.campaign||'').toLowerCase().replace(/[^a-z0-9]+/g,' ').trim();
+if(!cNorm)return;
+const cWords=cNorm.split(/\s+/).filter(w=>w.length>=3);
+if(cWords.length===0)return;
+let bestIdx=-1,bestScore=0;
+content.forEach((c,ci)=>{
+const tNorm=(c.title||'').toLowerCase().replace(/[^a-z0-9]+/g,' ').trim();
+const tWords=tNorm.split(/\s+/).filter(w=>w.length>=3);
+const common=cWords.filter(w=>tWords.some(tw=>tw.includes(w)||w.includes(tw))).length;
+const score=common/cWords.length;
+if(score>bestScore&&score>=0.4){bestScore=score;bestIdx=ci;}
+});
+if(bestIdx>=0)ga.matches[ri]=bestIdx;
+});
+}
+
+function applyGAMatches(d){
+(d.topContent||[]).forEach(c=>{delete c.gaSessions;delete c.gaConversions;delete c.gaRevenue;});
+const ga=d._ga;if(!ga||!ga.rows)return;
+Object.entries(ga.matches||{}).forEach(([ri,ci])=>{
+const row=ga.rows[parseInt(ri)];const post=(d.topContent||[])[ci];
+if(row&&post){post.gaSessions=(post.gaSessions||0)+(row.sessions||0);post.gaConversions=(post.gaConversions||0)+(row.conversions||0);post.gaRevenue=(post.gaRevenue||0)+(row.revenue||0);}
+});
+}
+
+function getGASummary(d){
+const ga=d?d._ga:null;
+const summary={totalSessions:0,totalConversions:0,matchedSessions:0,matchedConversions:0,channels:[]};
+if(!ga)return summary;
+if(ga.channels&&ga.channels.length>0){summary.channels=ga.channels;ga.channels.forEach(ch=>{summary.totalSessions+=ch.sessions;summary.totalConversions+=ch.conversions;});}
+if(ga.rows&&ga.rows.length>0){
+const campTotal={sessions:0,conversions:0};
+ga.rows.forEach(r=>{campTotal.sessions+=r.sessions||0;campTotal.conversions+=r.conversions||0;});
+if(summary.totalSessions===0){summary.totalSessions=campTotal.sessions;summary.totalConversions=campTotal.conversions;}
+Object.values(ga.matches||{}).forEach(ci=>{});
+Object.entries(ga.matches||{}).forEach(([ri])=>{const r=ga.rows[parseInt(ri)];if(r){summary.matchedSessions+=r.sessions||0;summary.matchedConversions+=r.conversions||0;}});
+}
+return summary;
+}
+
+function hasGAData(d){
+const ga=d?d._ga:null;if(!ga)return false;
+return(ga.channels&&ga.channels.length>0)||(ga.rows&&ga.rows.length>0);
+}
+
+function renderGAMatching(){
+const el=document.getElementById('gaMatchingUI');if(!el||!editMonth){if(el)el.innerHTML='';return;}
+const d=DATA[editMonth];const ga=d?d._ga:null;
+if(!ga||!ga.rows||ga.rows.length===0){el.innerHTML='';return;}
+const content=d.topContent||[];
+const summary=getGASummary(d);
+const unmatchedSess=summary.totalSessions-summary.matchedSessions;
+let html='<div class="s-subtitle">Campaign Matching</div>';
+html+='<div style="display:flex;gap:24px;margin-bottom:12px;font-size:11px"><div><span style="color:var(--green);font-weight:700">'+summary.matchedSessions.toLocaleString()+'</span> <span style="color:var(--muted2)">sessions matched</span></div><div><span style="color:'+(unmatchedSess>0?'var(--amber)':'var(--muted2)')+';font-weight:700">'+unmatchedSess.toLocaleString()+'</span> <span style="color:var(--muted2)">unmatched</span></div><div><span style="color:var(--muted2)">'+summary.totalConversions.toLocaleString()+' key events</span></div></div>';
+// Sort rows by sessions desc
+const sorted=ga.rows.map((r,i)=>({...r,_i:i})).sort((a,b)=>(b.sessions||0)-(a.sessions||0));
+html+='<table class="s-tbl"><thead><tr><th>Campaign</th><th>Source</th><th style="text-align:right">Sessions</th><th style="text-align:right">Conv.</th><th style="text-align:right">Rate</th><th>Matched Post</th></tr></thead><tbody>';
+sorted.forEach(row=>{
+const ri=row._i;
+const mi=ga.matches[ri]!==undefined?ga.matches[ri]:-1;
+const rate=row.sessions>0?Math.round(row.conversions/row.sessions*10000)/100:0;
+const opts='<option value="-1">— Unmatched —</option>'+content.map((c,ci)=>'<option value="'+ci+'"'+(mi===ci?' selected':'')+'>'+escH((c.title||'').substring(0,50))+'</option>').join('');
+const rowStyle=mi<0&&row.sessions>50?'background:var(--amber-dim)':'';
+html+='<tr style="'+rowStyle+'"><td style="font-size:11px;max-width:180px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">'+escH(row.campaign)+'</td><td style="font-size:11px;color:var(--muted2)">'+escH(row.source||'')+'</td><td style="text-align:right;font-size:11px">'+(row.sessions||0).toLocaleString()+'</td><td style="text-align:right;font-size:11px">'+(row.conversions||0).toLocaleString()+'</td><td style="text-align:right;font-size:11px;color:var(--muted2)">'+rate.toFixed(1)+'%</td><td><select class="s-input" style="font-size:10px;padding:4px 6px" onchange="setGAMatch('+ri+',parseInt(this.value))">'+opts+'</select></td></tr>';
+});
+html+='</tbody></table>';
+el.innerHTML=html;
+}
+
+function setGAMatch(gaIdx,postIdx){
+if(!editMonth||!DATA[editMonth]||!DATA[editMonth]._ga)return;
+const ga=DATA[editMonth]._ga;
+if(postIdx<0)delete ga.matches[gaIdx];else ga.matches[gaIdx]=postIdx;
+applyGAMatches(DATA[editMonth]);
+recompute();persist();renderImportArea();
+}
+
+/* ── Smart file detection + universal upload ── */
+function detectFileType(file,allRows,rows){
+const headers=rows[0].map(normalizeHeader);
+// GA4 (comment headers or campaign/channel columns)
+if(allRows.some(r=>String(r[0]).startsWith('#'))){
+const dr=allRows.filter(r=>!String(r[0]).startsWith('#'));
+if(dr.length>0){const h=dr[0].map(normalizeHeader);if(h.some(x=>x.includes('campaign')||x.includes('channelgroup')||x.includes('sessionprimary')))return'ga';}
+}
+if(headers.some(h=>(h.includes('campaign')&&!h.includes('keyevent'))||h.includes('channelgroup')||h.includes('sessionprimary')))return'ga';
+// TikTok
+if(headers.some(h=>h==='videoviews'||h==='profileviews'))return'tiktok';
+// Instagram Posts (has description/posttype + saves or comments)
+if((headers.includes('description')||headers.includes('posttype'))&&(headers.includes('saves')||headers.includes('comments')))return'metaPosts';
+// Instagram Stories (has replies, no saves/description)
+if(headers.includes('replies')&&!headers.includes('saves')&&!headers.includes('description'))return'metaStories';
+// YouTube (has videotitle or content + subscribers/commentsadded)
+if(headers.some(h=>h==='videotitle'||h==='content')&&headers.some(h=>h.includes('subscribers')||h==='commentsadded'))return file.name.toLowerCase().includes('short')?'ytShorts':'ytVideos';
+// LinkedIn CSV (date + impressions)
+if(headers.includes('date')&&headers.some(h=>h.includes('impressions')))return'linkedin';
+return null;
+}
+
+function handleUniversalUpload(input){
+if(!editMonth){toast('Select a month first');return;}
+Array.from(input.files).forEach(f=>processUniversalUpload(f));
+input.value='';
+}
+
+function processUniversalUpload(file){
+if(!editMonth){toast('Select a month first');return;}
+const ext=file.name.split('.').pop().toLowerCase();
+if(ext==='xls'||ext==='xlsx'){
+const reader=new FileReader();
+reader.onload=function(e){
+try{const wb=XLSX.read(e.target.result,{type:'array'});parseLinkedInExcel(wb);renderImportArea();}
+catch(err){toast('Could not read file: '+err.message);}
+};reader.readAsArrayBuffer(file);return;
+}
+const reader=new FileReader();
+reader.onload=function(e){
+const allRows=parseCSV(e.target.result);
+const rows=allRows.filter(r=>!String(r[0]).startsWith('#'));
+if(rows.length<2){toast('File has no data rows');return;}
+const type=detectFileType(file,allRows,rows);
+if(!type){toast('Could not detect file type — check the CSV format');return;}
+if(type==='ga'){processGAFromRows(allRows);renderImportArea();return;}
+if(type==='tiktok')parseTikTokCSV(rows);
+else if(type==='metaPosts')parseMetaPostsCSV(rows);
+else if(type==='metaStories')parseMetaStoriesCSV(rows);
+else if(type==='ytVideos')parseYouTubeCSV(rows,'videos');
+else if(type==='ytShorts')parseYouTubeCSV(rows,'shorts');
+else if(type==='linkedin')parseLinkedInCSV(rows);
+renderImportArea();
+};reader.readAsText(file);
+}
+
+function processGAFromRows(allRows){
+const rows=allRows.filter(r=>!String(r[0]).startsWith('#'));
+if(rows.length<2)return;
+const d=DATA[editMonth];
+const headers=rows[0].map(normalizeHeader);
+const iCamp=headers.findIndex(h=>h.includes('campaign')&&!h.includes('keyevent'));
+const iChannel=headers.findIndex(h=>h.includes('channelgroup')||h.includes('defaultchannel'));
+const iSrc=headers.findIndex(h=>(h.includes('source'))&&!h.includes('event')&&!h.includes('channel'));
+const iMed=headers.findIndex(h=>h.includes('medium'));
+const iSess=findCol(headers,['sessions','users','newusers']);
+const iConv=findCol(headers,['keyevents','conversions','goalcompletions','goalcompletionsall']);
+const iRev=findCol(headers,['totalrevenue','revenue','purchaserevenue']);
+const iEng=findCol(headers,['engagedsessions']);
+const iEngRate=findCol(headers,['engagementrate']);
+if(!d._ga)d._ga={};
+if(iChannel>=0&&iCamp<0){
+const channels=[];
+rows.slice(1).forEach(r=>{const ch=String(r[iChannel]||'').trim();if(!ch)return;channels.push({channel:ch,sessions:iSess>=0?n(r[iSess]):0,engaged:iEng>=0?n(r[iEng]):0,engRate:iEngRate>=0?parseFloat(r[iEngRate])||0:0,conversions:iConv>=0?n(r[iConv]):0,revenue:iRev>=0?n(r[iRev]):0});});
+d._ga.channels=channels;recompute();persist();toast('GA Traffic: '+channels.length+' channels');return;
+}
+const dimCol=iCamp>=0?iCamp:iSrc;
+if(dimCol<0){toast('No Campaign or Source column found');return;}
+const gaRows=[];
+rows.slice(1).forEach(r=>{
+const camp=String(r[dimCol]||'').trim();
+if(!camp||camp==='(not set)'||camp==='(direct)'||camp==='(organic)')return;
+gaRows.push({campaign:camp,source:iSrc>=0?String(r[iSrc]||'').trim():(iChannel>=0?String(r[iChannel]||'').trim():''),medium:iMed>=0?String(r[iMed]||'').trim():'',sessions:iSess>=0?n(r[iSess]):0,conversions:iConv>=0?n(r[iConv]):0,revenue:iRev>=0?n(r[iRev]):0});
+});
+d._ga.rows=gaRows;d._ga.matches={};
+autoMatchGA(d);applyGAMatches(d);recompute();persist();
+toast('GA: '+gaRows.length+' campaigns imported');
+}
+
+function renderImportArea(){
+const el=document.getElementById('importArea');if(!el)return;
+if(!editMonth){el.innerHTML='<p style="color:var(--muted2);font-size:11px">Select or add a month above to upload data.</p>';return;}
+const label=DATA[editMonth]?DATA[editMonth].label||editMonth:'';
+const cp=getClientConfig().platforms;
+const platformNames=cp.map(p=>PLATFORM_LABELS[p]).join(', ');
+let html='<div class="s-subtitle">'+label+'</div>';
+html+='<div class="s-upload-zone" id="zone_universal"><div class="s-upload-icon">&#8593;</div><div>Drop files here, or <label class="s-upload-link">browse<input type="file" accept=".csv,.xls,.xlsx" onchange="handleUniversalUpload(this)" multiple hidden></label></div><div class="s-upload-hint">Auto-detects: '+platformNames+', Google Analytics &mdash; drop multiple files at once</div></div>';
+html+='<div id="uploadStatus" style="margin-top:10px;font-size:12px;color:var(--muted2)"></div>';
+html+='<div id="gaUploadStatus" style="font-size:11px;margin-top:4px"></div>';
+html+='<div id="gaMatchingUI" style="margin-top:12px"></div>';
+el.innerHTML=html;
+// Drag-drop
+const zone=document.getElementById('zone_universal');
+if(zone){
+zone.ondragover=e=>{e.preventDefault();zone.classList.add('dragover');};
+zone.ondragleave=()=>zone.classList.remove('dragover');
+zone.ondrop=e=>{e.preventDefault();zone.classList.remove('dragover');if(!editMonth)return;Array.from(e.dataTransfer.files).forEach(f=>processUniversalUpload(f));};
+}
+renderUploadStatus();
+// GA status
+const d=DATA[editMonth];const ga=d?d._ga:null;
+const st=document.getElementById('gaUploadStatus');
+if(ga&&st){
+let sh='';
+if(ga.channels&&ga.channels.length>0)sh+='<span style="color:#4ade80">&#10003; Traffic overview: '+ga.channels.length+' channels</span><br>';
+if(ga.rows&&ga.rows.length>0){const matched=Object.keys(ga.matches||{}).length;const summary=getGASummary(d);const mp=summary.totalSessions>0?Math.round(summary.matchedSessions/summary.totalSessions*100):0;sh+='<span style="color:#4ade80">&#10003; '+ga.rows.length+' campaigns — '+matched+' matched ('+mp+'% of sessions)</span>';}
+st.innerHTML=sh;
+}
+renderGAMatching();
+}
+
 /* ── Recalculate platform totals from sub-sources ── */
 function recalcInstagram(d){
 const posts=d._igPosts||{views:0,reach:0,engagement:0};
@@ -840,8 +1241,10 @@ d.summary.avgEngagementRate=d.summary.totalViews>0?Math.round(d.summary.totalEng
 }
 
 function exportJSON(){
-const blob=new Blob([JSON.stringify({data:DATA,recs:RECS},null,2)],{type:'application/json'});
-const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='marketing-dashboard-data.json';a.click();
+const allData={};
+CLIENTS.forEach(c=>{try{allData[c.id]={data:JSON.parse(localStorage.getItem('ww_'+c.id+'_data')),recs:JSON.parse(localStorage.getItem('ww_'+c.id+'_recs'))};}catch(e){}});
+const blob=new Blob([JSON.stringify({clients:CLIENTS,clientData:allData,activeClient:ACTIVE_CLIENT},null,2)],{type:'application/json'});
+const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='marketing-dashboard-backup.json';a.click();
 }
 function importJSON(input){
 const file=input.files[0];if(!file)return;
@@ -849,24 +1252,35 @@ const reader=new FileReader();
 reader.onload=function(e){
 try{
 const obj=JSON.parse(e.target.result);
-if(obj.data)DATA=obj.data;
-if(obj.recs)RECS=obj.recs;
+if(obj.clients){
+CLIENTS=obj.clients;localStorage.setItem('ww_clients',JSON.stringify(CLIENTS));
+Object.entries(obj.clientData||{}).forEach(([id,cd])=>{
+if(cd.data)localStorage.setItem('ww_'+id+'_data',JSON.stringify(cd.data));
+if(cd.recs)localStorage.setItem('ww_'+id+'_recs',JSON.stringify(cd.recs));
+});
+ACTIVE_CLIENT=obj.activeClient||CLIENTS[0].id;localStorage.setItem('ww_active_client',ACTIVE_CLIENT);
+loadClientData();populateClientSel();editMonth=monthKeys()[0]||null;
+showView(document.getElementById('settingsView').style.display==='none'?'dash':'settings');toast('Imported backup');
+}else{
+if(obj.data)DATA=obj.data;if(obj.recs)RECS=obj.recs;
 recompute();persist();populateMonthSel();editMonth=monthKeys()[0]||null;renderSettings();toast('Imported');
+}
 }catch(err){toast('Invalid JSON file');}
 };
 reader.readAsText(file);input.value='';
 }
 function resetData(){
-if(!confirm('Reset all data to defaults?'))return;
-DATA=JSON.parse(JSON.stringify(DEFAULT_DATA));
-RECS=JSON.parse(JSON.stringify(DEFAULT_RECS));
-recompute();persist();editMonth=monthKeys()[0]||null;populateMonthSel();renderSettings();toast('Reset to defaults');
+const client=getClientConfig();
+if(!confirm('Reset '+client.name+' data to defaults?'))return;
+if(client.id==='world_within'){DATA=JSON.parse(JSON.stringify(DEFAULT_DATA));RECS=JSON.parse(JSON.stringify(DEFAULT_RECS));}
+else{DATA={};RECS=[];}
+recompute();persist();editMonth=monthKeys()[0]||null;populateMonthSel();renderSettings();toast('Reset '+client.name);
 }
 
 /* ── Dashboard logic ── */
 function bindTabs(){
-document.querySelectorAll('.tab').forEach(t=>t.onclick=function(){F=this.dataset.platform;document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));this.classList.add('active');UPD();});
-const ms=document.getElementById('monthSel');if(ms)ms.onchange=function(){M=this.value;UPD();};
+document.querySelectorAll('.tab[data-platform]').forEach(t=>t.onclick=function(){F=this.dataset.platform;document.querySelectorAll('.tab[data-platform]').forEach(x=>x.classList.remove('active'));this.classList.add('active');UPD();});
+const ms=document.getElementById('monthSel');if(ms)ms.onchange=function(){M=this.value;if(V==='overview')UPD();else FUNNEL_UPD();};
 }
 bindTabs();
 function initSort(tableId,sortState,renderFn){document.querySelectorAll('#'+tableId+' thead th[data-sort]').forEach(th=>{th.onclick=function(){const k=this.dataset.sort;if(sortState.key===k){sortState.dir*=-1;}else{sortState.key=k;sortState.dir=-1;}document.querySelectorAll('#'+tableId+' thead th').forEach(h=>{h.classList.remove('sorted');const a=h.querySelector('.sort-arrow');if(a)a.textContent='';});this.classList.add('sorted');this.querySelector('.sort-arrow').textContent=sortState.dir===1?' \u25B2':' \u25BC';renderFn();};});}
@@ -920,10 +1334,44 @@ document.getElementById('ec').textContent='';document.getElementById('erc').text
 document.querySelectorAll('.stat-label')[0].textContent=F==='linkedin'?'Impressions':'Total Views';
 document.querySelectorAll('.stat-label')[1].textContent=F==='all'||F==='instagram'?'Total Reach':'Reach';
 document.getElementById('lct').textContent='Daily Trends'+(d.label?' ('+d.label+')':'');
+// GA traffic summary + smart columns
+const gaActive=hasGAData(d);
+const ctEl=document.getElementById('contentTable');
+if(ctEl){if(gaActive)ctEl.classList.remove('ga-col-hidden');else ctEl.classList.add('ga-col-hidden');}
+document.getElementById('gaTrafficSection').style.display=gaActive?'':'none';
+if(gaActive)renderGATraffic(d);
 TBL();CHARTS(d);
 }
 
-function TBL(){const d=DATA[M];if(!d)return;const tb=document.getElementById('content');tb.innerHTML='';let f=[...(d.topContent||[])];if(F!=='all'){const map={'youtube':'YouTube','instagram':'Instagram','tiktok':'TikTok','linkedin':'LinkedIn'};f=f.filter(c=>c.platform===map[F]);}if(contentSort.key&&contentSort.key!=='index'){f=sortArr(f,contentSort.key,contentSort.dir,(item,k)=>{if(k==='title')return item.title.toLowerCase();if(k==='platform')return item.platform.toLowerCase();return item[k];});}else if(contentSort.key==='index'){if(contentSort.dir===1)f=f.reverse();}f.slice(0,15).forEach((c,i)=>{const row=document.createElement('tr');row.innerHTML='<td class="r m">'+(i+1)+'</td><td><div class="content-title">'+escH(c.title)+'</div></td><td><span class="platform-badge"><span class="platform-dot '+c.platform.toLowerCase()+'"></span>'+c.platform+'</span></td><td class="r">'+c.views.toLocaleString()+'</td><td class="r">'+c.engagement.toLocaleString()+'</td><td class="r" style="color:'+(c.rate>5?'#4ade80':c.rate>2?'#fbbf24':'#777')+'">'+c.rate.toFixed(1)+'%</td>';tb.appendChild(row);});}
+function renderGATraffic(d){
+const s=getGASummary(d);
+document.getElementById('gaSess').textContent=fmtK(s.totalSessions);
+document.getElementById('gaConv').textContent=fmtK(s.totalConversions);
+const convRate=s.totalSessions>0?Math.round(s.totalConversions/s.totalSessions*10000)/100:0;
+document.getElementById('gaConvRate').textContent=convRate>0?convRate.toFixed(1)+'% conversion rate':'';
+const matchPct=s.totalSessions>0&&s.matchedSessions>0?Math.round(s.matchedSessions/s.totalSessions*100):0;
+document.getElementById('gaMatchPct').textContent=s.matchedSessions>0?matchPct+'% matched to content':'Upload campaign data to match';
+// Channel chart
+if(typeof Chart==='undefined')return;
+if(CH.gaCh)CH.gaCh.destroy();
+const channels=s.channels.length>0?s.channels.sort((a,b)=>b.sessions-a.sessions):[];
+if(channels.length>0){
+const chColors=['#60a5fa','#4ade80','#fbbf24','#f87171','#a78bfa','#f472b6','#34d399','#fb923c'];
+CH.gaCh=new Chart(document.getElementById('gaChannelChart').getContext('2d'),{type:'doughnut',data:{labels:channels.map(c=>c.channel),datasets:[{data:channels.map(c=>c.sessions),backgroundColor:chColors.slice(0,channels.length),borderWidth:0}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:true,position:'right',labels:{color:'#777',font:{size:10},padding:8,usePointStyle:true}}}}});
+}else{const cv=document.getElementById('gaChannelChart');const cx=cv.getContext('2d');cx.clearRect(0,0,cv.width,cv.height);cx.fillStyle='#555';cx.font="11px 'Space Mono',monospace";cx.textAlign='center';cx.fillText('Upload channel group CSV',cv.width/2,cv.height/2);}
+// Campaign chart (top 8 by sessions)
+if(CH.gaCamp)CH.gaCamp.destroy();
+const ga=d._ga;
+const camps=ga&&ga.rows?[...ga.rows].sort((a,b)=>b.sessions-a.sessions).slice(0,8):[];
+if(camps.length>0){
+const matched=ga.matches||{};
+const campColors=camps.map((c,i)=>{const ri=ga.rows.indexOf(c);return matched[ri]!==undefined?'rgba(74,222,128,0.7)':'rgba(119,119,119,0.4)';});
+CH.gaCamp=new Chart(document.getElementById('gaCampChart').getContext('2d'),{type:'bar',data:{labels:camps.map(c=>(c.campaign||'').substring(0,20)),datasets:[{data:camps.map(c=>c.sessions),backgroundColor:campColors,borderRadius:2}]},options:{indexAxis:'y',responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{beginAtZero:true,grid:{color:'#1a1a1a'},ticks:{color:'#777',font:{size:10}}},y:{grid:{display:false},ticks:{color:'#f0ece4',font:{size:10}}}}}});
+}else{const cv=document.getElementById('gaCampChart');const cx=cv.getContext('2d');cx.clearRect(0,0,cv.width,cv.height);cx.fillStyle='#555';cx.font="11px 'Space Mono',monospace";cx.textAlign='center';cx.fillText('Upload campaign CSV',cv.width/2,cv.height/2);}
+}
+
+function TBL(){const d=DATA[M];if(!d)return;const tb=document.getElementById('content');tb.innerHTML='';if(!d.topContent||d.topContent.length===0){tb.innerHTML='<tr><td colspan="9" style="text-align:center;padding:40px;color:var(--muted2);font-size:12px">No content data for this period.<br><span style="color:var(--muted);font-size:11px">Upload platform CSVs in Settings to get started.</span></td></tr>';return;}let f=[...(d.topContent||[])];if(F!=='all'){const map={'youtube':'YouTube','instagram':'Instagram','tiktok':'TikTok','linkedin':'LinkedIn'};f=f.filter(c=>c.platform===map[F]);}if(contentSort.key&&contentSort.key!=='index'){f=sortArr(f,contentSort.key,contentSort.dir,(item,k)=>{if(k==='title')return item.title.toLowerCase();if(k==='platform')return item.platform.toLowerCase();if(k==='stage')return(item.stage||'zzz').toLowerCase();if(k==='sessions')return item.gaSessions||0;if(k==='conversions')return item.gaConversions||0;return item[k];});}else if(contentSort.key==='index'){if(contentSort.dir===1)f=f.reverse();}_tblItems=f.slice(0,15);_tblItems.forEach((c,i)=>{const sv=c.stage||'';const so='<option value="">—</option>'+FUNNEL_STAGES.map(s=>'<option value="'+s.id+'"'+(sv===s.id?' selected':'')+'>'+s.label+'</option>').join('');const row=document.createElement('tr');row.innerHTML='<td class="r m">'+(i+1)+'</td><td><div class="content-title" title="'+escH(c.title)+'">'+escH(c.title)+'</div></td><td><span class="platform-badge"><span class="platform-dot '+c.platform.toLowerCase()+'"></span>'+c.platform+'</span></td><td class="r">'+c.views.toLocaleString()+'</td><td class="r">'+c.engagement.toLocaleString()+'</td><td class="r" style="color:'+(c.rate>5?'#4ade80':c.rate>2?'#fbbf24':'#777')+'">'+c.rate.toFixed(1)+'%</td><td class="r m ga-col">'+(c.gaSessions?c.gaSessions.toLocaleString():'—')+'</td><td class="r m ga-col">'+(c.gaConversions?c.gaConversions.toLocaleString():'—')+'</td><td><select title="Assign funnel stage" class="stage-select'+(sv?' stage-'+sv:'')+'" onchange="this.className=\'stage-select\'+(this.value?\' stage-\'+this.value:\'\');setStage('+i+',this.value)">'+so+'</select></td>';tb.appendChild(row);});}
+function setStage(idx,stage){if(!_tblItems[idx])return;_tblItems[idx].stage=stage||'';persist();}
 
 function REND_RECS(){const rtb=document.getElementById('recs');rtb.innerHTML='';const pOrd={High:0,Medium:1,Low:2};let r=[...RECS];if(recsSort.key){r=sortArr(r,recsSort.key,recsSort.dir,(item,k)=>{if(k==='priority')return pOrd[item.p]!=null?pOrd[item.p]:99;if(k==='recommendation')return item.r.toLowerCase();if(k==='insight')return item.i.toLowerCase();return 0;});}r.forEach(x=>{const row=document.createElement('tr');row.innerHTML='<td><span class="priority-badge priority-'+x.p.toLowerCase()+'">'+x.p+'</span></td><td>'+escH(x.r)+'</td><td class="m">'+escH(x.i)+'</td>';rtb.appendChild(row);});}
 
@@ -945,11 +1393,148 @@ datasets.push({label:'No daily data',data:[],borderColor:'#777',borderWidth:1});
 }
 if(CH.l)CH.l.destroy();CH.l=new Chart(document.getElementById('lc').getContext('2d'),{type:'line',data:{labels:tsLabels,datasets:datasets},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:true,position:'top',align:'end',labels:{color:'#777',usePointStyle:true,font:{size:11}}}},scales:{y:{beginAtZero:true,grid:{color:'#1a1a1a'},ticks:{color:'#777',font:{size:11}}},x:{grid:{display:false},ticks:{color:'#777',font:{size:10}}}}}});}
 
+/* ── Funnel View ── */
+function computeFunnelStats(d){
+const stats={};
+FUNNEL_STAGES.forEach(s=>{stats[s.id]={posts:0,views:0,reach:0,engagement:0,sessions:0,conversions:0,content:[]};});
+stats._untagged={posts:0,views:0,reach:0,engagement:0,sessions:0,conversions:0,content:[]};
+(d.topContent||[]).forEach(c=>{
+const stage=c.stage&&stats[c.stage]?c.stage:'_untagged';
+const b=stats[stage];b.posts++;b.views+=c.views||0;b.reach+=c.reach||0;b.engagement+=c.engagement||0;b.sessions+=c.gaSessions||0;b.conversions+=c.gaConversions||0;b.content.push(c);
+});
+return stats;
+}
+
+function FUNNEL_UPD(){
+const d=DATA[M];if(!d)return;
+const stats=computeFunnelStats(d);
+renderFunnelCards(stats,d);
+renderFunnelCharts(stats);
+renderFunnelTable(stats);
+}
+
+function renderFunnelCards(stats,d){
+const el=document.getElementById('funnelCards');if(!el)return;
+const stageColors={discover:'var(--red)',engage:'var(--amber)',convert:'var(--green)',partner:'var(--blue)'};
+el.innerHTML='';
+const totalTagged=FUNNEL_STAGES.reduce((s,st)=>s+stats[st.id].posts,0);
+FUNNEL_STAGES.forEach(s=>{
+const st=stats[s.id];const color=stageColors[s.id];
+let goalsHtml='';
+ensureGoals();
+const goals=DATA._goals[s.id]||[];
+const md=M!=='combined'&&DATA[M]?DATA[M]:null;
+const gv=md&&md._goalValues?md._goalValues:{};
+goals.forEach(g=>{
+if(!g.name)return;
+const key=s.id+'|'+g.name;const actual=gv[key]||0;const target=g.target||1;
+const pct=Math.min(100,Math.round(actual/target*100));
+goalsHtml+='<div class="funnel-goal-name">'+escH(g.name)+': '+actual+' / '+g.target+'</div><div class="funnel-goal-track"><div class="funnel-goal-fill" style="width:'+pct+'%;background:'+color+'"></div></div>';
+});
+if(goalsHtml)goalsHtml='<div class="funnel-goal-bar">'+goalsHtml+'</div>';
+const engRate=st.views>0?Math.round(st.engagement/st.views*10000)/100:0;
+const hasGA=st.sessions>0||st.conversions>0;
+let gaHtml='';
+if(hasGA){gaHtml='<div style="display:flex;gap:20px;margin-top:10px;padding-top:10px;border-top:1px solid var(--border)"><div><div class="funnel-card-stat-value">'+fmtK(st.sessions)+'</div><div class="funnel-card-stat-label">Sessions</div></div><div><div class="funnel-card-stat-value">'+st.conversions+'</div><div class="funnel-card-stat-label">Conversions</div></div>'+(st.sessions>0?'<div><div class="funnel-card-stat-value">'+Math.round(st.conversions/st.sessions*10000)/100+'%</div><div class="funnel-card-stat-label">Conv. Rate</div></div>':'')+'</div>';}
+el.innerHTML+='<div class="funnel-card"><div class="funnel-card-accent" style="background:'+color+'"></div><div class="funnel-card-header"><span class="stage-dot stage-dot-'+s.id+'"></span><span class="funnel-card-stage">'+s.label+'</span></div><div class="funnel-card-metric"><div class="funnel-card-metric-value">'+st.posts+'</div><div class="funnel-card-metric-label">Tagged Posts</div></div><div class="funnel-card-row"><div><div class="funnel-card-stat-value">'+fmtK(st.views)+'</div><div class="funnel-card-stat-label">Views</div></div><div><div class="funnel-card-stat-value">'+fmtK(st.engagement)+'</div><div class="funnel-card-stat-label">Engagement</div></div><div><div class="funnel-card-stat-value">'+engRate.toFixed(1)+'%</div><div class="funnel-card-stat-label">Eng. Rate</div></div></div>'+gaHtml+goalsHtml+'</div>';
+});
+if(totalTagged===0){
+el.innerHTML='<div class="funnel-card" style="grid-column:1/-1"><div class="funnel-empty">No content tagged yet<div class="funnel-empty-hint">Use the Stage dropdown on each post in <a href="#" onclick="setDashView(\'overview\');return false" style="color:var(--accent);text-decoration:underline">Overview</a> to categorize content into Discover, Engage, Convert, or Partner stages.</div></div></div>';
+}
+}
+
+function renderFunnelCharts(stats){
+if(typeof Chart==='undefined')return;
+const stColors=['rgba(248,113,113,0.8)','rgba(251,191,36,0.8)','rgba(74,222,128,0.8)','rgba(96,165,250,0.8)'];
+// Stage views chart
+if(CH.funnel)CH.funnel.destroy();
+CH.funnel=new Chart(document.getElementById('funnelChart').getContext('2d'),{type:'bar',data:{labels:FUNNEL_STAGES.map(s=>s.label),datasets:[{label:'Views',data:FUNNEL_STAGES.map(s=>stats[s.id].views),backgroundColor:stColors,borderRadius:2},{label:'Engagement',data:FUNNEL_STAGES.map(s=>stats[s.id].engagement),backgroundColor:stColors.map(c=>c.replace('0.8','0.4')),borderRadius:2}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:true,position:'top',align:'end',labels:{color:'#777',usePointStyle:true,font:{size:11}}}},scales:{y:{beginAtZero:true,grid:{color:'#1a1a1a'},ticks:{color:'#777',font:{size:11}}},x:{grid:{display:false},ticks:{color:'#f0ece4',font:{size:11}}}}}});
+// Goal progress chart
+if(CH.goalChart)CH.goalChart.destroy();
+ensureGoals();
+const allGoals=[];
+const md=M!=='combined'&&DATA[M]?DATA[M]:null;
+const gv=md&&md._goalValues?md._goalValues:{};
+FUNNEL_STAGES.forEach((s,si)=>{
+(DATA._goals[s.id]||[]).forEach(g=>{
+if(!g.name)return;
+const key=s.id+'|'+g.name;const actual=gv[key]||0;const target=g.target||1;
+allGoals.push({name:g.name,pct:Math.min(100,Math.round(actual/target*100)),color:stColors[si]});
+});
+});
+if(allGoals.length===0){
+const cv=document.getElementById('goalChart');const cx=cv.getContext('2d');
+cx.clearRect(0,0,cv.width,cv.height);
+cx.fillStyle='#555';cx.font="11px 'Space Mono',monospace";cx.textAlign='center';
+cx.fillText('Define goals in Settings',cv.width/2,cv.height/2);
+return;
+}
+CH.goalChart=new Chart(document.getElementById('goalChart').getContext('2d'),{type:'bar',data:{labels:allGoals.map(g=>g.name),datasets:[{data:allGoals.map(g=>g.pct),backgroundColor:allGoals.map(g=>g.color),borderRadius:2}]},options:{indexAxis:'y',responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{beginAtZero:true,max:100,grid:{color:'#1a1a1a'},ticks:{color:'#777',font:{size:11},callback:v=>v+'%'}},y:{grid:{display:false},ticks:{color:'#f0ece4',font:{size:10}}}}}});
+}
+
+function renderFunnelTable(stats){
+const tb=document.getElementById('funnelContent');if(!tb)return;
+tb.innerHTML='';
+_funnelItems=[];
+FUNNEL_STAGES.forEach(s=>{stats[s.id].content.forEach(c=>_funnelItems.push(c));});
+stats._untagged.content.forEach(c=>_funnelItems.push(c));
+_funnelItems.forEach((c,i)=>{
+const sv=c.stage||'';
+const so='<option value="">—</option>'+FUNNEL_STAGES.map(s=>'<option value="'+s.id+'"'+(sv===s.id?' selected':'')+'>'+s.label+'</option>').join('');
+const row=document.createElement('tr');
+row.innerHTML='<td><select title="Assign funnel stage" class="stage-select'+(sv?' stage-'+sv:'')+'" onchange="this.className=\'stage-select\'+(this.value?\' stage-\'+this.value:\'\');setFunnelStage('+i+',this.value)">'+so+'</select></td><td><div class="content-title" title="'+escH(c.title)+'">'+escH(c.title)+'</div></td><td><span class="platform-badge"><span class="platform-dot '+c.platform.toLowerCase()+'"></span>'+c.platform+'</span></td><td class="r">'+c.views.toLocaleString()+'</td><td class="r">'+c.engagement.toLocaleString()+'</td><td class="r m">'+(c.gaSessions?c.gaSessions.toLocaleString():'—')+'</td><td class="r m">'+(c.gaConversions?c.gaConversions.toLocaleString():'—')+'</td>';
+tb.appendChild(row);
+});
+}
+function setFunnelStage(idx,stage){if(!_funnelItems[idx])return;_funnelItems[idx].stage=stage||'';persist();FUNNEL_UPD();}
+
+/* ── Auth ── */
+function simpleHash(str){let h=0;for(let i=0;i<str.length;i++){h=((h<<5)-h)+str.charCodeAt(i);h|=0;}return'h'+Math.abs(h).toString(36);}
+function checkAuth(){const hash=localStorage.getItem('ww_password_hash');if(!hash)return true;return localStorage.getItem('ww_auth')===hash;}
+function tryAuth(){
+const input=document.getElementById('authInput').value;
+const stored=localStorage.getItem('ww_password_hash');
+if(simpleHash(input)===stored){
+if(document.getElementById('authRemember').checked)localStorage.setItem('ww_auth',stored);
+document.getElementById('authGate').style.display='none';
+populateClientSel();showView('dash');updateLockBtn();
+}else{document.getElementById('authError').textContent='Incorrect password';document.getElementById('authInput').value='';}
+}
+function lockDashboard(){localStorage.removeItem('ww_auth');location.reload();}
+function updateLockBtn(){const btn=document.getElementById('lockBtn');if(btn)btn.style.display=localStorage.getItem('ww_password_hash')?'':'none';}
+function setPassword(){
+const pw=document.getElementById('secNewPw').value;
+if(!pw){toast('Enter a password');return;}
+const hash=simpleHash(pw);
+localStorage.setItem('ww_password_hash',hash);
+localStorage.setItem('ww_auth',hash);
+renderSecurity();updateLockBtn();toast('Password set');
+}
+function clearPassword(){
+if(!confirm('Remove password protection?'))return;
+localStorage.removeItem('ww_password_hash');localStorage.removeItem('ww_auth');
+renderSecurity();updateLockBtn();toast('Password removed');
+}
+function renderSecurity(){
+const el=document.getElementById('securityEditor');if(!el)return;
+const hasPw=!!localStorage.getItem('ww_password_hash');
+if(hasPw){
+el.innerHTML='<p style="color:var(--green);font-size:11px;margin-bottom:12px">&#10003; Dashboard is password-protected</p><div class="s-row"><div class="s-field"><div class="s-lbl">New Password</div><input class="s-input" type="password" id="secNewPw" placeholder="Change password" style="width:200px"></div><button class="s-btn s-btn-primary" onclick="setPassword()">Update</button><button class="s-btn s-btn-danger" onclick="clearPassword()">Remove</button></div>';
+}else{
+el.innerHTML='<p style="color:var(--muted2);font-size:11px;margin-bottom:12px">No password set. Anyone with the link can access this dashboard.</p><div class="s-row"><div class="s-field"><div class="s-lbl">Set Password</div><input class="s-input" type="password" id="secNewPw" placeholder="Enter password" style="width:200px"></div><button class="s-btn s-btn-primary" onclick="setPassword()">Set Password</button></div>';
+}
+}
+
 /* ── Init ── */
-recompute();
-populateMonthSel();
-REND_RECS();
-UPD();
+initClients();
+loadClientData();
+if(!checkAuth()){
+document.getElementById('authGate').style.display='flex';
+document.getElementById('authInput').focus();
+}else{
+populateClientSel();showView('dash');
+}
+updateLockBtn();
 initSort('contentTable',contentSort,TBL);
 initSort('recsTable',recsSort,REND_RECS);
 
